@@ -1,24 +1,26 @@
-import {Injectable, Query} from '@nestjs/common';
-import {UserDocument, UserModel, UserSchema} from './user.model';
-import {CreateUserDto, ID, IUserService, SearchUserParams, User} from './user.interfaces';
-import {InjectModel, Schema} from "@nestjs/mongoose";
+import {Injectable} from '@nestjs/common';
+import {User} from './user.model';
+import {ID, IUser, IUserRegistration, IUserService, SearchUserParams} from './user.interfaces';
+import {InjectModel} from "@nestjs/mongoose";
 import {Model, Promise} from "mongoose";
-import * as console from "console";
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UsersService implements IUserService {
     constructor(
-        @InjectModel(UserModel.name) private readonly userModel: Model<UserModel>,
+        @InjectModel(User.name) private readonly User: Model<User>,
     ) {
     }
 
-    public async create(data: CreateUserDto) {
-        const user = new this.userModel(data);
-        return await user.save();
-    }
 
-    public async update(data: CreateUserDto) {
-        const user = new this.userModel(data);
+    public async create(data: IUserRegistration) {
+        const {password} = data;
+        const passwordHash = await bcrypt.hash(
+            password,
+            parseInt(process.env.APP_SALT),
+        );
+        const user = new this.User({...data, passwordHash: passwordHash});
+
         return await user.save();
     }
 
@@ -30,15 +32,16 @@ export class UsersService implements IUserService {
             contactPhone: {$regex: new RegExp(contactPhone, 'i')},
         };
 
-        return this.userModel.find(findParams, '-passwordHash');
+        return this.User.find(findParams, '-passwordHash');
     }
 
-    findByEmail(email: string): Promise<User> {
-        return Promise.resolve(undefined);
+    public async findByEmail(email: string): Promise<User> {
+        return this.User.findOne({email: email}).select('-__v');
     }
 
-    findById(id: ID): Promise<User> {
-        return Promise.resolve(undefined);
+
+    findById(id: ID): Promise<IUser> {
+        throw new Error('Method not implemented.');
     }
 
 }

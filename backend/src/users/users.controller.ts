@@ -10,8 +10,4 @@ export class UsersController {
     async findAll(@Query() query: SearchUserParams) {
         return await this.userService.findAll(query);
     }
-    @Post()
-    async createUser(@Body() createUserDto: CreateUserDto) {
-        return await this.userService.create(createUserDto);
-    }
 }

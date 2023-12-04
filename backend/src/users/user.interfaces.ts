@@ -1,14 +1,13 @@
 import type { Types } from 'mongoose';
-import {prop} from "@typegoose/typegoose";
-
 export interface ID extends Types.ObjectId {}
 
-export interface User {
+export interface IUser {
     id: string;
     email: string;
     name: string;
     contactPhone: string;
     role: string;
+    passwordHash: string;
 }
 
 export interface SearchUserParams {
@@ -19,10 +18,10 @@ export interface SearchUserParams {
     contactPhone: string;
 }
 export interface IUserService {
-    create(data: Partial<User>): Promise<User>;
-    findById(id: ID): Promise<User>;
-    findByEmail(email: string): Promise<User>;
-    findAll(params: SearchUserParams): Promise<User[]>;
+    create(data: Partial<IUser>): Promise<IUser>;
+    findById(id: ID): Promise<IUser>;
+    findByEmail(email: string): Promise<IUser>;
+    findAll(params: SearchUserParams): Promise<IUser[]>;
 }
 
 export interface CreateUserDto {
@@ -31,4 +30,9 @@ export interface CreateUserDto {
     phone?: string;
 }
 
-
+export interface IUserRegistration {
+    email: string;
+    name: string;
+    phone: string;
+    password: string;
+}
