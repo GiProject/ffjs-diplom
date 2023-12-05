@@ -8,6 +8,8 @@ import {AuthModule} from "./auth/auth.module";
 import {AuthController} from "./auth/auth.controller";
 import {AuthService} from "./auth/auth.service";
 import {PassportModule} from "@nestjs/passport";
+import {HotelModule} from "./hotel/hotel.module";
+import {HotelRoomModule} from "./hotelRoom/hotel.room.module";
 
 @Module({
     imports: [
@@ -16,6 +18,8 @@ import {PassportModule} from "@nestjs/passport";
         UsersModule,
         AuthModule,
         PassportModule,
+        HotelModule,
+        HotelRoomModule,
     ],
     controllers: [
         AppController,
@@ -24,6 +28,7 @@ import {PassportModule} from "@nestjs/passport";
     providers: [
         AppService,
         AuthService
+
     ],
     exports: [AuthService],
 })
