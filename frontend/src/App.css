@@ -71,3 +71,53 @@ body {
     font-weight: 600;
     margin-bottom: 8px;
 }
+
+.form-group {
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%;
+    align-items: center;
+}
+
+.registration-form-block {
+    width: 320px;
+}
+
+.registration-form-block .form-group {
+    justify-content: space-between;
+}
+
+.form-input {
+    width: 100%;
+}
+
+.form-input .p-calendar {
+    width: 100%;
+}
+
+.form-input input {
+    font-size: 16px;
+    padding: 10px;
+    width: 100%;
+}
+
+.form-group .dash {
+    font-size: 20px;
+    margin: 0 20px;
+    color: #079aa2;
+}
+
+.form-group [type="submit"] {
+    background: #5D73E1;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    padding: 10px 20px;
+    font-weight: normal;
+    border-radius: 5px;
+}
+
+.p-calendar .p-highlight {
+    background: #079aa2;
+    color: #fff;
+}

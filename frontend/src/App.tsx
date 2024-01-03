@@ -12,6 +12,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import HotelSearch from "./components/page.blocks/hotel/hotel.search";
 import {Route, Routes} from "react-router-dom";
+import Test from "./components/page.blocks/test";
+import LoginPage from "./components/page.blocks/login.page";
+import RegistrationPage from "./components/page.blocks/registration.page";
 
 
 function App() {
@@ -30,6 +33,9 @@ function App() {
                         <Content>
                             <Routes>
                                 <Route path="/" element={<HotelSearch/>}/>
+                                <Route path="/test" element={<Test/>}/>
+                                <Route path="/login" element={<LoginPage/>}/>
+                                <Route path="/registration" element={<RegistrationPage/>}/>
                             </Routes>
                         </Content>
                     </div>
