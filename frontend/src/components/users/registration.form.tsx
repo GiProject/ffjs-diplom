@@ -46,13 +46,15 @@ export default function RegistrationForm() {
         const validation = await FormSchema
             .validate(values, {abortEarly: false})
             .then(() => {
-                console.log(1);
                 axios.post(`${process.env.BASE_URL}/api/users/signup`, values, {
                     headers: {
                         "Access-Control-Allow-Origin": "*"
                     }
                 })
                     .then((res) => {
+                        // @ts-ignore
+                        e.target.reset();
+                        setValues(initialValues);
                         alert('Пользователь успешно зарегистрирован!')
                     })
                     .catch((e) => {

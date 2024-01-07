@@ -15,6 +15,7 @@ import {Route, Routes} from "react-router-dom";
 import Test from "./components/page.blocks/test";
 import LoginPage from "./components/page.blocks/login.page";
 import RegistrationPage from "./components/page.blocks/registration.page";
+import UsersPage from "./components/page.blocks/UsersPage";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
                                 <Route path="/test" element={<Test/>}/>
                                 <Route path="/login" element={<LoginPage/>}/>
                                 <Route path="/registration" element={<RegistrationPage/>}/>
+                                <Route path="/users" element={<UsersPage/>}/>
                             </Routes>
                         </Content>
                     </div>

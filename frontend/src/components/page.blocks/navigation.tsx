@@ -7,7 +7,7 @@ export  default function Navigation() {
             <NavLink className="menu__item" to="/">Все гостиницы</NavLink>
             <NavLink className="menu__item" to="/drift">Поиск номера</NavLink>
             <NavLink className="menu__item" to="/timeattack">Добавить гостиницу</NavLink>
-            <NavLink className="menu__item" to="/forza">Пользователи</NavLink>
+            <NavLink className="menu__item" to="/users">Пользователи</NavLink>
         </nav>
     </React.Fragment>
 }
