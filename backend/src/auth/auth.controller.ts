@@ -7,7 +7,7 @@ import {
     // Response,
     // HttpStatus,
     // BadRequestException,
-    UseFilters,
+    UseFilters, Get,
 } from '@nestjs/common';
 // import {deleteCookie} from 'cookies-next';
 import {UsersService} from '../users/users.service';
@@ -21,6 +21,7 @@ import {LocalAuthGuard} from '../guards/local-auth.guard';
 import * as mongoose from 'mongoose';
 import {IUserRegistration} from "../users/user.interfaces";
 import {AuthGuard} from "@nestjs/passport";
+import { json } from "express";
 
 interface IUser {
     _id: mongoose.Schema.Types.ObjectId;
@@ -36,15 +37,27 @@ export class AuthController {
     constructor(private readonly usersService: UsersService) {
     }
 
+    @Get('/test')
+    async test() {
+        return 'test';
+    }
+
     @UseGuards(LocalAuthGuard)
     @Post('/users/login')
     async login(@Request() req) {
-        return req.user;
+        //return req.user;
     }
 
     @Post('/users/signup')
     async signup(@Body() userRegistration: IUserRegistration) {
-        return await this.usersService.create(userRegistration);
+        ///return await this.usersService.create(userRegistration);
+    }
+
+    @UseGuards(AuthGuard)
+    @Post('/signin')
+    async signin(@Request() req) {
+        console.log(req.body);
+        return req.user;
     }
 
     // @Roles('admin')

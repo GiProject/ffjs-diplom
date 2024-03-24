@@ -1,16 +1,10 @@
-import {Base} from '@typegoose/typegoose/lib/defaultClasses';
 import {HydratedDocument, Types} from "mongoose";
 import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
 
 export type UserDocument = HydratedDocument<User>;
 
 @Schema()
-export class User implements Base {
-    @Prop()
-    _id: Types.ObjectId;
-
-    @Prop()
-    id: string;
+export class User {
 
     @Prop()
     email: string;
@@ -26,6 +20,7 @@ export class User implements Base {
 
     @Prop({ required: true, default: 'client' })
     public role: string;
+    _id: any;
 
 }
 

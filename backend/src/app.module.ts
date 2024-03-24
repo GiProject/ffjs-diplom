@@ -10,6 +10,9 @@ import {AuthService} from "./auth/auth.service";
 import {PassportModule} from "@nestjs/passport";
 import {HotelModule} from "./hotel/hotel.module";
 import {HotelRoomModule} from "./hotelRoom/hotel.room.module";
+import {ReservationModule} from "./reservation/reservation.module";
+import {NestjsFormDataModule} from "nestjs-form-data";
+import {JwtModule} from "@nestjs/jwt";
 
 @Module({
     imports: [
@@ -20,6 +23,9 @@ import {HotelRoomModule} from "./hotelRoom/hotel.room.module";
         PassportModule,
         HotelModule,
         HotelRoomModule,
+        ReservationModule,
+        NestjsFormDataModule,
+        JwtModule.register({secret: 'secret'}),
     ],
     controllers: [
         AppController,
