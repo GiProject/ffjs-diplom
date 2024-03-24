@@ -16,6 +16,9 @@ import Test from "./components/page.blocks/test";
 import LoginPage from "./components/page.blocks/login.page";
 import RegistrationPage from "./components/page.blocks/registration.page";
 import UsersPage from "./components/page.blocks/UsersPage";
+import HotelList from "./components/pages/hotel/hotel.page";
+import HotelDetail from "./components/pages/hotel/hotel.detail.page";
+import HotelAdd from "./components/page.blocks/hotel/hotel.add";
 
 
 function App() {
@@ -34,10 +37,13 @@ function App() {
                         <Content>
                             <Routes>
                                 <Route path="/" element={<HotelSearch/>}/>
+                                <Route path="/hotels" element={<HotelList/>}/>
+                                <Route path="/hotels/:id" element={<HotelDetail/>}/>
                                 <Route path="/test" element={<Test/>}/>
                                 <Route path="/login" element={<LoginPage/>}/>
                                 <Route path="/registration" element={<RegistrationPage/>}/>
                                 <Route path="/users" element={<UsersPage/>}/>
+                                <Route path="/hotels/add" element={<HotelAdd />}/>
                             </Routes>
                         </Content>
                     </div>

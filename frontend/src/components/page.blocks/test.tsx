@@ -44,9 +44,6 @@ export default function Test() {
 
     }
 
-    return <form onSubmit={onSubmit}>
-        {errors.name ? (<p className="field-error">{errors.name}</p>) : ''}
-        <input type="text" name="name" onChange={(e) => handleChange(e)}/>
-        <button type="submit">submit</button>
-    </form>;
+    // @ts-ignore
+    return <></>;
 }
