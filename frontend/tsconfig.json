@@ -17,5 +17,6 @@
     "jsx": "react-jsx",
     "types": ["node"]
   },
-  "files": ["src/index.tsx"]
+  "files": ["src/index.tsx"],
+  "include": ["src/**/*"]
 }
