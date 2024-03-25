@@ -1,0 +1,14 @@
+.User {
+  color: var(--accent);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  .Avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius);
+    background-color: var(--accent);
+    margin-left: calc(var(--padding) / 2);
+  }
+}

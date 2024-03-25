@@ -1,16 +1,17 @@
 import React from "react";
-import UserPopover from "./user.modal/user.popover";
+import s from "./Header.module.scss";
+import User from "./User/User";
 
 interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
   return (
-    <div className="header">
-      <div className="logo">
-        <div className="logo-text">logo</div>
+    <div className={s.Header}>
+      <div className={s.Logo}>
+        <div>LOGO</div>
       </div>
-      <div className="header-profile">
-        <UserPopover />
+      <div className={s.Menu}>
+        <User isLoggedin={true} />
       </div>
     </div>
   );

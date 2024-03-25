@@ -47,3 +47,7 @@ $L: 1300px;
     opacity: 0.8;
   }
 }
+
+@mixin Shadow {
+  box-shadow: 2px 2px 25px rgba(134, 134, 134, 0.25);
+}

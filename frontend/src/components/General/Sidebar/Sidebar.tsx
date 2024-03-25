@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import s from "./Sidebar.module.scss";
 
 const nav_items = [
   {
@@ -22,22 +23,20 @@ const nav_items = [
 
 export default function Sidebar() {
   return (
-    <React.Fragment>
-      <div className="sidebar">
-        <nav className="menu">
-          {nav_items.map((item) => {
-            return (
-              <NavLink
-                key={item.link + item.name}
-                className="menu__item"
-                to={item.link}
-              >
-                {item.name}
-              </NavLink>
-            );
-          })}
-        </nav>
-      </div>
-    </React.Fragment>
+    <div className={s.Sidebar}>
+      <nav>
+        {nav_items.map((item) => {
+          return (
+            <NavLink
+              key={item.link + item.name}
+              className="menu__item"
+              to={item.link}
+            >
+              {item.name}
+            </NavLink>
+          );
+        })}
+      </nav>
+    </div>
   );
 }
