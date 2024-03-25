@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "../../../../UI/Button/Button";
 import s from "./Item.module.scss";
 interface ItemProps {
@@ -16,7 +17,7 @@ const Item: React.FC<ItemProps> = ({ hotelDetails }) => {
           описа ние отеля опис ание отеля описание отеля описание отеля
         </div>
         <div className={s.Button}>
-          <Button>Подробнее</Button>
+          <Button href="./123">Подробнее</Button>
         </div>
       </div>
     </article>
