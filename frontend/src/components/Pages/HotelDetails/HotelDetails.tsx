@@ -1,41 +1,14 @@
 import s from "./HotelDetails.module.scss";
-
-import axios from "axios";
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
 
-import { Room } from "../../../interfaces/model/room.interface";
-import HotelRoom from "./RoomsList/Room/Room";
 import Button from "../../UI/Button/Button";
 import Body from "../../General/Body/Body";
 import RoomsList from "./RoomsList/RoomsList";
+import ScrollToTop from "../../../utils/scrollToTop";
 
 export default function HotelDetail() {
   const params = useParams();
   const hotelId = params.id;
-  const [hotel, setHotel] = useState<any>({});
-  const [rooms, setRooms] = useState<any>([]);
-
-  const hotelQuery = async (id: string | undefined) => {
-    return await axios.get(`${process.env.BASE_URL}/api/hotels/${id}`, {});
-  };
-  const roomsQuery = async (hotelId: string | undefined) => {
-    return await axios.get(`${process.env.BASE_URL}/api/hotels-rooms/`, {
-      params: {
-        hotel: hotelId,
-      },
-    });
-  };
-
-  useEffect(() => {
-    //получаем данные определенной гостиницы
-    (async () => {
-      const resHotel = await hotelQuery(hotelId);
-      setHotel(resHotel.data);
-      const resRooms = await roomsQuery(hotelId);
-      setRooms(resRooms.data);
-    })();
-  }, []);
 
   return (
     <div className={s.HotelDetails}>
@@ -64,6 +37,7 @@ export default function HotelDetail() {
         </div>
       </Body>
       <RoomsList rooms={[1, 2, 3]} />
+      <ScrollToTop />
     </div>
   );
 }

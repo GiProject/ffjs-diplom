@@ -10,8 +10,8 @@ const RoomsList: React.FC<RoomsListProps> = ({ rooms }) => {
       <>
         <h2>Номера</h2>
         <div className={s.RoomsList}>
-          {rooms.map((room: any) => {
-            return <Room key={room.id} roomDetails={room} />;
+          {rooms.map((room: any, index: number) => {
+            return <Room key={index} roomDetails={room} />;
           })}
         </div>
       </>
