@@ -9,7 +9,7 @@ const nav_items = [
   },
   {
     name: "Поиск номера",
-    link: "/drift",
+    link: "/hotels",
   },
   {
     name: "Добавить гостиницу",

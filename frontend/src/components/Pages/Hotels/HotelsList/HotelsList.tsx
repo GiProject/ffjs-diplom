@@ -9,9 +9,9 @@ const HotelsList: React.FC<HotelsListProps> = ({ hotels }) => {
   if (hotels?.length > 0) {
     return (
       <div className={s.HotelsList}>
-        {hotels.map((hotel: any) => {
+        {hotels.map((hotel: any, index) => {
           return (
-            <Body key={hotel.id}>
+            <Body key={index}>
               <Item hotelDetails={hotel} />
             </Body>
           );

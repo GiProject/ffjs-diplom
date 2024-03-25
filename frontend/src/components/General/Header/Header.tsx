@@ -1,15 +1,16 @@
 import React from "react";
 import s from "./Header.module.scss";
 import User from "./User/User";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
   return (
     <div className={s.Header}>
-      <div className={s.Logo}>
+      <Link to="/" className={s.Logo}>
         <div>LOGO</div>
-      </div>
+      </Link>
       <div className={s.Menu}>
         <User isLoggedin={true} />
       </div>
