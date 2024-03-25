@@ -7,6 +7,7 @@ import InputDate from "../../../UI/Input/InputDate";
 import moment from "moment";
 import Button from "../../../UI/Button/Button";
 import Body from "../../../General/Body/Body";
+import Upload from "../../../UI/UploadImage/Upload";
 
 interface FormHotelsProps {}
 
@@ -23,6 +24,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
     defaultValues: {
       title: "",
       description: "",
+      images: [],
     },
   });
 
@@ -34,6 +36,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
   return (
     <form onSubmit={handleSubmit(onSubmitForm)}>
       <div className={s.Form}>
+        <Upload name="images" control={control} options={{}} />
         <Input
           label={"Название отеля"}
           icon={<></>}
