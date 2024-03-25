@@ -1,3 +1,4 @@
+import Body from "../../../General/Body/Body";
 import s from "./HotelsList.module.scss";
 import Item from "./Item/Item";
 interface HotelsListProps {
@@ -9,7 +10,11 @@ const HotelsList: React.FC<HotelsListProps> = ({ hotels }) => {
     return (
       <div className={s.HotelsList}>
         {hotels.map((hotel: any) => {
-          return <Item key={hotel.id} hotelDetails={hotel} />;
+          return (
+            <Body key={hotel.id}>
+              <Item hotelDetails={hotel} />
+            </Body>
+          );
         })}
       </div>
     );
