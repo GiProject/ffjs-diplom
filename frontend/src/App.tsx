@@ -17,7 +17,6 @@ import HotelDetails from "./components/Pages/HotelDetails/HotelDetails";
 import HotelAdd from "./components/Pages/HotelAdd/HotelAdd";
 
 //Parts
-import HotelSearch from "./components/page.blocks/hotel/hotel.search";
 import Template from "./components/General/Template/Template";
 
 function App() {
@@ -26,7 +25,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<SignIn />} />
         <Route path="/registration" element={<SignUp />} />
-        <Route path="/" element={<HotelSearch />} />
+        <Route path="/" element={<HotelsPage />} />
         <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/hotels/:id" element={<HotelDetails />} />
         <Route path="/users" element={<UsersPage />} />
