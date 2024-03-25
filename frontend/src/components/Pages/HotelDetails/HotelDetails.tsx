@@ -1,9 +1,14 @@
+import s from "./HotelDetails.module.scss";
+
+import axios from "axios";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import axios from "axios";
+
 import { Room } from "../../../interfaces/model/room.interface";
-import { Link } from "react-router-dom";
-import HotelRoom from "../../page.blocks/hotel/hotel.room";
+import HotelRoom from "./RoomsList/Room/Room";
+import Button from "../../UI/Button/Button";
+import Body from "../../General/Body/Body";
+import RoomsList from "./RoomsList/RoomsList";
 
 export default function HotelDetail() {
   const params = useParams();
@@ -33,23 +38,32 @@ export default function HotelDetail() {
   }, []);
 
   return (
-    <div className="hotel-detail">
-      <div className="hotel-images">images</div>
-      <div className="hotel-title">{hotel.title}</div>
-      <div className="hotel-description">{hotel.description}</div>
-      <div className="hotel-actions">
-        <Link to="#" className="button orange update">
-          Редактировать
-        </Link>
-        <Link to="#" className="button blue add-room">
-          Добавить номер
-        </Link>
-      </div>
-      <div className="rooms">
-        {rooms.map((room: Room) => (
-          <HotelRoom room={room} />
-        ))}
-      </div>
+    <div className={s.HotelDetails}>
+      <h1>Отель ID: {hotelId}</h1>
+      <Body>
+        <article className={s.Item}>
+          <div className={s.ImagesList}>
+            <div className={s.Image}></div>
+            <div className={s.Image}></div>
+          </div>
+          <div className={s.Info}>
+            <div className={s.Description}>
+              Описание отеля описание отеля опис ание отеля описание отеля опис
+              ание отеля опис ание отеля опис ание отеля опис ание отеля опис
+              ание отеля описа ние отеля опис ание отеля описание отеля описание
+              отеля
+            </div>
+          </div>
+        </article>
+      </Body>
+
+      <Body>
+        <div className={s.Actions}>
+          <Button>Редактировать</Button>
+          <Button>Добавить номер</Button>
+        </div>
+      </Body>
+      <RoomsList rooms={[1, 2, 3]} />
     </div>
   );
 }

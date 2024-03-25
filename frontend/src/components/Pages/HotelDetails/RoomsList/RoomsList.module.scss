@@ -1,0 +1,5 @@
+.RoomsList {
+  & > * {
+    margin-bottom: var(--gap);
+  }
+}
