@@ -23,20 +23,22 @@ const nav_items = [
 
 export default function Sidebar() {
   return (
-    <div className={s.Sidebar}>
-      <nav>
-        {nav_items.map((item) => {
-          return (
-            <NavLink
-              key={item.link + item.name}
-              className="menu__item"
-              to={item.link}
-            >
-              {item.name}
-            </NavLink>
-          );
-        })}
-      </nav>
+    <div className={s.SidebarContainer}>
+      <div className={s.Sidebar}>
+        <nav>
+          {nav_items.map((item) => {
+            return (
+              <NavLink
+                key={item.link + item.name}
+                className="menu__item"
+                to={item.link}
+              >
+                {item.name}
+              </NavLink>
+            );
+          })}
+        </nav>
+      </div>
     </div>
   );
 }

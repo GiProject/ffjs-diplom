@@ -13,12 +13,5 @@
     @include MQ(S) {
       grid-template-columns: 1fr;
     }
-    .ContentBody {
-      @include Shadow;
-      box-sizing: border-box;
-      padding: var(--padding);
-      background-color: #fff;
-      border-radius: var(--radius);
-    }
   }
 }

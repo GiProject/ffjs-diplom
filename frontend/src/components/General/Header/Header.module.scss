@@ -7,9 +7,10 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  height: var(--buttonHeight);
+  height: var(--headerHeight);
   box-sizing: border-box;
   padding: var(--padding);
+
   @include Shadow;
   .Logo {
     background-color: var(--accent);

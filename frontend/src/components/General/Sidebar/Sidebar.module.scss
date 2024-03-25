@@ -1,21 +1,23 @@
 @use "./src/styles/mixins" as *;
 
-.Sidebar {
-  background-color: var(--light);
-  border-radius: var(--radius);
-  width: 100%;
-  padding: var(--padding);
-  @include Shadow;
-  height: auto;
-  nav {
-    display: flex;
-    flex-direction: column;
-    a {
-      text-decoration: none;
-      color: var(--accent);
-      font-weight: 600;
-      margin: 8px 0;
-      @include HoverText;
+.SidebarContainer {
+  .Sidebar {
+    background-color: var(--light);
+    border-radius: var(--radius);
+    width: 100%;
+    padding: var(--padding);
+    @include Shadow;
+    height: auto;
+    nav {
+      display: flex;
+      flex-direction: column;
+      a {
+        text-decoration: none;
+        color: var(--accent);
+        font-weight: 600;
+        margin: 8px 0;
+        @include HoverText;
+      }
     }
   }
 }
