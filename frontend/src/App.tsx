@@ -18,20 +18,23 @@ import HotelAdd from "./components/Pages/HotelAdd/HotelAdd";
 
 //Parts
 import Template from "./components/General/Template/Template";
+import ReduxProvider from "./providers/ReduxProvider";
 
 function App() {
   return (
-    <Template>
-      <Routes>
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/registration" element={<SignUp />} />
-        <Route path="/" element={<HotelsPage />} />
-        <Route path="/hotels" element={<HotelsPage />} />
-        <Route path="/hotels/:id" element={<HotelDetails />} />
-        <Route path="/users" element={<UsersPage />} />
-        <Route path="/hotels/add" element={<HotelAdd />} />
-      </Routes>
-    </Template>
+    <ReduxProvider>
+      <Template>
+        <Routes>
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/registration" element={<SignUp />} />
+          <Route path="/" element={<HotelsPage />} />
+          <Route path="/hotels" element={<HotelsPage />} />
+          <Route path="/hotels/:id" element={<HotelDetails />} />
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="/hotels/add" element={<HotelAdd />} />
+        </Routes>
+      </Template>
+    </ReduxProvider>
   );
 }
 
