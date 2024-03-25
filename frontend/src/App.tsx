@@ -1,56 +1,50 @@
-import React from 'react';
-import './App.css';
-import Header from "./components/page.blocks/header";
-import Sidebar from "./components/page.blocks/sidebar";
-import Content from "./components/page.blocks/content";
-import Logo from "./components/page.blocks/logo";
-import Navigation from "./components/page.blocks/navigation";
-import HeaderNav from "./components/page.blocks/header.nav";
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import HotelSearch from "./components/page.blocks/hotel/hotel.search";
-import {Route, Routes} from "react-router-dom";
-import Test from "./components/page.blocks/test";
-import LoginPage from "./components/page.blocks/login.page";
-import RegistrationPage from "./components/page.blocks/registration.page";
-import UsersPage from "./components/page.blocks/UsersPage";
-import HotelList from "./components/pages/hotel/hotel.page";
-import HotelDetail from "./components/pages/hotel/hotel.detail.page";
+import React from "react";
+import "./styles/general.scss";
+import { Route, Routes } from "react-router-dom";
+
+//Fonts
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
+//Pages
+import SignIn from "./components/Pages/SignIn/SignIn";
+import SignUp from "./components/Pages/SignUp/SignUp";
+import HotelsPage from "./components/Pages/Hotels/Hotels";
+import UsersPage from "./components/Pages/Users/Users";
+import HotelDetails from "./components/Pages/HotelDetails/HotelDetails";
 import HotelAdd from "./components/page.blocks/hotel/hotel.add";
 
+//Parts
+import Header from "./components/General/Header/Header";
+import Sidebar from "./components/General/Sidebar/Sidebar";
+import HotelSearch from "./components/page.blocks/hotel/hotel.search";
 
 function App() {
-    return (
-        <div className="App">
-            <div className="container">
-                <div className="row">
-                    <Header>
-                        <Logo></Logo>
-                        <HeaderNav></HeaderNav>
-                    </Header>
-                    <div className="content-container">
-                        <Sidebar>
-                            <Navigation></Navigation>
-                        </Sidebar>
-                        <Content>
-                            <Routes>
-                                <Route path="/" element={<HotelSearch/>}/>
-                                <Route path="/hotels" element={<HotelList/>}/>
-                                <Route path="/hotels/:id" element={<HotelDetail/>}/>
-                                <Route path="/test" element={<Test/>}/>
-                                <Route path="/login" element={<LoginPage/>}/>
-                                <Route path="/registration" element={<RegistrationPage/>}/>
-                                <Route path="/users" element={<UsersPage/>}/>
-                                <Route path="/hotels/add" element={<HotelAdd />}/>
-                            </Routes>
-                        </Content>
-                    </div>
-                </div>
+  return (
+    <div className="App">
+      <div className="container">
+        <div className="row">
+          <Header />
+          <div className="content-container">
+            <Sidebar />
+            <div className="content">
+              <Routes>
+                <Route path="/login" element={<SignIn />} />
+                <Route path="/registration" element={<SignUp />} />
+                <Route path="/" element={<HotelSearch />} />
+                <Route path="/hotels" element={<HotelsPage />} />
+                <Route path="/hotels/:id" element={<HotelDetails />} />
+                <Route path="/users" element={<UsersPage />} />
+                <Route path="/hotels/add" element={<HotelAdd />} />
+              </Routes>
             </div>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default App;
