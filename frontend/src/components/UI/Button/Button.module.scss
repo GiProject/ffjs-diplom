@@ -1,11 +1,11 @@
 @use "./src/styles/mixins" as *;
 
 .Button {
-  width: 400px;
+  width: 100%;
   max-width: 100%;
   background-color: var(--accent);
   color: var(--light);
-  border-radius: var(--buttonRadius);
+  border-radius: var(--radius);
   font-size: 1rem;
   padding: 10px;
   display: flex;

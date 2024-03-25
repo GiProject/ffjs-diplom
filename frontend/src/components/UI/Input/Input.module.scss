@@ -75,7 +75,7 @@
     height: 100%;
     background-color: #f4f7fa;
     border: 1px solid transparent;
-    border-radius: var(--buttonRadius);
+    border-radius: var(--radius);
     box-sizing: border-box;
     transition: 0.5s ease border, 0.5s ease padding;
     color: $colorText;

@@ -20,30 +20,21 @@ import HotelAdd from "./components/page.blocks/hotel/hotel.add";
 import Header from "./components/General/Header/Header";
 import Sidebar from "./components/General/Sidebar/Sidebar";
 import HotelSearch from "./components/page.blocks/hotel/hotel.search";
+import Template from "./components/General/Template/Template";
 
 function App() {
   return (
-    <div className="App">
-      <div className="container">
-        <div className="row">
-          <Header />
-          <div className="content-container">
-            <Sidebar />
-            <div className="content">
-              <Routes>
-                <Route path="/login" element={<SignIn />} />
-                <Route path="/registration" element={<SignUp />} />
-                <Route path="/" element={<HotelSearch />} />
-                <Route path="/hotels" element={<HotelsPage />} />
-                <Route path="/hotels/:id" element={<HotelDetails />} />
-                <Route path="/users" element={<UsersPage />} />
-                <Route path="/hotels/add" element={<HotelAdd />} />
-              </Routes>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Template>
+      <Routes>
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/registration" element={<SignUp />} />
+        <Route path="/" element={<HotelSearch />} />
+        <Route path="/hotels" element={<HotelsPage />} />
+        <Route path="/hotels/:id" element={<HotelDetails />} />
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/hotels/add" element={<HotelAdd />} />
+      </Routes>
+    </Template>
   );
 }
 
