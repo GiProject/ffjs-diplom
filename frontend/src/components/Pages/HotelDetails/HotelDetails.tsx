@@ -1,10 +1,10 @@
 import s from "./HotelDetails.module.scss";
 import { useParams } from "react-router";
 
-import Button from "../../UI/Button/Button";
-import Body from "../../General/Body/Body";
+import Button from "@/components/UI/Button/Button";
+import Body from "@/components/General/Body/Body";
 import RoomsList from "./RoomsList/RoomsList";
-import ScrollToTop from "../../../utils/scrollToTop";
+import ScrollToTop from "@/utils/scrollToTop";
 
 export default function HotelDetail() {
   const params = useParams();

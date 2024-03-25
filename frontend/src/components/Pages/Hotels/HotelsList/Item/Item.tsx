@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Button from "../../../../UI/Button/Button";
+import Button from "@/components/UI/Button/Button";
 import s from "./Item.module.scss";
 interface ItemProps {
   hotelDetails: any;

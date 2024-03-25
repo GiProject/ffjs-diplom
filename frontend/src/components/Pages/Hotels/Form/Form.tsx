@@ -1,12 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
-
-import Input from "../../../UI/Input/Input";
-import InputDate from "../../../UI/Input/InputDate";
 import moment from "moment";
-import Button from "../../../UI/Button/Button";
-import Body from "../../../General/Body/Body";
+
+import Button from "@/components/UI/Button/Button";
+import Body from "@/components/General/Body/Body";
+import Input from "@/components/UI/Input/Input";
+import InputDate from "@/components/UI/Input/InputDate";
 
 interface FormHotelsProps {}
 

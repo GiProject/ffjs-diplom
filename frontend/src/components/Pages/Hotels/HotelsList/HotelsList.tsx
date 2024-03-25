@@ -1,4 +1,4 @@
-import Body from "../../../General/Body/Body";
+import Body from "@/components/General/Body/Body";
 import s from "./HotelsList.module.scss";
 import Item from "./Item/Item";
 interface HotelsListProps {

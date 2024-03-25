@@ -1,13 +1,10 @@
 import React from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import User from "../../../interfaces/model/user.interface";
-import {
-  SearchUserParams,
-  userData,
-} from "../../../interfaces/form/users.search";
-import Pagination from "../../UI/Pagination/Pagination";
-import Body from "../../General/Body/Body";
+import User from "@/interfaces/model/user.interface";
+import { SearchUserParams, userData } from "@/interfaces/form/users.search";
+import Pagination from "@/components/UI/Pagination/Pagination";
+import Body from "@/components/General/Body/Body";
 
 axios.defaults.withCredentials = true;
 export default function () {
