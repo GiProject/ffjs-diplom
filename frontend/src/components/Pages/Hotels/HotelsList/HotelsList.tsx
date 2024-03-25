@@ -14,7 +14,7 @@ const HotelsList: React.FC<HotelsListProps> = ({ hotels }) => {
       </div>
     );
   } else {
-    return null;
+    return <>Отели не найдены</>;
   }
 };
 

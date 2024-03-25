@@ -11,7 +11,7 @@ const Template: React.FC<TemplateProps> = ({ children }) => {
       <Header />
       <div className={s.Content}>
         <Sidebar />
-        <div className={s.ContentBody}>{children}</div>
+        {children}
       </div>
     </main>
   );
