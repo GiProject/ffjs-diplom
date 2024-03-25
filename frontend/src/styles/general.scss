@@ -1,5 +1,13 @@
+@import "./variables.scss";
+@import "./mixins.scss";
+@import "./root.scss";
+
 body {
   background: #f5f6fa;
+}
+
+form {
+  max-width: 100%;
 }
 
 .App {

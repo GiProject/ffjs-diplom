@@ -1,0 +1,49 @@
+// breakpoints
+
+$S: 600px;
+$M: 900px;
+$L: 1300px;
+
+// media queries
+
+@mixin MQ($canvas) {
+  @if $canvas == S {
+    @media only screen and (max-width: $S) {
+      @content;
+    }
+  } @else if $canvas == notS {
+    @media only screen and (min-width: $S) {
+      @content;
+    }
+  } @else if $canvas == M {
+    @media only screen and (max-width: $M) {
+      @content;
+    }
+  } @else if $canvas == L {
+    @media only screen and (max-width: $L) {
+      @content;
+    }
+  } @else if $canvas == MM {
+    @media only screen and (min-width: $M) {
+      @content;
+    }
+  }
+}
+
+@mixin Hover {
+  transform: scale(1);
+  transition: 0.5s ease transform;
+  cursor: pointer;
+  &:hover {
+    transform: scale(0.98);
+  }
+}
+
+@mixin HoverText {
+  opacity: 1;
+  transition: 0.5s ease opacity;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+}

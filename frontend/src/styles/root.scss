@@ -1,0 +1,22 @@
+@import "./mixins.scss";
+
+:root {
+  --buttonHeight: 50px;
+  --inputHeight: 50px;
+  --buttonRadius: 10px;
+  --FormGap: 20px;
+
+  //colors
+  --accent: #079aa2;
+  --dark: #314155;
+  --light: #fff;
+  --success: #00d192;
+  --warning: #d90505;
+  --error: #d90505;
+}
+
+@include MQ(S) {
+  :root {
+    --buttonHeight: 50px;
+  }
+}
