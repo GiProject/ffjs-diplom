@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import axios from "axios";
-import Body from "../../General/Body/Body";
+import Body from "@/components/General/Body/Body";
 import Form from "./Form/Form";
 
 export default function HotelAdd() {

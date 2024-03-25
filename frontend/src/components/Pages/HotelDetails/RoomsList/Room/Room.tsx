@@ -1,5 +1,5 @@
-import Body from "../../../../General/Body/Body";
-import Button from "../../../../UI/Button/Button";
+import Body from "@/components/General/Body/Body";
+import Button from "@/components/UI/Button/Button";
 import s from "./Room.module.scss";
 interface RoomProps {
   roomDetails: any;

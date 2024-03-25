@@ -2,12 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 
-import Input from "../../../UI/Input/Input";
-import InputDate from "../../../UI/Input/InputDate";
-import moment from "moment";
-import Button from "../../../UI/Button/Button";
-import Body from "../../../General/Body/Body";
-import Upload from "../../../UI/UploadImage/Upload";
+import Input from "@/components/UI/Input/Input";
+import Button from "@/components/UI/Button/Button";
+import Upload from "@/components/UI/UploadImage/Upload";
 
 interface FormHotelsProps {}
 
@@ -29,14 +26,23 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
   });
 
   async function onSubmitForm(values: any) {
-    console.log(values);
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("images[]", values.images);
     // TODO: request data
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmitForm)}>
       <div className={s.Form}>
-        <Upload name="images" control={control} options={{}} />
+        <Upload
+          name="images"
+          control={control}
+          options={{
+            required: "Добавьте изображение",
+          }}
+        />
         <Input
           label={"Название отеля"}
           icon={<></>}
@@ -89,6 +95,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
       </div>
       {Object.entries(errors).length > 0 && (
         <div className={s.Errors}>
+          {errors?.images?.message && <span>{errors?.images?.message}</span>}
           {errors?.title?.message && <span>{errors?.title?.message}</span>}
           {errors?.description?.message && (
             <span>{errors?.description?.message}</span>
