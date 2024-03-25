@@ -1,0 +1,283 @@
+body {
+  background: #f5f6fa;
+}
+
+.App {
+  margin-top: 20px;
+}
+
+.logo,
+.sidebar {
+  display: flex;
+  width: 230px;
+}
+
+.logo {
+  height: 60px;
+  background: #079aa2;
+  border-radius: 10px;
+}
+
+.logo-text {
+  margin: auto;
+  color: #fff;
+}
+
+.header,
+.content-container {
+  display: flex;
+}
+
+.content-container {
+  margin-top: 20px;
+}
+
+.header-profile {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.header-profile button {
+  margin-right: 15px;
+}
+
+.content,
+.header-profile,
+.sidebar,
+.logo {
+  box-shadow: 2px 2px 25px rgba(134, 134, 134, 0.35);
+}
+
+.sidebar {
+  background: #fff;
+  border-radius: 10px;
+}
+
+.content,
+.header-profile {
+  background: #fff;
+  width: calc(100% - 230px);
+  margin-left: 15px;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  width: 100%;
+}
+
+.menu .menu__item {
+  color: #079aa2;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-group {
+  display: flex;
+  margin-bottom: 15px;
+  width: 100%;
+  align-items: center;
+}
+
+.registration-form-block {
+  width: 320px;
+}
+
+.registration-form-block .form-group {
+  justify-content: space-between;
+}
+
+.form-input {
+  width: 100%;
+}
+
+.form-input .p-calendar {
+  width: 100%;
+}
+
+.form-input input {
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
+}
+
+.form-group .dash {
+  font-size: 20px;
+  margin: 0 20px;
+  color: #079aa2;
+}
+
+.form-group [type="submit"] {
+  background: #5d73e1;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  padding: 10px 20px;
+  font-weight: normal;
+  border-radius: 5px;
+}
+
+.p-calendar .p-highlight {
+  background: #079aa2;
+  color: #fff;
+}
+
+.block-table table {
+  width: 100%;
+}
+
+.block-table table thead {
+  background: #f5f6fa;
+}
+
+.block-table table tr {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.block-table table th,
+.block-table table td {
+  padding: 20px;
+  vertical-align: center;
+}
+
+.block-table table tbody tr:nth-child(2n) {
+  background: #f5f6fa;
+}
+
+[name="user-search"] {
+  padding: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.pagination li:not(.active) a {
+  cursor: pointer;
+}
+
+.hotel-item {
+  display: flex;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+.hotel-item .hotel-image {
+  width: 33%;
+  height: 200px;
+  background-color: #adb5bd;
+  border-radius: 10px;
+}
+
+.hotel-item .hotel-content {
+  width: 67%;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.hotel-item .hotel-content .hotel-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.hotel-item .hotel-content .hotel-link a {
+  background: #5d73e1;
+  color: #fff;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.hotel-detail .hotel-title {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.hotel-detail .hotel-description {
+  color: #8a92a6;
+  margin-bottom: 15px;
+}
+
+.hotel-detail .hotel-actions {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.button {
+  padding: 8px 15px;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.button.blue {
+  background: #5d73e1;
+}
+
+.button.orange {
+  background: #e1855d;
+}
+
+.add-room {
+  margin-left: 5px;
+}
+
+.room-item .actions {
+  margin-top: 15px;
+}
+
+.add-image-input label,
+.form-preview-img {
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  border: #adb5bd 1px solid;
+}
+
+.add-image-input label {
+  display: flex;
+  background: #eee;
+  transition: opacity ease-in-out 0.2s;
+}
+
+.add-image-input label:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.add-image-input label span {
+  margin: auto;
+}
+
+.form-preview-img {
+  background-size: cover;
+  background-position: center;
+  margin-right: 5px;
+}
+
+.hotel-add .images-list {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.hotel-add .images {
+  display: flex;
+}
+
+.hotel-add form input,
+.hotel-add form textarea {
+  width: 100%;
+  border: 1px solid #079aa2;
+  padding: 10px 15px;
+}
+
+.hotel-add form textarea {
+  min-height: 150px;
+}
