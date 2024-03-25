@@ -7,6 +7,7 @@ import {
   userData,
 } from "../../../interfaces/form/users.search";
 import Pagination from "../../UI/Pagination/Pagination";
+import Body from "../../General/Body/Body";
 
 axios.defaults.withCredentials = true;
 export default function () {
@@ -59,7 +60,7 @@ export default function () {
   }, [page]);
 
   return (
-    <div>
+    <Body>
       <form onSubmit={onSubmitHandler}>
         <input
           name="user-search"
@@ -95,6 +96,6 @@ export default function () {
           nextPage={(page: number) => setPage(page)}
         />
       </div>
-    </div>
+    </Body>
   );
 }

@@ -56,7 +56,7 @@ const Input = (props: InputProps) => {
             setShow(false);
           }}
         >
-          pass
+          show
         </div>
       )}
     </div>

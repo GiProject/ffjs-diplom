@@ -14,11 +14,9 @@ import SignUp from "./components/Pages/SignUp/SignUp";
 import HotelsPage from "./components/Pages/Hotels/Hotels";
 import UsersPage from "./components/Pages/Users/Users";
 import HotelDetails from "./components/Pages/HotelDetails/HotelDetails";
-import HotelAdd from "./components/page.blocks/hotel/hotel.add";
+import HotelAdd from "./components/Pages/HotelAdd/HotelAdd";
 
 //Parts
-import Header from "./components/General/Header/Header";
-import Sidebar from "./components/General/Sidebar/Sidebar";
 import HotelSearch from "./components/page.blocks/hotel/hotel.search";
 import Template from "./components/General/Template/Template";
 
