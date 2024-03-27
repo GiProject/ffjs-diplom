@@ -5,9 +5,16 @@ import { baseQueryWithReauth } from "./baseQuery";
 export const generalAPI: any = createApi({
   reducerPath: "generalAPI",
   baseQuery: baseQueryWithReauth,
-  endpoints: (builder) => ({}),
+  endpoints: (builder) => ({
+    getUsers: builder.query({
+      query: () => ({
+        url: "/api/users",
+        method: "GET",
+      }),
+    }),
+  }),
 });
 
 // export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {} = generalAPI;
+export const { useGetUsersQuery } = generalAPI;

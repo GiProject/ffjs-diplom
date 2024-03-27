@@ -5,28 +5,18 @@ import User from "@/interfaces/model/user.interface";
 import { SearchUserParams, userData } from "@/interfaces/form/users.search";
 import Pagination from "@/components/UI/Pagination/Pagination";
 import Body from "@/components/General/Body/Body";
+import useUsers from "./Users.hook";
 
 axios.defaults.withCredentials = true;
 export default function () {
+  const { users, count, isLoading } = useUsers();
+
   const options = {
     page: 1,
     perPage: 10,
   };
   const [search, setSearch] = useState("");
-  const [users, setUsers] = useState([]);
   const [page, setPage] = useState(options.page);
-  const [count, setCount] = useState(0);
-  const userQuery = async (query: SearchUserParams = {}) => {
-    query = {
-      ...query,
-      limit: options.perPage,
-      offset: options.perPage * (page - 1),
-    };
-
-    return await axios.get(`${process.env.BASE_URL}/api/users`, {
-      params: query,
-    });
-  };
 
   const searchInputOnChange = (e: ChangeEvent) => {
     // @ts-ignore
@@ -34,27 +24,11 @@ export default function () {
     setSearch(value);
   };
 
-  const setData = (data: userData) => {
-    // @ts-ignore
-    setUsers(data.users);
-    setCount(data.count);
-  };
-
   const onSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
-    const userRes = await userQuery({ query: search });
 
     setPage(1);
-    setData(userRes.data);
   };
-
-  useEffect(() => {
-    (async () => {
-      const usersData = await userQuery({ query: search });
-
-      setData(usersData.data);
-    })();
-  }, [page]);
 
   return (
     <Body>

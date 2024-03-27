@@ -4,10 +4,14 @@ import s from "./Form.module.scss";
 
 import Button from "@/components/UI/Button/Button";
 import Input from "@/components/UI/Input/Input";
+import { useAppDispatch } from "@/hooks/redux";
+import { loginUser } from "@/redux/auth/authActions";
 
 interface SignInFormProps {}
 
 const SignInForm: React.FC<SignInFormProps> = () => {
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
@@ -25,6 +29,7 @@ const SignInForm: React.FC<SignInFormProps> = () => {
 
   async function onSubmitForm(values: any) {
     console.log(values);
+    dispatch(loginUser(values));
     // TODO: request data
   }
 

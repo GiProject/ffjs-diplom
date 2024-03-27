@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  registerUser,
-  loginUser,
-  regAuthGoogle,
-  regAuthApple,
-} from "./authActions";
+import { registerUser, loginUser } from "./authActions";
 import { parseJSON } from "@/utils/parseJSON";
 
 // initialize userToken from local storage
@@ -50,9 +45,9 @@ const authSlice = createSlice({
       localStorage.setItem("userInfo", JSON.stringify(payload));
     },
     setAccessToken: (state, { payload }) => {
-      state.userToken = payload.accessToken;
+      state.userToken = payload.access_token;
       state.refreshToken = payload.refreshToken;
-      localStorage.setItem("userToken", payload.accessToken);
+      localStorage.setItem("userToken", payload.access_token);
       localStorage.setItem("refreshToken", payload.refreshToken);
     },
   },
@@ -69,10 +64,10 @@ const authSlice = createSlice({
         state.loading = false;
         state.success = true; // registration successful
         state.userInfo = payload.profile;
-        state.userToken = payload.data.accessToken;
-        state.refreshToken = payload.data.refreshToken;
-        localStorage.setItem("userToken", payload.data.accessToken);
-        localStorage.setItem("refreshToken", payload.data.refreshToken);
+        state.userToken = payload.access_token;
+        state.refreshToken = payload.refreshToken;
+        localStorage.setItem("userToken", payload.access_token);
+        localStorage.setItem("refreshToken", payload.refreshToken);
         localStorage.setItem("userInfo", JSON.stringify(payload.profile));
       })
       .addCase(registerUser.rejected, (state, { payload }: any) => {
@@ -91,10 +86,10 @@ const authSlice = createSlice({
         state.loading = false;
         state.success = true; // login successful
         state.userInfo = payload.profile;
-        state.userToken = payload.data.accessToken;
-        state.refreshToken = payload.data.refreshToken;
-        localStorage.setItem("userToken", payload.data.accessToken);
-        localStorage.setItem("refreshToken", payload.data.refreshToken);
+        state.userToken = payload.access_token;
+        state.refreshToken = payload.refreshToken;
+        localStorage.setItem("userToken", payload.access_token);
+        localStorage.setItem("refreshToken", payload.refreshToken);
         localStorage.setItem("userInfo", JSON.stringify(payload.profile));
       })
       .addCase(loginUser.rejected, (state, { payload }: any) => {
