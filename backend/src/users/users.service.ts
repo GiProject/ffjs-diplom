@@ -21,6 +21,8 @@ export class UsersService implements IUserService {
 
     const user = new this.User({ ...data, passwordHash: passwordHash });
 
+    console.log(user);
+
     return await user.save();
   }
 
