@@ -18,7 +18,7 @@ export type BaseQueryFn<
   extraOptions: DefinitionExtraOptions
 ) => MaybePromise<QueryReturnValue<Result, Error, Meta>>;
 
-const baseUrl = `/${process.env.NEXT_PUBLIC_API_PATH}/`;
+const baseUrl = `${process.env.BASE_URL}`;
 
 const baseQueryWithAuth = fetchBaseQuery({
   // base url of backend API
@@ -29,8 +29,7 @@ const baseQueryWithAuth = fetchBaseQuery({
     const refresh = (getState() as any).auth.refreshToken;
     if (token && refresh) {
       // include token in req header
-      headers.set("X-Auth-Token", `${token}`);
-      headers.set("X-REFRESH-TOKEN", `${refresh}`);
+      headers.set("authorization", `Bearer ${token}`);
       return headers;
     }
   },
