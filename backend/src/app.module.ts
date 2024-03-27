@@ -13,6 +13,7 @@ import {HotelRoomModule} from "./hotelRoom/hotel.room.module";
 import {ReservationModule} from "./reservation/reservation.module";
 import {NestjsFormDataModule} from "nestjs-form-data";
 import {JwtModule} from "@nestjs/jwt";
+import {MulterModule} from "@nestjs/platform-express";
 
 @Module({
     imports: [
@@ -26,6 +27,9 @@ import {JwtModule} from "@nestjs/jwt";
         ReservationModule,
         NestjsFormDataModule,
         JwtModule.register({secret: 'secret'}),
+        MulterModule.register({
+            dest: './upload',
+        })
     ],
     controllers: [
         AppController,
