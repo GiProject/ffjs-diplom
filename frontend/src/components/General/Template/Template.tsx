@@ -1,4 +1,5 @@
 import Header from "../Header/Header";
+import SignInWindow from "../SignInWindow/SignInWindow";
 import Sidebar from "../Sidebar/Sidebar";
 import s from "./Template.module.scss";
 interface TemplateProps {
@@ -13,6 +14,9 @@ const Template: React.FC<TemplateProps> = ({ children }) => {
         <Sidebar />
         {children}
       </div>
+      <>
+        <SignInWindow />
+      </>
     </main>
   );
 };

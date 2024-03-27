@@ -1,93 +1,105 @@
-import * as React from "react";
-import { Field, Form, Formik } from "formik";
-import { ChangeEvent, FormEvent, useState } from "react";
-import * as yup from "yup";
-import axios from "axios";
-import { ValidationError } from "yup";
+import React from "react";
+import { useForm } from "react-hook-form";
+import s from "./Form.module.scss";
 
-export default function SignInForm() {
-  const initialValues = {
-    email: "",
-    password: "",
-  };
-  const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState(initialValues);
+import Button from "@/components/UI/Button/Button";
+import Input from "@/components/UI/Input/Input";
 
-  const FormSchema = yup.object({
-    email: yup
-      .string()
-      .required("Поле обязательное")
-      .email("Не корректный email"),
-    password: yup.string().required("Поле обязательное"),
+interface SignInFormProps {}
+
+const SignInForm: React.FC<SignInFormProps> = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    getValues,
+    formState: { errors, isDirty, isValid },
+    control,
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    let errorMessages = {};
-
-    const validation = await FormSchema.validate(values, { abortEarly: false })
-      .then(() => {
-        axios
-          .post(`${process.env.BASE_URL}/api/users/login`, values, {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-            },
-            withCredentials: true,
-          })
-          .then((res) => {
-            // @ts-ignore
-            e.target.reset();
-            setValues(initialValues);
-            alert("Вы успешно авторизованы!");
-          })
-          .catch((e) => {
-            alert("Ошибка!");
-          });
-      })
-      .catch((e) => {
-        return e;
-      });
-
-    setErrors(initialValues);
-
-    if (validation) {
-      validation.inner.map((error: ValidationError) => {
-        // @ts-ignore
-        errorMessages[error.path] = error.message;
-      });
-
-      setErrors((errors) => ({ ...errors, ...errorMessages }));
-    }
-  };
-  const handleChanged = (e: ChangeEvent) => {
-    // @ts-ignore
-    const { name, value } = e.target;
-    setValues((values) => ({ ...values, [name]: value }));
-  };
+  async function onSubmitForm(values: any) {
+    console.log(values);
+    // TODO: request data
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        {errors.email ? <p className="field-error">{errors.email}</p> : ""}
-        <input name="email" value={values.email} onChange={handleChanged} />
-      </div>
-      <div className="form-group">
-        {errors.password ? (
-          <p className="field-error">{errors.password}</p>
-        ) : (
-          ""
-        )}
-        <input
-          name="password"
-          type="password"
-          value={values.password}
-          onChange={handleChanged}
+    <form onSubmit={handleSubmit(onSubmitForm)}>
+      <div className={s.Form}>
+        <Input
+          label={"Email"}
+          icon={<></>}
+          errors={errors}
+          register={register}
+          watch={watch}
+          id="email"
+          type="text"
+          defaultValue={""}
+          options={{
+            required: "Введите Email",
+            onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
+              e.target.value = e.target.value
+                .replace(/[^а-яА-Яa-zA-Z0-9-_.@]*/g, "")
+                .replace(/\s/g, "")
+                .replace(/^-/g, "")
+                .replace(/-{2,}/g, "-");
+            },
+            minLength: {
+              value: 5,
+              message: "Email: 5 min.",
+            },
+            maxLength: {
+              value: 40,
+              message: "Email: 40 max",
+            },
+            pattern: {
+              value: /^[а-яА-ЯA-Z0-9._%+-]+@[а-яА-ЯA-Z0-9.-]+\.[А-ЯA-Z]{2,}$/i,
+              message: "Email: wrong format",
+            },
+          }}
         />
+
+        <Input
+          label={"Пароль"}
+          icon={<></>}
+          errors={errors}
+          register={register}
+          watch={watch}
+          id="password"
+          type="password"
+          defaultValue={""}
+          options={{
+            required: "Введите пароль",
+            onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
+              e.target.value = e.target.value.replace(/[а-яА-Я\s]*/g, "");
+            },
+            minLength: {
+              value: 5,
+              message: "Pass: 5 min.",
+            },
+            maxLength: {
+              value: 30,
+              message: "Pass: 5 max",
+            },
+          }}
+        />
+        <Button type="submit">Войти</Button>
       </div>
-      <div className="form-group">
-        <button type="submit">Войти</button>
-      </div>
+      {Object.entries(errors).length > 0 && (
+        <div className={s.Errors}>
+          {errors?.email?.message && <span>{errors?.email?.message}</span>}
+          {errors?.password?.message && (
+            <span>{errors?.password?.message}</span>
+          )}
+        </div>
+      )}
     </form>
   );
-}
+};
+
+export default SignInForm;

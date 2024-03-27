@@ -7,14 +7,16 @@ interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
   return (
-    <div className={s.Header}>
-      <Link to="/" className={s.Logo}>
-        <div>LOGO</div>
-      </Link>
-      <div className={s.Menu}>
-        <User isLoggedin={true} />
+    <>
+      <div className={s.Header}>
+        <Link to="/" className={s.Logo}>
+          <div>LOGO</div>
+        </Link>
+        <div className={s.Menu}>
+          <User isLoggedin={false} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
