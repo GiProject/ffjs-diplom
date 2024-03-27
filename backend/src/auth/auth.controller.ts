@@ -55,7 +55,7 @@ export class AuthController {
 
     @Post('/users/signup')
     async signup(@Body() userRegistration: IUserRegistration) {
-        ///return await this.usersService.create(userRegistration);
+        return await this.usersService.create(userRegistration);
     }
 
     @UseGuards(JwtAuthGuard)
