@@ -3,8 +3,8 @@ import { UsersService } from "./users.service";
 import { CreateUserDto, SearchUserInputParams, SearchUserParams } from "./user.interfaces";
 import { UserDocument } from "./user.model";
 import { Roles } from "../guards/role.decorator";
-import { AuthenticatedGuard } from "../guards/authentication.guard";
 import { RoleGuard } from "../guards/role.guard";
+import {JwtAuthGuard} from "../guards/jwt-auth.guard";
 
 @Controller("api/users")
 export class UsersController {
@@ -13,7 +13,7 @@ export class UsersController {
 
   @Get()
   @Roles('manager')
-  @UseGuards(AuthenticatedGuard, RoleGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   async findAll(@Query() query: SearchUserInputParams) {
     const params: SearchUserParams = {
       ...query,
@@ -21,7 +21,7 @@ export class UsersController {
       name: query.query,
       contactPhone: query.query
     };
-    
+
     return await this.userService.findAll(params);
   }
 

@@ -16,12 +16,13 @@ import * as bcrypt from 'bcrypt';
 // import {Roles} from '../guards/role.decorator';
 // import {RoleGuard} from '../guards/role.guard';
 import {LocalAuthGuard} from '../guards/local-auth.guard';
+import {JwtAuthGuard} from '../guards/jwt-auth.guard';
 // import {AuthenticatedGuard} from '../guards/authentication.guard';
 // import ISearchUserParams from '../interface/user/ISearchUserParams';
 import * as mongoose from 'mongoose';
 import {IUserRegistration} from "../users/user.interfaces";
-import {AuthGuard} from "@nestjs/passport";
 import { json } from "express";
+import {AuthService} from "./auth.service";
 
 interface IUser {
     _id: mongoose.Schema.Types.ObjectId;
@@ -34,7 +35,10 @@ interface IUser {
 
 @Controller('api')
 export class AuthController {
-    constructor(private readonly usersService: UsersService) {
+    constructor(
+        private readonly usersService: UsersService,
+        private readonly authService: AuthService
+    ) {
     }
 
     @Get('/test')
@@ -45,6 +49,7 @@ export class AuthController {
     @UseGuards(LocalAuthGuard)
     @Post('/users/login')
     async login(@Request() req) {
+        return this.authService.login(req.user);
         //return req.user;
     }
 
@@ -53,12 +58,20 @@ export class AuthController {
         ///return await this.usersService.create(userRegistration);
     }
 
-    @UseGuards(AuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('/signin')
     async signin(@Request() req) {
-        console.log(req.body);
+        return this.authService.login(req.user);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('/profile')
+    async profile(@Request() req) {
         return req.user;
     }
+
+
+
 
     // @Roles('admin')
     // @UseGuards(AuthenticatedGuard, RoleGuard)
