@@ -10,6 +10,39 @@ form {
   max-width: 100%;
 }
 
+/*
+** Modal Transitions
+*/
+
+.modal-enter {
+  opacity: 0 !important;
+  transform: scale(0.9);
+}
+.modal-enter-active {
+  opacity: 1 !important;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.modal-enter-done {
+  opacity: 1 !important;
+  pointer-events: all;
+}
+.modal-exit {
+  opacity: 1 !important;
+}
+.modal-exit-active {
+  opacity: 0 !important;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+.modal-exit-done {
+  opacity: 0 !important;
+}
+
+/*
+** TODO: Delete
+*/
+
 .App {
   margin-top: 20px;
 }
