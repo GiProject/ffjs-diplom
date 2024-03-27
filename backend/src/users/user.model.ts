@@ -20,7 +20,6 @@ export class User {
 
     @Prop({ required: true, default: 'client' })
     public role: string;
-    _id: any;
 
 }
 

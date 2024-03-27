@@ -7,7 +7,7 @@ import {
     Put,
     Query,
     UploadedFile,
-    UploadedFiles,
+    UploadedFiles, UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
 import {HotelService} from './hotel.service';
@@ -16,8 +16,10 @@ import {diskStorage} from 'multer';
 import {destination, editFileName} from '../lib/file-upload';
 import {ID, UpdateHotelParams, ICreateHotelRoomDto, SearchHotelParams, ICreateHotelDto} from "./hotel.interfaces";
 import {FormDataRequest, NestjsFormDataModule} from "nestjs-form-data";
+import {JwtAuthGuard} from "../guards/jwt-auth.guard";
 
 @Controller('api')
+@UseGuards(JwtAuthGuard)
 export class HotelController {
     constructor(private readonly hotelService: HotelService) {
     }
@@ -29,15 +31,12 @@ export class HotelController {
         @UploadedFiles() images: Array<Express.Multer.File>,
         @Body() createHotelDto: ICreateHotelDto,
     ) {
-        console.log(images);
-        console.log(createHotelDto);
-        // console.log(createHotelDto);
-        // const hotel = await this.hotelService.create(createHotelDto);
-        // return {
-        //     id: hotel._id,
-        //     title: hotel.title,
-        //     description: hotel.description,
-        // };
+        const hotel = await this.hotelService.create(createHotelDto);
+        return {
+            id: hotel._id,
+            title: hotel.title,
+            description: hotel.description,
+        };
     }
 
     @Get('/hotels')
