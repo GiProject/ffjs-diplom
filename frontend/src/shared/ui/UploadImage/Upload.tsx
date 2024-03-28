@@ -71,7 +71,12 @@ const Upload: React.FC<UploadProps> = ({ name, options, control }) => {
         {singleFile.length >= 3 ? null : (
           <label className={s.Add}>
             <div className={s.Icon}>+</div>
-            <input type="file" name={name} onChange={uploadSingleFiles} />
+            <input
+              type="file"
+              accept="image/png, image/jpeg"
+              name={name}
+              onChange={uploadSingleFiles}
+            />
           </label>
         )}
       </div>
