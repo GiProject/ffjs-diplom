@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
+import App from "@/app/App";
+import reportWebVitals from "./app/reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { PrimeReactProvider } from "primereact/api";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

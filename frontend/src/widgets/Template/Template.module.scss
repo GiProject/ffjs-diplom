@@ -1,0 +1,17 @@
+@use "./src/shared/styles/mixins" as *;
+
+.Template {
+  display: grid;
+  grid-gap: var(--gap);
+  .Content {
+    display: grid;
+    grid-gap: var(--gap);
+    grid-template-columns: 1fr 4fr;
+    @include MQ(M) {
+      grid-template-columns: 1fr 2fr;
+    }
+    @include MQ(S) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
