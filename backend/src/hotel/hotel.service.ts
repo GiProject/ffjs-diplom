@@ -1,9 +1,18 @@
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import { Model, Promise } from "mongoose";
+import {Model, Promise, Query} from "mongoose";
 import {Hotel, HotelDocument} from './hotel.model';
-import { HotelReturnInterface, ID, IHotelService, SearchHotelParams, UpdateHotelParams } from "./hotel.interfaces";
-import { UserReturnInterface } from "../users/user.interfaces";
+import {
+    FileInterface,
+    HotelReturnInterface,
+    ID,
+    IHotelService,
+    SearchHotelParams,
+    UpdateHotelParams
+} from "./hotel.interfaces";
+import {writeFile} from "fs";
+import {join} from 'path';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable()
 export class HotelService implements IHotelService {
@@ -13,7 +22,11 @@ export class HotelService implements IHotelService {
     }
 
     public async create(data: any): Promise<Hotel> {
+        data.images = data.images.map((image) => {
+            return this.saveFile('hotel', image);
+        });
         const hotel = new this.HotelModel(data);
+
         return await hotel.save();
     }
 
@@ -26,14 +39,14 @@ export class HotelService implements IHotelService {
     public async search(params: SearchHotelParams): Promise<HotelReturnInterface> {
 
         const query = {
-            title: {$regex: new RegExp(params.title, "i") },
+            title: {$regex: new RegExp(params.title, "i")},
         };
 
         const count = await this.HotelModel.find(query).countDocuments().exec();
         const hotels = await this.HotelModel.find(query)
-          .skip(params.offset)
-          .limit(params.limit)
-          .select('-__v -createdAt -updatedAt');
+            .skip(params.offset)
+            .limit(params.limit)
+            .select('-__v -createdAt -updatedAt');
 
         return {
             count: count,
@@ -42,6 +55,31 @@ export class HotelService implements IHotelService {
     }
 
     public async update(id: ID, data: UpdateHotelParams): Promise<Hotel> {
+        let resultImages;
+        const hotel = await this.HotelModel.findById(id).select(
+            '-__v -createdAt -updatedAt',
+        );
+        let images = [...hotel.images];
+
+        if (data.delete_image !== undefined || data.images !== undefined) {
+            let tempImagesPath = [];
+            if (data.delete_image !== undefined) {
+                data.delete_image.forEach((value) => {
+                    images = images.splice(value, 1);
+                });
+            }
+
+            if (data.images !== undefined) {
+                tempImagesPath = data.images.map((image: FileInterface) => {
+                    return this.saveFile('hotel', image);
+                });
+
+            }
+            resultImages = [...images, ...tempImagesPath];
+        } else {
+            resultImages = [...images];
+        }
+
         return this.HotelModel.findOneAndUpdate(
             {
                 _id: id,
@@ -50,8 +88,7 @@ export class HotelService implements IHotelService {
                 $set: {
                     title: data.title,
                     description: data.description,
-                    images:
-                        data.images.length === 0 ? [] : [...data.images.split(',')],
+                    images: resultImages,
                     updatedAt: new Date(),
                 },
             },
@@ -59,5 +96,21 @@ export class HotelService implements IHotelService {
                 new: true,
             },
         );
+    }
+
+    public async delete(id: ID) {
+        return this.HotelModel.findOneAndDelete({ _id: id });
+    }
+
+    private saveFile(prefix: string, file: FileInterface): String {
+        const extension = file.originalname.split('.')[1];
+        const imagePath = `/public/images/${prefix}s/${prefix}-${Date.now()}${Math.random()}.${extension}`;
+        writeFile(join(__dirname, '..', '..', imagePath), file.buffer, function (err) {
+            if (err) {
+                return console.log(err);
+            }
+        });
+
+        return imagePath;
     }
 }

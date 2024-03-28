@@ -13,8 +13,8 @@ export interface SearchHotelParams {
 export interface UpdateHotelParams {
     title: string;
     description: string;
-    images: string;
-    files: File[];
+    delete_image: number[];
+    images: object[];
 }
 export interface IHotelService {
     create(data: any): Promise<Hotel>;
@@ -50,4 +50,13 @@ export interface ICreateHotelRoomDto {
 export interface HotelReturnInterface {
     count: number,
     hotels: Hotel[]
+}
+
+export interface FileInterface {
+    fieldname: string,
+    originalname: string,
+    encoding: string,
+    mimetype: string,
+    buffer: string,
+    size: number,
 }
