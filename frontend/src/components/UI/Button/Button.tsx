@@ -9,6 +9,7 @@ interface ButtonProps {
   type?: string;
   disabled?: boolean;
   isLoading?: boolean;
+  isSuccess?: boolean;
   href?: string;
 }
 
@@ -19,18 +20,30 @@ const Button: React.FC<ButtonProps> = ({
   type,
   disabled,
   isLoading,
+  isSuccess,
   href,
 }) => {
   switch (type) {
     case "submit":
-      return (
-        <button
-          className={[s.Button, disabled ? s.Disabled : ""].join(" ")}
-          data-style={style}
-        >
-          {!isLoading ? <span>{children}</span> : <ButtonLoader />}
-        </button>
-      );
+      if (!isSuccess) {
+        return (
+          <button
+            className={[s.Button, disabled ? s.Disabled : ""].join(" ")}
+            data-style={style}
+          >
+            {!isLoading ? <span>{children}</span> : <ButtonLoader />}
+          </button>
+        );
+      } else {
+        return (
+          <button
+            className={[s.Button, disabled ? s.Disabled : ""].join(" ")}
+            data-style={style}
+          >
+            Успешно!
+          </button>
+        );
+      }
     default:
       if (!href) {
         return (

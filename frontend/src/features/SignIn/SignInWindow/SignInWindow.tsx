@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import ModalWindow from "../ModalWindow/ModalWindow";
+import ModalWindow from "../../../components/General/ModalWindow/ModalWindow";
 import { setLoginOpen } from "@/redux/GlobalSlice";
-import SignInForm from "@/components/Pages/SignIn/SignInForm/SignInForm";
+import SignInForm from "@/features/SignIn/SignInForm/SignInForm";
 
 interface SignInWindowProps {}
 

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser, loginUser } from "./authActions";
 import { parseJSON } from "@/utils/parseJSON";
 
 // initialize userToken from local storage
@@ -19,12 +18,9 @@ const userInfo =
     : null;
 
 const initialState = {
-  loading: false,
   userInfo: userInfo, // for user object
   userToken, // for storing the JWT
   refreshToken,
-  error: null,
-  success: false, // for monitoring the registration process.
 };
 
 const authSlice = createSlice({
@@ -32,15 +28,13 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.loading = false;
       state.userInfo = null;
       state.userToken = null;
-      state.error = null;
       localStorage.removeItem("userToken");
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("userInfo");
     },
-    setCredentials: (state, { payload }) => {
+    setUser: (state, { payload }) => {
       state.userInfo = payload;
       localStorage.setItem("userInfo", JSON.stringify(payload));
     },
@@ -51,53 +45,7 @@ const authSlice = createSlice({
       localStorage.setItem("refreshToken", payload.refreshToken);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      /**
-       * Register user
-       */
-      .addCase(registerUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(registerUser.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.success = true; // registration successful
-        state.userInfo = payload.profile;
-        state.userToken = payload.access_token;
-        state.refreshToken = payload.refreshToken;
-        localStorage.setItem("userToken", payload.access_token);
-        localStorage.setItem("refreshToken", payload.refreshToken);
-        localStorage.setItem("userInfo", JSON.stringify(payload.profile));
-      })
-      .addCase(registerUser.rejected, (state, { payload }: any) => {
-        state.loading = false;
-        state.error = payload;
-      })
-
-      /**
-       * Login user
-       */
-      .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(loginUser.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.success = true; // login successful
-        state.userInfo = payload.profile;
-        state.userToken = payload.access_token;
-        state.refreshToken = payload.refreshToken;
-        localStorage.setItem("userToken", payload.access_token);
-        localStorage.setItem("refreshToken", payload.refreshToken);
-        localStorage.setItem("userInfo", JSON.stringify(payload.profile));
-      })
-      .addCase(loginUser.rejected, (state, { payload }: any) => {
-        state.loading = false;
-        state.error = payload;
-      });
-  },
 });
 
-export const { logout, setCredentials, setAccessToken } = authSlice.actions;
+export const { logout, setUser, setAccessToken } = authSlice.actions;
 export default authSlice.reducer;

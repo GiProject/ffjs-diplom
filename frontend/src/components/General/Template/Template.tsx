@@ -1,5 +1,5 @@
 import Header from "../Header/Header";
-import SignInWindow from "../SignInWindow/SignInWindow";
+import SignInWindow from "../../../features/SignIn/SignInWindow/SignInWindow";
 import Sidebar from "../Sidebar/Sidebar";
 import s from "./Template.module.scss";
 interface TemplateProps {

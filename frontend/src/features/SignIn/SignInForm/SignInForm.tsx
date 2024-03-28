@@ -4,13 +4,12 @@ import s from "./Form.module.scss";
 
 import Button from "@/components/UI/Button/Button";
 import Input from "@/components/UI/Input/Input";
-import { useAppDispatch } from "@/hooks/redux";
-import { loginUser } from "@/redux/auth/authActions";
+import useSignIn from "./SignIn.hook";
 
 interface SignInFormProps {}
 
 const SignInForm: React.FC<SignInFormProps> = () => {
-  const dispatch = useAppDispatch();
+  const { loginUser, isLoading, isError, isSuccess, error } = useSignIn();
 
   const {
     register,
@@ -28,8 +27,7 @@ const SignInForm: React.FC<SignInFormProps> = () => {
   });
 
   async function onSubmitForm(values: any) {
-    console.log(values);
-    dispatch(loginUser(values));
+    await loginUser(values);
     // TODO: request data
   }
 
@@ -93,14 +91,17 @@ const SignInForm: React.FC<SignInFormProps> = () => {
             },
           }}
         />
-        <Button type="submit">Войти</Button>
+        <Button type="submit" isLoading={isLoading} isSuccess={isSuccess}>
+          Войти
+        </Button>
       </div>
-      {Object.entries(errors).length > 0 && (
+      {(Object.entries(errors).length > 0 || isError) && (
         <div className={s.Errors}>
           {errors?.email?.message && <span>{errors?.email?.message}</span>}
           {errors?.password?.message && (
             <span>{errors?.password?.message}</span>
           )}
+          {isError && <span>{error.message}</span>}
         </div>
       )}
     </form>

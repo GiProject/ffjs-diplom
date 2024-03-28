@@ -6,6 +6,14 @@ export const generalAPI: any = createApi({
   reducerPath: "generalAPI",
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
+    userSignIn: builder.mutation({
+      query: ({ email, password }: { email: string; password: string }) => ({
+        url: "/api/users/login",
+        method: "POST",
+        body: { email, password },
+      }),
+    }),
+
     getUsers: builder.query({
       query: () => ({
         url: "/api/users",
@@ -17,4 +25,4 @@ export const generalAPI: any = createApi({
 
 // export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUsersQuery } = generalAPI;
+export const { useUserSignInMutation, useGetUsersQuery } = generalAPI;
