@@ -13,7 +13,7 @@ export default function useSignIn() {
 
   useEffect(() => {
     if (data && !isError) {
-      dispatch(setAccessToken(data.access_token));
+      dispatch(setAccessToken(data));
       setIsSuccess(true);
       setTimeout(() => {
         dispatch(setLoginOpen(false));

@@ -1,25 +1,25 @@
 import { setLoginOpen } from "@/shared/redux/GlobalSlice";
 import s from "./User.module.scss";
-import { useAppDispatch } from "@/shared/hooks/redux";
-interface UserProps {
-  isLoggedin?: boolean;
-}
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/redux";
+interface UserProps {}
 
-const User: React.FC<UserProps> = ({ isLoggedin }) => {
+const User: React.FC<UserProps> = ({}) => {
   const dispatch = useAppDispatch();
 
+  const { userToken }: any = useAppSelector((state) => state.auth);
+
   const handleClick = () => {
-    if (isLoggedin) {
+    if (userToken) {
       console.log("User info");
     } else {
       dispatch(setLoginOpen(true));
     }
   };
 
-  if (isLoggedin) {
+  if (userToken) {
     return (
       <article className={s.User} onClick={handleClick}>
-        Имя пользователя <div className={s.Avatar}></div>
+        Авторизован <div className={s.Avatar}></div>
       </article>
     );
   } else {
