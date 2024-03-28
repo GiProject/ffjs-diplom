@@ -2,8 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 
-import Button from "@/components/UI/Button/Button";
-import Input from "@/components/UI/Input/Input";
+import Button from "@/shared/ui/Button/Button";
+import Input from "@/shared/ui/Input/Input";
 import useSignIn from "./SignIn.hook";
 
 interface SignInFormProps {}

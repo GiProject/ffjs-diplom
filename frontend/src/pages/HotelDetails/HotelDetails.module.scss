@@ -1,0 +1,46 @@
+@use "./src/shared/styles/mixins" as *;
+
+.HotelDetails {
+  & > * {
+    margin-bottom: var(--gap);
+  }
+}
+
+.Item {
+  display: flex;
+  flex-direction: column;
+  .ImagesList {
+    display: flex;
+    margin-bottom: var(--gap);
+    flex-wrap: wrap;
+    .Image {
+      width: 30%;
+      min-width: 200px;
+      height: 200px;
+      margin-right: var(--gap);
+      margin-bottom: var(--gap);
+      background-color: #efefef;
+      border-radius: var(--radius);
+    }
+  }
+  h4 {
+    font-size: 1.4rem;
+    margin: 10px 0 var(--gap) 0;
+    padding: 0;
+    font-weight: 400;
+  }
+  .Description {
+    margin: 0 0 var(--gap) 0;
+    color: var(--gray);
+  }
+  .Button {
+    max-width: 300px;
+  }
+}
+
+.Actions {
+  display: flex;
+  & > * {
+    margin-right: var(--gap);
+  }
+}

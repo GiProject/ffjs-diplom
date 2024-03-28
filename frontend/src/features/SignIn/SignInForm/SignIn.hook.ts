@@ -1,7 +1,7 @@
-import { useAppDispatch } from "@/hooks/redux";
-import { setLoginOpen } from "@/redux/GlobalSlice";
-import { useUserSignInMutation } from "@/redux/api/generalAPI";
-import { logout, setAccessToken } from "@/redux/auth/authSlice";
+import { useAppDispatch } from "@/shared/hooks/redux";
+import { setLoginOpen } from "@/shared/redux/GlobalSlice";
+import { useUserSignInMutation } from "@/shared/redux/api/generalAPI";
+import { logout, setAccessToken } from "@/shared/redux/auth/authSlice";
 import { useEffect, useState } from "react";
 
 export default function useSignIn() {
