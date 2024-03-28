@@ -5,10 +5,13 @@ import s from "./Form.module.scss";
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
 import Upload from "@/shared/ui/UploadImage/Upload";
+import { useHotelAddMutation } from "@/shared/redux/api/generalAPI";
 
 interface FormHotelsProps {}
 
 const FormHotels: React.FC<FormHotelsProps> = () => {
+  const [hotelAdd, { data, isLoading, isError, error }] = useHotelAddMutation();
+
   const {
     register,
     handleSubmit,
@@ -29,7 +32,11 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("description", values.description);
-    formData.append("images[]", values.images);
+
+    values.images.forEach((image: any) => {
+      formData.append("images", image);
+    });
+    await hotelAdd(formData);
     // TODO: request data
   }
 

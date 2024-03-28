@@ -14,6 +14,14 @@ export const generalAPI: any = createApi({
       }),
     }),
 
+    hotelAdd: builder.mutation({
+      query: (formData: FormData) => ({
+        url: "/api/hotels",
+        method: "POST",
+        body: formData,
+      }),
+    }),
+
     getUsers: builder.query({
       query: () => ({
         url: "/api/users",
@@ -25,4 +33,5 @@ export const generalAPI: any = createApi({
 
 // export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useUserSignInMutation, useGetUsersQuery } = generalAPI;
+export const { useUserSignInMutation, useHotelAddMutation, useGetUsersQuery } =
+  generalAPI;
