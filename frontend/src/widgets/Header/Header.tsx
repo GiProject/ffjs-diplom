@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = () => {
           <div>LOGO</div>
         </Link>
         <div className={s.Menu}>
-          <User isLoggedin={false} />
+          <User />
         </div>
       </div>
     </>
