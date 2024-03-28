@@ -1,7 +1,11 @@
 import Header from "../Header/Header";
-import SignInWindow from "../../features/SignIn/SignInWindow/SignInWindow";
 import Sidebar from "../Sidebar/Sidebar";
 import s from "./Template.module.scss";
+
+//Modals
+import SignInWindow from "../../features/SignIn/SignInWindow/SignInWindow";
+import SignUpWindow from "@/features/SignUp/SignInWindow/SignUpWindow";
+
 interface TemplateProps {
   children: React.ReactNode;
 }
@@ -16,6 +20,7 @@ const Template: React.FC<TemplateProps> = ({ children }) => {
       </div>
       <>
         <SignInWindow />
+        <SignUpWindow />
       </>
     </main>
   );
