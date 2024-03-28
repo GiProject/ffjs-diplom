@@ -28,7 +28,20 @@ const Upload: React.FC<UploadProps> = ({ name, options, control }) => {
 
   useEffect(() => {
     if (singleFile.length > 0) {
-      field.onChange(singleFile);
+      const imagesAsFiles: File[] = [];
+
+      singleFile.forEach((imageURL: any) => {
+        fetch(imageURL)
+          .then((r) => r.blob())
+          .then((b) => {
+            const imageFile = new File([b], "file.jpeg", {
+              type: "image/jpeg",
+            });
+            imagesAsFiles.push(imageFile);
+          });
+      });
+
+      field.onChange(imagesAsFiles);
     }
   }, [singleFile]);
 

@@ -33,8 +33,8 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
     formData.append("title", values.title);
     formData.append("description", values.description);
 
-    values.images.forEach((image: any) => {
-      formData.append("images", image);
+    values.images.forEach((imageFile: any) => {
+      formData.append("images", imageFile);
     });
     await hotelAdd(formData);
     // TODO: request data
