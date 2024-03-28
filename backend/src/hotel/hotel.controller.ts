@@ -1,21 +1,17 @@
 import {
     Body,
-    Controller,
+    Controller, Delete,
     Get,
     Param,
     Post,
     Put,
     Query,
-    UploadedFile,
     UploadedFiles, UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
 import {HotelService} from './hotel.service';
 import {FilesInterceptor} from '@nestjs/platform-express';
-import {diskStorage} from 'multer';
-import {destination, editFileName} from '../lib/file-upload';
 import {ID, UpdateHotelParams, ICreateHotelRoomDto, SearchHotelParams, ICreateHotelDto} from "./hotel.interfaces";
-import {FormDataRequest, NestjsFormDataModule} from "nestjs-form-data";
 import {JwtAuthGuard} from "../guards/jwt-auth.guard";
 
 @Controller('api')
@@ -31,11 +27,13 @@ export class HotelController {
         @UploadedFiles() images: Array<Express.Multer.File>,
         @Body() createHotelDto: ICreateHotelDto,
     ) {
-        const hotel = await this.hotelService.create(createHotelDto);
+        const data = {...createHotelDto, images: images}
+        const hotel = await this.hotelService.create(data);
         return {
             id: hotel._id,
             title: hotel.title,
             description: hotel.description,
+            images: hotel.images,
         };
     }
 
@@ -52,17 +50,22 @@ export class HotelController {
     }
 
     @Put('/hotels/:id')
-    @UseInterceptors(
-        FilesInterceptor('files', 10, {
-            storage: diskStorage({
-                destination: destination,
-                filename: editFileName,
-            }),
-        }),
-    )
-    async putUpdateHotel(@Param() params: {
+    @UseInterceptors(FilesInterceptor('images', 6))
+    async putUpdateHotel(
+        @Param() params: {id: ID},
+        @Body() body: UpdateHotelParams,
+        @UploadedFiles() images: Array<Express.Multer.File>
+    ) {
+        body.images = images;
+
+        return await this.hotelService.update(params.id, body);
+    }
+
+
+    @Delete('/hotels/:id')
+    async delete(@Param() params: {
         id: ID
-    }, @Body() body: UpdateHotelParams) {
-        await this.hotelService.update(params.id, body);
+    }) {
+        return await this.hotelService.delete(params.id);
     }
 }
