@@ -9,8 +9,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 //Pages
-import SignIn from "./components/Pages/SignIn/SignIn";
-import SignUp from "./components/Pages/SignUp/SignUp";
 import HotelsPage from "./components/Pages/Hotels/Hotels";
 import UsersPage from "./components/Pages/Users/Users";
 import HotelDetails from "./components/Pages/HotelDetails/HotelDetails";
@@ -25,8 +23,6 @@ function App() {
     <ReduxProvider>
       <Template>
         <Routes>
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/registration" element={<SignUp />} />
           <Route path="/" element={<HotelsPage />} />
           <Route path="/hotels" element={<HotelsPage />} />
           <Route path="/hotels/:id" element={<HotelDetails />} />
