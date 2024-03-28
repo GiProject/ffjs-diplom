@@ -20,14 +20,14 @@ export type BaseQueryFn<
 
 const baseUrl = `${process.env.BASE_URL}`;
 
-const baseQueryWithAuth = fetchBaseQuery({
+export const baseQueryWithAuth = fetchBaseQuery({
   // base url of backend API
   baseUrl: baseUrl,
   // prepareHeaders is used to configure the header of every request and gives access to getState which we use to include the token from the store
   prepareHeaders: (headers, { getState, endpoint }) => {
     const token = (getState() as any).auth.userToken;
-    const refresh = (getState() as any).auth.refreshToken;
-    if (token && refresh) {
+    //const refresh = (getState() as any).auth.refreshToken;
+    if (token) {
       // include token in req header
       headers.set("authorization", `Bearer ${token}`);
       return headers;
