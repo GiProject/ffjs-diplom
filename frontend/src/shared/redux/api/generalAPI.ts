@@ -33,6 +33,13 @@ export const generalAPI: any = createApi({
         body: formData,
       }),
     }),
+    hotelUpdate: builder.mutation({
+      query: ({ formData, id }: { formData: FormData; id: string }) => ({
+        url: `/api/hotels/${id}`,
+        method: "PATCH",
+        body: formData,
+      }),
+    }),
 
     getUsers: builder.query({
       query: () => ({

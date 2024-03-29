@@ -6,12 +6,21 @@ interface UploadProps {
   name: string;
   control: any;
   options: any;
+  defaultValue?: string[];
 }
 
-const Upload: React.FC<UploadProps> = ({ name, options, control }) => {
+const Upload: React.FC<UploadProps> = ({
+  name,
+  options,
+  control,
+  defaultValue,
+}) => {
   let singleFileObj: any = [];
   let singleFileArray: any = [];
-  const [singleFile, setSingleFile] = useState<any>([]);
+
+  const [singleFile, setSingleFile] = useState<any>(
+    defaultValue ? defaultValue : []
+  );
 
   const uploadSingleFiles = (e: any) => {
     singleFileObj.push(e.target.files);
