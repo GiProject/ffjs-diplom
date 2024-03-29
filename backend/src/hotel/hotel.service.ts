@@ -59,7 +59,12 @@ export class HotelService implements IHotelService {
         const hotel = await this.HotelModel.findById(id).select(
             '-__v -createdAt -updatedAt',
         );
-        let images = [...hotel.images];
+
+        if (hotel === null) {
+            return null;
+        }
+
+        let images = [...hotel?.images];
 
         if (data.delete_image !== undefined || data.images !== undefined) {
             let tempImagesPath = [];

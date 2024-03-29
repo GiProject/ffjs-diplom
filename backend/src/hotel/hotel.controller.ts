@@ -1,13 +1,13 @@
 import {
     Body,
     Controller, Delete,
-    Get,
-    Param,
+    Get, HttpException,
+    Param, Patch,
     Post,
-    Put,
-    Query,
+    Query, Res,
     UploadedFiles, UseGuards,
     UseInterceptors,
+    HttpStatus,
 } from '@nestjs/common';
 import {HotelService} from './hotel.service';
 import {FilesInterceptor} from '@nestjs/platform-express';
@@ -49,16 +49,23 @@ export class HotelController {
         return await this.hotelService.findById(params.id);
     }
 
-    @Put('/hotels/:id')
+    @Patch('/hotels/:id')
     @UseInterceptors(FilesInterceptor('images', 6))
     async putUpdateHotel(
         @Param() params: {id: ID},
         @Body() body: UpdateHotelParams,
         @UploadedFiles() images: Array<Express.Multer.File>
     ) {
-        body.images = images;
+        if (images !== undefined) {
+            body.images = images;
+        }
+        const result = await this.hotelService.update(params.id, body);
 
-        return await this.hotelService.update(params.id, body);
+        if (result === null) {
+            throw new HttpException('Отель не найден', HttpStatus.NOT_FOUND);
+        }
+
+        return result;
     }
 
 
