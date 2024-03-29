@@ -8,16 +8,17 @@ interface ItemProps {
 const Item: React.FC<ItemProps> = ({ hotelDetails }) => {
   return (
     <article className={s.Item}>
-      <div className={s.Image}></div>
+      <div className={s.Image}>
+        <img
+          src={`${process.env.BASE_URL}${hotelDetails.images[0]}`}
+          alt={hotelDetails.title}
+        />
+      </div>
       <div className={s.Info}>
-        <h4>Название отеля</h4>
-        <div className={s.Description}>
-          Описание отеля описание отеля опис ание отеля описание отеля опис ание
-          отеля опис ание отеля опис ание отеля опис ание отеля опис ание отеля
-          описа ние отеля опис ание отеля описание отеля описание отеля
-        </div>
+        <h4>{hotelDetails.title}</h4>
+        <div className={s.Description}>{hotelDetails.description}</div>
         <div className={s.Button}>
-          <Button href="./123">Подробнее</Button>
+          <Button href={`/hotels/${hotelDetails._id}`}>Подробнее</Button>
         </div>
       </div>
     </article>

@@ -5,27 +5,32 @@ import Button from "@/shared/ui/Button/Button";
 import Body from "@/widgets/Body/Body";
 import RoomsList from "./RoomsList/RoomsList";
 import ScrollToTop from "@/shared/utils/scrollToTop";
+import { useGetHotel } from "../Hotels/Hotels.hook";
 
 export default function HotelDetail() {
   const params = useParams();
   const hotelId = params.id;
+  const { hotel } = useGetHotel(hotelId);
 
   return (
     <div className={s.HotelDetails}>
-      <h1>Отель ID: {hotelId}</h1>
+      <h1>{hotel?.title}</h1>
       <Body>
         <article className={s.Item}>
           <div className={s.ImagesList}>
-            <div className={s.Image}></div>
-            <div className={s.Image}></div>
+            {hotel?.images.map((image: string, index: number) => {
+              return (
+                <div className={s.Image} key={index}>
+                  <img
+                    src={`${process.env.BASE_URL}${image}`}
+                    alt={hotel?.title}
+                  />
+                </div>
+              );
+            })}
           </div>
           <div className={s.Info}>
-            <div className={s.Description}>
-              Описание отеля описание отеля опис ание отеля описание отеля опис
-              ание отеля опис ание отеля опис ание отеля опис ание отеля опис
-              ание отеля описа ние отеля опис ание отеля описание отеля описание
-              отеля
-            </div>
+            <div className={s.Description}>{hotel?.description}</div>
           </div>
         </article>
       </Body>
