@@ -37,8 +37,8 @@ export default function HotelDetail() {
 
       <Body>
         <div className={s.Actions}>
-          <Button>Редактировать</Button>
-          <Button>Добавить номер</Button>
+          <Button href={`/hotels/${hotelId}/update`}>Редактировать</Button>
+          <Button href={`/hotels/${hotelId}/addRoom`}>Добавить номер</Button>
         </div>
       </Body>
       <RoomsList rooms={[1, 2, 3]} />
