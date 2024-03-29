@@ -12,9 +12,15 @@
     margin-right: var(--gap);
     background-color: #efefef;
     border-radius: var(--radius);
+    overflow: hidden;
+    @include Image;
     @include MQ(M) {
       margin-right: 0;
       margin-bottom: var(--gap);
+    }
+    img {
+      object-fit: cover;
+      object-position: center center;
     }
   }
   h4 {

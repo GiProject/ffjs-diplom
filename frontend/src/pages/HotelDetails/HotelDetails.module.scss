@@ -17,10 +17,25 @@
       width: 30%;
       min-width: 200px;
       height: 200px;
-      margin-right: var(--gap);
       margin-bottom: var(--gap);
       background-color: #efefef;
       border-radius: var(--radius);
+      @include Image;
+      overflow: hidden;
+      &:not(:last-child) {
+        margin-right: var(--gap);
+      }
+      img {
+        object-fit: cover;
+        object-position: center center;
+      }
+
+      @include MQ(M) {
+        min-width: calc(50% - var(--gap));
+      }
+      @include MQ(S) {
+        min-width: 100%;
+      }
     }
   }
   h4 {
