@@ -18,9 +18,14 @@ const Upload: React.FC<UploadProps> = ({
   let singleFileObj: any = [];
   let singleFileArray: any = [];
 
-  const [singleFile, setSingleFile] = useState<any>(
-    defaultValue ? defaultValue : []
-  );
+  const [singleFile, setSingleFile] = useState<any>([]);
+  const [defaultFiles, setDefaultFiles] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (defaultValue) {
+      setDefaultFiles(defaultValue);
+    }
+  }, [defaultValue]);
 
   const uploadSingleFiles = (e: any) => {
     singleFileObj.push(e.target.files);
@@ -32,6 +37,13 @@ const Upload: React.FC<UploadProps> = ({
     setSingleFile([
       ...singleFile.slice(0, index),
       ...singleFile.slice(index + 1, singleFile.length),
+    ]);
+  };
+
+  const removeDefaultImage = (index: any) => {
+    setDefaultFiles([
+      ...defaultFiles.slice(0, index),
+      ...defaultFiles.slice(index + 1, defaultFiles.length),
     ]);
   };
 
@@ -67,6 +79,18 @@ const Upload: React.FC<UploadProps> = ({
   return (
     <div className={s.Upload}>
       <div className={s.Row}>
+        {defaultFiles?.length !== 0 &&
+          defaultFiles?.map((url: string, index: any) => (
+            <div key={url} className={s.ImageContainer}>
+              <img src={url} alt="..." />
+              <span
+                className={s.Remove}
+                onClick={() => removeDefaultImage(index)}
+              >
+                x
+              </span>
+            </div>
+          ))}
         {singleFile.length !== 0 &&
           singleFile.map((url: string, index: any) => (
             <div key={url} className={s.ImageContainer}>
@@ -77,7 +101,7 @@ const Upload: React.FC<UploadProps> = ({
             </div>
           ))}
 
-        {singleFile.length >= 3 ? null : (
+        {singleFile.length >= 3 - (defaultValue?.length || 0) ? null : (
           <label className={s.Add}>
             <div className={s.Icon}>+</div>
             <input

@@ -57,5 +57,6 @@ export const {
   useHotelGetListQuery,
   useHotelGetItemQuery,
   useHotelAddMutation,
+  useHotelUpdateMutation,
   useGetUsersQuery,
 } = generalAPI;
