@@ -1,18 +1,16 @@
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {Model, Promise, Query} from "mongoose";
+import {Model, Promise} from "mongoose";
 import {Hotel, HotelDocument} from './hotel.model';
 import {
-    FileInterface,
-    HotelReturnInterface,
+    FileInterface, HotelCountReturnInterface,
+    HotelReturnInterface, HotelRoomReturnInterface,
     ID,
     IHotelService,
     SearchHotelParams,
     UpdateHotelParams
 } from "./hotel.interfaces";
-import {writeFile} from "fs";
-import {join} from 'path';
-import {v4 as uuidv4} from 'uuid';
+import {saveFile} from "../functions/save.file";
 
 @Injectable()
 export class HotelService implements IHotelService {
@@ -23,7 +21,7 @@ export class HotelService implements IHotelService {
 
     public async create(data: any): Promise<Hotel> {
         data.images = data.images.map((image) => {
-            return this.saveFile('hotel', image);
+            return saveFile('hotel', image);
         });
         const hotel = new this.HotelModel(data);
 
@@ -31,9 +29,9 @@ export class HotelService implements IHotelService {
     }
 
     public async findById(id: ID): Promise<Hotel> {
-        return this.HotelModel.findById(id).select(
-            '-__v -createdAt -updatedAt',
-        );
+        return this.HotelModel
+            .findById(id)
+            .select('-__v -createdAt -updatedAt');
     }
 
     public async search(params: SearchHotelParams): Promise<HotelReturnInterface> {
@@ -50,7 +48,7 @@ export class HotelService implements IHotelService {
 
         return {
             count: count,
-            hotels: hotels,
+            data: hotels,
         };
     }
 
@@ -76,7 +74,7 @@ export class HotelService implements IHotelService {
 
             if (data.images !== undefined) {
                 tempImagesPath = data.images.map((image: FileInterface) => {
-                    return this.saveFile('hotel', image);
+                    return saveFile('hotel', image);
                 });
 
             }
@@ -105,17 +103,5 @@ export class HotelService implements IHotelService {
 
     public async delete(id: ID) {
         return this.HotelModel.findOneAndDelete({ _id: id });
-    }
-
-    private saveFile(prefix: string, file: FileInterface): String {
-        const extension = file.originalname.split('.')[1];
-        const imagePath = `/public/images/${prefix}s/${prefix}-${Date.now()}${Math.random()}.${extension}`;
-        writeFile(join(__dirname, '..', '..', imagePath), file.buffer, function (err) {
-            if (err) {
-                return console.log(err);
-            }
-        });
-
-        return imagePath;
     }
 }
