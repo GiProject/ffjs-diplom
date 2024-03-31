@@ -3,8 +3,8 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Model, Promise} from "mongoose";
 import {Hotel, HotelDocument} from './hotel.model';
 import {
-    FileInterface, HotelCountReturnInterface,
-    HotelReturnInterface, HotelRoomReturnInterface,
+    FileInterface,
+    HotelReturnInterface,
     ID,
     IHotelService,
     SearchHotelParams,
