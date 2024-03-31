@@ -2,8 +2,14 @@ import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import {Model} from 'mongoose';
-import {ID, IHotelRoomService, SearchRoomsParams} from '../hotel/hotel.interfaces';
+import {
+    FileInterface,
+    ID,
+    IHotelRoomService,
+    SearchRoomsParams, UpdateHotelRoomParams
+} from '../hotel/hotel.interfaces';
 import {HotelRoom, HotelRoomDocument} from './hotel.room.model';
+import {saveFile} from "../functions/save.file";
 
 @Injectable()
 export class HotelRoomService implements IHotelRoomService {
@@ -12,61 +18,80 @@ export class HotelRoomService implements IHotelRoomService {
         private HotelRoomModel: Model<HotelRoomDocument>,
     ) {}
 
-    public async create(data: Partial<HotelRoom>): Promise<HotelRoom> {
+    public async create(data: any): Promise<HotelRoom> {
+        data.images = data.images.map((image) => {
+            return saveFile('hotel-rooms', image);
+        });
+
         const hotelRoom = new this.HotelRoomModel(data);
-        await hotelRoom.save();
-        return hotelRoom.populate([
-            {
-                path: 'hotel',
-                transform: function (value) {
-                    return {
-                        id: value._id,
-                        title: value.title,
-                        description: value.description,
-                    };
-                },
-            },
-        ]);
+        return hotelRoom.save();
     }
 
     public async findById(id: ID): Promise<HotelRoom> {
         return this.HotelRoomModel.findById(id)
             .select('-__v -createdAt -updatedAt')
-            .populate({
-                path: 'hotel',
-                transform: function (value) {
-                    return {
-                        id: value._id,
-                        title: value.title,
-                        description: value.description,
-                    };
-                },
-            });
     }
 
-    async search(params: SearchRoomsParams): Promise<HotelRoomDocument[]> {
+    async search(params: SearchRoomsParams){
         if (params.isEnabled === undefined) {
             delete params.isEnabled;
         }
-        return await this.HotelRoomModel.find(params)
+        const count = await this.HotelRoomModel.find(params).countDocuments().exec();
+        const rooms = await this.HotelRoomModel.find(params)
             .populate("hotel")
             .select("-__v")
             .exec();
+
+        return {
+            count: count,
+            data: rooms,
+        };
     }
 
 
     public async update(
         id: ID,
-        data: Partial<HotelRoom>,
+        data: UpdateHotelRoomParams,
     ): Promise<HotelRoom> {
+        let resultImages;
+        const hotelRoom = await this.HotelRoomModel.findById(id).select(
+            '-__v -createdAt -updatedAt',
+        );
+
+        if (hotelRoom === null) {
+            return null;
+        }
+
+        let images = [...hotelRoom?.images];
+
+        if (data.delete_image !== undefined || data.images !== undefined) {
+            let tempImagesPath = [];
+            if (data.delete_image !== undefined) {
+                data.delete_image.forEach((value) => {
+                    images = images.splice(value, 1);
+                });
+            }
+
+            if (data.images !== undefined) {
+                tempImagesPath = data.images.map((image: FileInterface) => {
+                    return saveFile('hotel', image);
+                });
+
+            }
+            resultImages = [...images, ...tempImagesPath];
+        } else {
+            resultImages = [...images];
+        }
+
         return this.HotelRoomModel.findOneAndUpdate(
             {
-                _id: new mongoose.Types.ObjectId(id),
+                _id: id,
             },
             {
                 $set: {
+                    title: data.title,
                     description: data.description,
-                    images: data.images,
+                    images: resultImages,
                     updatedAt: new Date(),
                 },
             },
@@ -75,4 +100,9 @@ export class HotelRoomService implements IHotelRoomService {
             },
         );
     }
+
+    public async delete(id: ID) {
+        return this.HotelRoomModel.findOneAndDelete({ _id: id });
+    }
+
 }

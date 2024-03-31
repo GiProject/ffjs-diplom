@@ -1,5 +1,5 @@
-import {Hotel} from "./hotel.model";
-import { Promise, Types } from "mongoose";
+import {Hotel, HotelDocument} from "./hotel.model";
+import mongoose, {Mongoose, Promise, Types} from "mongoose";
 import {HotelRoom} from "../hotelRoom/hotel.room.model";
 import { User } from "../users/user.model";
 
@@ -16,10 +16,17 @@ export interface UpdateHotelParams {
     delete_image: number[];
     images: object[];
 }
+
+export interface UpdateHotelRoomParams {
+    title: string;
+    description: string;
+    delete_image: number[];
+    images: object[];
+}
 export interface IHotelService {
     create(data: any): Promise<Hotel>;
     findById(id: ID): Promise<Hotel>;
-    search(params: SearchHotelParams): Promise<HotelReturnInterface>;
+    search(params: SearchHotelParams): Promise<any>;
     update(id: ID, data: UpdateHotelParams): Promise<Hotel>;
 }
 
@@ -31,10 +38,10 @@ export interface SearchRoomsParams {
 }
 
 export interface IHotelRoomService {
-    create(data: Partial<HotelRoom>): Promise<HotelRoom>;
+    create(data: ICreateHotelRoomDto): Promise<HotelRoom>;
     findById(id: ID): Promise<HotelRoom>;
-    search(params: SearchRoomsParams): Promise<HotelRoom[]>;
-    update(id: ID, data: Partial<HotelRoom>): Promise<HotelRoom>;
+    search(params: SearchRoomsParams): Promise<any>;
+    update(id: ID, data: UpdateHotelRoomParams): Promise<HotelRoom>;
 }
 
 export interface ICreateHotelDto {
@@ -44,12 +51,13 @@ export interface ICreateHotelDto {
 
 export interface ICreateHotelRoomDto {
     id: string;
+    hotel: Hotel;
     description: string;
 }
 
 export interface HotelReturnInterface {
     count: number,
-    hotels: Hotel[]
+    data: Hotel[]
 }
 
 export interface FileInterface {
