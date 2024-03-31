@@ -3,12 +3,12 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Model, Promise} from "mongoose";
 import {Hotel, HotelDocument} from './hotel.model';
 import {
-    FileInterface, HotelCountReturnInterface,
-    HotelReturnInterface, HotelRoomReturnInterface,
+    FileInterface,
+    HotelReturnInterface,
     ID,
     IHotelService,
     SearchHotelParams,
-    UpdateHotelParams
+    UpdateHotelParams, UpdateHotelRoomParams
 } from "./hotel.interfaces";
 import {saveFile} from "../functions/save.file";
 
@@ -34,7 +34,7 @@ export class HotelService implements IHotelService {
             .select('-__v -createdAt -updatedAt');
     }
 
-    public async search(params: SearchHotelParams): Promise<HotelReturnInterface> {
+    public async search(params: SearchHotelParams){
 
         const query = {
             title: {$regex: new RegExp(params.title, "i")},
@@ -52,7 +52,7 @@ export class HotelService implements IHotelService {
         };
     }
 
-    public async update(id: ID, data: UpdateHotelParams): Promise<Hotel> {
+    public async update(id: ID, data: UpdateHotelRoomParams): Promise<Hotel> {
         let resultImages;
         const hotel = await this.HotelModel.findById(id).select(
             '-__v -createdAt -updatedAt',

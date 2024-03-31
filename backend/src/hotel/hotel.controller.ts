@@ -51,7 +51,7 @@ export class HotelController {
 
     @Patch('/hotels/:id')
     @UseInterceptors(FilesInterceptor('images', 6))
-    async putUpdateHotel(
+    async updateHotel(
         @Param() params: {id: ID},
         @Body() body: UpdateHotelParams,
         @UploadedFiles() images: Array<Express.Multer.File>
