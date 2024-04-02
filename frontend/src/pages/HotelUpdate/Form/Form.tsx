@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 
@@ -6,6 +6,7 @@ import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
 import Upload from "@/shared/ui/UploadImage/Upload";
 import { useHotelUpdateMutation } from "@/shared/redux/api/generalAPI";
+import { useNavigate } from "react-router";
 
 interface FormHotelsProps {
   hotel: any;
@@ -14,6 +15,7 @@ interface FormHotelsProps {
 const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
   const [hotelUpdate, { data, isLoading, isError, error }] =
     useHotelUpdateMutation();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -42,6 +44,15 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
     await hotelUpdate({ formData, id: hotel?._id });
     // TODO: request data
   }
+
+  useEffect(() => {
+    if (data && !isError) {
+      setTimeout(
+        () => navigate(`/hotels/${hotel._id}`, { replace: true }),
+        500
+      );
+    }
+  }, [data, isError]);
 
   return (
     <form onSubmit={handleSubmit(onSubmitForm)}>
@@ -105,7 +116,13 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
           }}
         />
         <div className={s.Columns}>
-          <Button type="submit">Сохранить</Button>
+          <Button
+            type="submit"
+            isLoading={isLoading}
+            isSuccess={data !== undefined && data !== null}
+          >
+            Сохранить
+          </Button>
         </div>
       </div>
       {Object.entries(errors).length > 0 && (
@@ -115,6 +132,7 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
           {errors?.description?.message && (
             <span>{errors?.description?.message}</span>
           )}
+          {isError && <span>{error.message}</span>}
         </div>
       )}
     </form>
