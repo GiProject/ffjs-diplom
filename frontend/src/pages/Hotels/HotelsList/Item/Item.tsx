@@ -12,6 +12,8 @@ const Item: React.FC<ItemProps> = ({ hotelDetails }) => {
         <img
           src={`${process.env.BASE_URL}${hotelDetails.images[0]}`}
           alt={hotelDetails.title}
+          width={240}
+          height={200}
         />
       </div>
       <div className={s.Info}>
