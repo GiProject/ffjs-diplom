@@ -91,7 +91,7 @@ export class HotelService implements IHotelService {
                 $set: {
                     title: data.title,
                     description: data.description,
-                    // images: resultImages,
+                    images: resultImages,
                     updatedAt: new Date(),
                 },
             },
