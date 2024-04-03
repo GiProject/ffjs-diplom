@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 
@@ -6,11 +6,13 @@ import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
 import Upload from "@/shared/ui/UploadImage/Upload";
 import { useHotelAddMutation } from "@/shared/redux/api/generalAPI";
+import { useNavigate } from "react-router";
 
 interface FormHotelsProps {}
 
 const FormHotels: React.FC<FormHotelsProps> = () => {
   const [hotelAdd, { data, isLoading, isError, error }] = useHotelAddMutation();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -39,6 +41,12 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
     await hotelAdd(formData);
     // TODO: request data
   }
+
+  useEffect(() => {
+    if (data && !isError) {
+      setTimeout(() => navigate(`/hotels/${data.id}`, { replace: true }), 500);
+    }
+  }, [data, isError]);
 
   return (
     <form onSubmit={handleSubmit(onSubmitForm)}>
@@ -97,7 +105,9 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
           }}
         />
         <div className={s.Columns}>
-          <Button type="submit">Сохранить</Button>
+          <Button type="submit" isSuccess={data !== undefined && data !== null}>
+            Добавить отель
+          </Button>
         </div>
       </div>
       {Object.entries(errors).length > 0 && (

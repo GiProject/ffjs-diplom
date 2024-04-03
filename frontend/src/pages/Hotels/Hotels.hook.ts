@@ -6,7 +6,7 @@ import {
 export function useGetHotels() {
   const { data, isLoading } = useHotelGetListQuery();
   return {
-    hotels: data?.hotels || [],
+    hotels: data?.data || [],
     count: data?.count || 0,
     isLoading,
   };
