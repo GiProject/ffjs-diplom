@@ -7,6 +7,8 @@ interface UploadProps {
   control: any;
   options: any;
   defaultValue?: string[];
+  deletedFiles: number[];
+  setDeletedFiles: any;
 }
 
 const Upload: React.FC<UploadProps> = ({
@@ -14,18 +16,26 @@ const Upload: React.FC<UploadProps> = ({
   options,
   control,
   defaultValue,
+  deletedFiles,
+  setDeletedFiles,
 }) => {
   let singleFileObj: any = [];
   let singleFileArray: any = [];
 
   const [singleFile, setSingleFile] = useState<any>([]);
-  const [defaultFiles, setDefaultFiles] = useState<string[]>([]);
+  const [defaultFiles, setDefaultFiles] = useState<any[]>([]);
 
   useEffect(() => {
     if (defaultValue) {
-      setDefaultFiles(defaultValue);
+      const arrayOfObjects = defaultValue.map((item: any, id: any) => {
+        return {
+          id: id,
+          url: item,
+        };
+      });
+      setDefaultFiles(arrayOfObjects);
     }
-  }, [defaultValue]);
+  }, [defaultValue?.length]);
 
   const uploadSingleFiles = (e: any) => {
     singleFileObj.push(e.target.files);
@@ -45,6 +55,7 @@ const Upload: React.FC<UploadProps> = ({
       ...defaultFiles.slice(0, index),
       ...defaultFiles.slice(index + 1, defaultFiles.length),
     ]);
+    setDeletedFiles([...deletedFiles, index]);
   };
 
   useEffect(() => {
@@ -80,12 +91,12 @@ const Upload: React.FC<UploadProps> = ({
     <div className={s.Upload}>
       <div className={s.Row}>
         {defaultFiles?.length !== 0 &&
-          defaultFiles?.map((url: string, index: any) => (
-            <div key={url} className={s.ImageContainer}>
-              <img src={url} alt="..." />
+          defaultFiles?.map((item: any, index: any) => (
+            <div key={item.id} className={s.ImageContainer}>
+              <img src={item.url} alt="..." />
               <span
                 className={s.Remove}
-                onClick={() => removeDefaultImage(index)}
+                onClick={() => removeDefaultImage(item.id)}
               >
                 x
               </span>
