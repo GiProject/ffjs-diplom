@@ -61,91 +61,95 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
     }
   }, [data, isError]);
 
-  return (
-    <form onSubmit={handleSubmit(onSubmitForm)}>
-      <div className={s.Form}>
-        <Upload
-          name="images"
-          control={control}
-          options={{}}
-          defaultValue={
-            hotel?.images.length > 0
-              ? hotel?.images.map((image: string) => {
-                  return `${process.env.BASE_URL}${image}`;
-                })
-              : []
-          }
-          deletedFiles={deletedFiles}
-          setDeletedFiles={setDeletedFiles}
-        />
-        <Input
-          label={"Название отеля"}
-          icon={<></>}
-          errors={errors}
-          register={register}
-          watch={watch}
-          id="title"
-          type="text"
-          options={{
-            required: "Введите название отеля",
-            onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-              e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
-            },
-            minLength: {
-              value: 3,
-              message: "Название отеля: от 3 символов",
-            },
-            maxLength: {
-              value: 50,
-              message: "Название отеля: до 50 символов",
-            },
-          }}
-        />
-        <Input
-          label={"Описание отеля"}
-          icon={<></>}
-          errors={errors}
-          register={register}
-          watch={watch}
-          id="description"
-          type="text"
-          options={{
-            required: "Введите описание отеля",
-            onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-              e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
-            },
-            minLength: {
-              value: 3,
-              message: "Описание отеля: от 3 символов",
-            },
-            maxLength: {
-              value: 50,
-              message: "Описание отеля: до 50 символов",
-            },
-          }}
-        />
-        <div className={s.Columns}>
-          <Button
-            type="submit"
-            isLoading={isLoading}
-            isSuccess={data !== undefined && data !== null}
-          >
-            Сохранить
-          </Button>
+  if (!isLoading) {
+    return (
+      <form onSubmit={handleSubmit(onSubmitForm)}>
+        <div className={s.Form}>
+          <Upload
+            name="images"
+            control={control}
+            options={{}}
+            defaultValue={
+              hotel?.images.length > 0
+                ? hotel?.images.map((image: string) => {
+                    return `${process.env.BASE_URL}${image}`;
+                  })
+                : []
+            }
+            deletedFiles={deletedFiles}
+            setDeletedFiles={setDeletedFiles}
+          />
+          <Input
+            label={"Название отеля"}
+            icon={<></>}
+            errors={errors}
+            register={register}
+            watch={watch}
+            id="title"
+            type="text"
+            options={{
+              required: "Введите название отеля",
+              onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
+                e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
+              },
+              minLength: {
+                value: 3,
+                message: "Название отеля: от 3 символов",
+              },
+              maxLength: {
+                value: 50,
+                message: "Название отеля: до 50 символов",
+              },
+            }}
+          />
+          <Input
+            label={"Описание отеля"}
+            icon={<></>}
+            errors={errors}
+            register={register}
+            watch={watch}
+            id="description"
+            type="text"
+            options={{
+              required: "Введите описание отеля",
+              onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
+                e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
+              },
+              minLength: {
+                value: 3,
+                message: "Описание отеля: от 3 символов",
+              },
+              maxLength: {
+                value: 50,
+                message: "Описание отеля: до 50 символов",
+              },
+            }}
+          />
+          <div className={s.Columns}>
+            <Button
+              type="submit"
+              isLoading={isLoading}
+              isSuccess={data !== undefined && data !== null}
+            >
+              Сохранить
+            </Button>
+          </div>
         </div>
-      </div>
-      {Object.entries(errors).length > 0 && (
-        <div className={s.Errors}>
-          {errors?.images?.message && <span>{errors?.images?.message}</span>}
-          {errors?.title?.message && <span>{errors?.title?.message}</span>}
-          {errors?.description?.message && (
-            <span>{errors?.description?.message}</span>
-          )}
-          {isError && <span>{error.message}</span>}
-        </div>
-      )}
-    </form>
-  );
+        {Object.entries(errors).length > 0 && (
+          <div className={s.Errors}>
+            {errors?.images?.message && <span>{errors?.images?.message}</span>}
+            {errors?.title?.message && <span>{errors?.title?.message}</span>}
+            {errors?.description?.message && (
+              <span>{errors?.description?.message}</span>
+            )}
+            {isError && <span>{error.message}</span>}
+          </div>
+        )}
+      </form>
+    );
+  } else {
+    return false;
+  }
 };
 
 export default FormHotels;
