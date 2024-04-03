@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 
@@ -16,6 +16,7 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
   const [hotelUpdate, { data, isLoading, isError, error }] =
     useHotelUpdateMutation();
   const navigate = useNavigate();
+  const [deletedFiles, setDeletedFiles] = useState<number[]>([]);
 
   const {
     register,
@@ -37,6 +38,12 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("description", values.description);
+
+    if (deletedFiles.length > 0) {
+      deletedFiles.forEach((value) => {
+        formData.append("delete_image[]", value.toString());
+      });
+    }
 
     values.images.forEach((imageFile: any) => {
       formData.append("images", imageFile);
@@ -68,6 +75,8 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
                 })
               : []
           }
+          deletedFiles={deletedFiles}
+          setDeletedFiles={setDeletedFiles}
         />
         <Input
           label={"Название отеля"}
