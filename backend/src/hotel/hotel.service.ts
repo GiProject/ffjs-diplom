@@ -68,7 +68,7 @@ export class HotelService implements IHotelService {
             let tempImagesPath = [];
             if (data.delete_image !== undefined) {
                 data.delete_image.forEach((value) => {
-                    images = images.splice(value, 1);
+                    images.splice(value, 1);
                 });
             }
 
@@ -91,7 +91,7 @@ export class HotelService implements IHotelService {
                 $set: {
                     title: data.title,
                     description: data.description,
-                    images: resultImages,
+                    // images: resultImages,
                     updatedAt: new Date(),
                 },
             },

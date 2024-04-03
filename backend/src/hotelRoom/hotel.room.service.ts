@@ -68,7 +68,7 @@ export class HotelRoomService implements IHotelRoomService {
             let tempImagesPath = [];
             if (data.delete_image !== undefined) {
                 data.delete_image.forEach((value) => {
-                    images = images.splice(value, 1);
+                    images.splice(value, 1);
                 });
             }
 
