@@ -5,6 +5,7 @@ import { baseQueryWithReauth } from "./baseQuery";
 export const generalAPI: any = createApi({
   reducerPath: "generalAPI",
   baseQuery: baseQueryWithReauth,
+  tagTypes: ["Hotels"],
   endpoints: (builder) => ({
     userSignIn: builder.mutation({
       query: ({ email, password }: { email: string; password: string }) => ({
@@ -19,12 +20,14 @@ export const generalAPI: any = createApi({
         url: "/api/hotels",
         method: "GET",
       }),
+      providesTags: ["Hotels"],
     }),
     hotelGetItem: builder.query({
       query: (id) => ({
         url: `/api/hotels/${id}`,
         method: "GET",
       }),
+      providesTags: ["Hotels"],
     }),
     hotelAdd: builder.mutation({
       query: (formData: FormData) => ({
@@ -32,6 +35,7 @@ export const generalAPI: any = createApi({
         method: "POST",
         body: formData,
       }),
+      invalidatesTags: ["Hotels"],
     }),
     hotelUpdate: builder.mutation({
       query: ({ formData, id }: { formData: FormData; id: string }) => ({
@@ -39,6 +43,7 @@ export const generalAPI: any = createApi({
         method: "PATCH",
         body: formData,
       }),
+      invalidatesTags: ["Hotels"],
     }),
 
     getUsers: builder.query({
