@@ -1,12 +1,13 @@
 import {HydratedDocument, Types} from "mongoose";
 import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
+import mongoose from "mongoose";
 
 export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
 
-    _id: string;
+    _id: mongoose.Schema.Types.ObjectId;
     @Prop()
     email: string;
 

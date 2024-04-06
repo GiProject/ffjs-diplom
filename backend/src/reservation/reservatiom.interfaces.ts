@@ -1,5 +1,5 @@
 import {Reservation} from "./reservation.model";
-import {Types} from "mongoose";
+import {ObjectId, Types} from "mongoose";
 
 export interface ID extends Types.ObjectId {}
 export interface SearchReservationParams {
@@ -31,5 +31,13 @@ export interface IReservation {
     getReservations(
         filter: ReservationSearchOptions,
     ): Promise<Array<Reservation>>;
+}
+
+export interface IReservationModelInterface {
+    userId: ID;
+    hotelId: ID;
+    roomId: ID;
+    dateStart: Date;
+    dateEnd: Date;
 }
 

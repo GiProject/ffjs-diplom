@@ -3,6 +3,9 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {Reservation, ReservationDocument} from './reservation.model';
 import {ReservationDto, ReservationSearchOptions, IReservation} from './reservatiom.interfaces'
+import {User} from "../users/user.model";
+import {Hotel} from "../hotel/hotel.model";
+import {HotelRoom} from "../hotelRoom/hotel.room.model";
 
 @Injectable()
 export class ReservationService implements IReservation {
@@ -44,21 +47,15 @@ export class ReservationService implements IReservation {
 
     public async getReservations(
         filter: ReservationSearchOptions,
-    ): Promise<Array<Reservation>> {
-        // let mongooseFilter = {
-        //     roomId: filter.roomId,
-        // };
-
-        return this.ReservationModel.find({
-            roomId: filter.roomId,
-            $and: [
-                {
-                    dateStart: {
-                        $gte: filter.dateStart,
-                        $lte: filter.dateEnd,
-                    },
-                }
-            ]
-        })
+    ): Promise<ReservationDocument[]> {
+        const { userId } = filter;
+        const parseFilter: any = {};
+        userId && (parseFilter.userId = userId);
+        filter.dateStart && (parseFilter.dateStart = { $gte: filter.dateStart, $lte: filter.dateStart});
+        filter.dateEnd && (parseFilter.dateEnd = { $lte: filter.dateEnd, $gte: filter.dateStart});
+        return await this.ReservationModel
+            .find(parseFilter)
+            .select('-__v')
+            .exec();
     }
 }

@@ -5,7 +5,7 @@ import {Hotel} from "../hotel/hotel.model";
 export type HotelRoomDocument = HotelRoom & Document;
 @Schema()
 export class HotelRoom {
-    _id: mongoose.Types.ObjectId;
+    _id: mongoose.Schema.Types.ObjectId;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel', required: true })
     public hotel: Hotel;
