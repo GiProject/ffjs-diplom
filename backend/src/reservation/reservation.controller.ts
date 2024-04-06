@@ -1,39 +1,43 @@
-import {Body, Controller, Delete, Get, Param, Post, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Query, UseGuards} from '@nestjs/common';
 import {formatInTimeZone} from 'date-fns-tz';
 
 import {ReservationService} from './reservation.service';
 import {ReservationDto, SearchReservationParams} from "./reservatiom.interfaces";
+import {JwtAuthGuard} from "../guards/jwt-auth.guard";
+import {User} from "../decorations/user.decorator";
+import {UserEntity} from "../users/user.entity";
+import {ID} from "../hotel/hotel.interfaces";
 
 @Controller('api')
+@UseGuards(JwtAuthGuard)
 export class ReservationController {
     constructor(private readonly reservationService: ReservationService) {}
 
-    @Post('client/reservations/')
-    async add(@Body() body: ReservationDto) {
-        const reservation = await this.reservationService.addReservation({
-            ...body,
+    @Post('/hotels/:hotelId/rooms/:roomId/reservation')
+    async add(
+        @Param() params: {hotelId: ID, roomId: ID},
+        @User() user: UserEntity,
+        @Body() body: any,
+    ) {
+        return await this.reservationService.addReservation({
+            userId: user.id,
+            hotelId: params.hotelId,
+            roomId: params.roomId,
             dateStart: new Date(
                 formatInTimeZone(
-                    body.dateStart,
+                    new Date(body.dateStart),
                     'Europe/Moscow',
                     'yyyy-MM-dd',
                 )
             ),
             dateEnd: new Date(
                 formatInTimeZone(
-                    body.dateEnd,
+                    new Date(body.dateEnd),
                     'Europe/Moscow',
                     'yyyy-MM-dd'
                 )
             ),
         });
-
-        return {
-            dateStart: reservation.dateStart,
-            dateEnd: reservation.dateEnd,
-            hotelRoom: reservation.roomId,
-            hotel: reservation.hotel,
-        };
     }
 
     @Get('reservations/hotel-room/:roomId')

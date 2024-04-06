@@ -4,24 +4,13 @@ import {
     Body,
     UseGuards,
     Request,
-    // Response,
-    // HttpStatus,
-    // BadRequestException,
-    UseFilters, Get,
+    Get,
 } from '@nestjs/common';
-// import {deleteCookie} from 'cookies-next';
 import {UsersService} from '../users/users.service';
-import * as bcrypt from 'bcrypt';
-// import {HttpExceptionFilter} from 'src/HttpExceptionFilter/HttpExceptionFilter ';
-// import {Roles} from '../guards/role.decorator';
-// import {RoleGuard} from '../guards/role.guard';
 import {LocalAuthGuard} from '../guards/local-auth.guard';
 import {JwtAuthGuard} from '../guards/jwt-auth.guard';
-// import {AuthenticatedGuard} from '../guards/authentication.guard';
-// import ISearchUserParams from '../interface/user/ISearchUserParams';
 import * as mongoose from 'mongoose';
 import {IUserRegistration} from "../users/user.interfaces";
-import { json } from "express";
 import {AuthService} from "./auth.service";
 
 interface IUser {
@@ -41,16 +30,10 @@ export class AuthController {
     ) {
     }
 
-    @Get('/test')
-    async test() {
-        return 'test';
-    }
-
     @UseGuards(LocalAuthGuard)
     @Post('/users/login')
     async login(@Request() req) {
         return this.authService.login(req.user);
-        //return req.user;
     }
 
     @Post('/users/signup')

@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import {HotelService} from './hotel.service';
 import {FilesInterceptor} from '@nestjs/platform-express';
-import {ID, UpdateHotelParams, ICreateHotelRoomDto, SearchHotelParams, ICreateHotelDto} from "./hotel.interfaces";
+import {ID, UpdateHotelParams, SearchHotelParams, ICreateHotelDto} from "./hotel.interfaces";
 import {JwtAuthGuard} from "../guards/jwt-auth.guard";
 
 @Controller('api')

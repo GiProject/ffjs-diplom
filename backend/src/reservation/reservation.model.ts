@@ -11,7 +11,7 @@ export class Reservation {
     public userId: mongoose.ObjectId;
 
     @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' })
-    public hotel: mongoose.ObjectId;
+    public hotelId: mongoose.ObjectId;
 
     @Prop({
         required: true,
@@ -25,8 +25,6 @@ export class Reservation {
 
     @Prop({ required: true })
     public dateEnd: Date;
-
-    _doc: any;
 }
 
 export const ReservationSchema = SchemaFactory.createForClass(Reservation);

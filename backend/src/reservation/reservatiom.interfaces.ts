@@ -1,5 +1,7 @@
 import {Reservation} from "./reservation.model";
+import {Types} from "mongoose";
 
+export interface ID extends Types.ObjectId {}
 export interface SearchReservationParams {
     limit: number;
     offset: number;
@@ -8,8 +10,8 @@ export interface SearchReservationParams {
 
 export interface ReservationDto {
     userId: string;
-    hotelId: string;
-    roomId: string;
+    hotelId: ID;
+    roomId: ID;
     dateStart: Date;
     dateEnd: Date;
 }

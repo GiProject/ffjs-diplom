@@ -13,40 +13,29 @@ export class ReservationService implements IReservation {
     }
 
     public async addReservation(data: ReservationDto) {
-        const checkReservationDays = await this.getReservations({
-            roomId: data.roomId,
+        const checkReservationRoom = this.getReservations({
+            roomId: data.roomId.toString(),
             dateStart: data.dateStart,
             dateEnd: data.dateEnd,
         });
 
-        if (checkReservationDays.length === 0) {
-            const reservation = await this.ReservationModel.create(data);
-            await reservation.populate([
+        if ((await checkReservationRoom).length > 0) {
+            throw new HttpException(
                 {
-                    path: 'roomId',
-                    transform: function (value) {
-                        return {
-                            description: value.description,
-                            images: value.images,
-                        };
-                    },
+                    status: HttpStatus.BAD_REQUEST,
+                    error: 'Room is reserved',
                 },
-                {
-                    path: 'hotel',
-                    transform: function (value) {
-                        return {
-                            title: value.title,
-                            description: value.description,
-                            images: value.images,
-                        };
-                    },
-                },
-            ]);
-
-            return reservation;
-        } else {
-            throw new HttpException({}, HttpStatus.BAD_REQUEST);
+                HttpStatus.BAD_REQUEST,
+            );
         }
+
+        return await this.ReservationModel.create({
+            userId: data.userId,
+            hotelId: data.hotelId,
+            roomId: data.roomId,
+            dateStart: data.dateStart,
+            dateEnd: data.dateEnd,
+        })
     }
 
     public async removeReservation(id: string) {
@@ -55,138 +44,21 @@ export class ReservationService implements IReservation {
 
     public async getReservations(
         filter: ReservationSearchOptions,
-    ) {
-        let reservation: Reservation[] | PromiseLike<Reservation[]>;
+    ): Promise<Array<Reservation>> {
+        // let mongooseFilter = {
+        //     roomId: filter.roomId,
+        // };
 
-        if (filter.roomId && filter.dateStart && filter.dateEnd) {
-            reservation = await this.ReservationModel.find({
-                roomId: filter.roomId,
-                $and: [
-                    {
-                        $or: [
-                            {
-                                dateStart: {$gte: filter.dateStart, $lte: filter.dateEnd},
-                            },
-                            {
-                                dateEnd: {$gte: filter.dateStart, $lte: filter.dateEnd},
-                            },
-                        ],
-                    },
-                ],
-            });
-        }
-
-        if (filter.roomId && !filter.dateStart && !filter.dateEnd) {
-            reservation = await this.ReservationModel.find({
-                roomId: filter.roomId,
-            });
-        }
-
-        if (filter.userId && filter.dateStart && filter.dateEnd) {
-            reservation = await this.ReservationModel.find({
-                userId: filter.userId,
-                $and: [
-                    {
-                        $or: [
-                            {
-                                dateStart: {$gte: filter.dateStart, $lte: filter.dateEnd},
-                            },
-                            {
-                                dateEnd: {$gte: filter.dateStart, $lte: filter.dateEnd},
-                            },
-                        ],
-                    },
-                ],
-            });
-        }
-
-        if (filter.userId && !filter.dateStart && !filter.dateEnd) {
-            reservation = await this.ReservationModel.find({
-                userId: filter.userId,
-            }).populate([
+        return this.ReservationModel.find({
+            roomId: filter.roomId,
+            $and: [
                 {
-                    path: 'roomId',
-                    transform: function (value) {
-                        return {
-                            description: value.description,
-                            images: value.images,
-                        };
+                    dateStart: {
+                        $gte: filter.dateStart,
+                        $lte: filter.dateEnd,
                     },
-                },
-                {
-                    path: 'hotel',
-                    transform: function (value) {
-                        return {
-                            title: value.title,
-                            description: value.description,
-                            images: value.images,
-                        };
-                    },
-                },
-            ]);
-        }
-
-        if (
-            !filter.userId &&
-            !filter.roomId &&
-            !filter.dateStart &&
-            !filter.dateEnd
-        ) {
-            reservation = await this.ReservationModel.find({})
-                .skip(filter.offset)
-                .limit(filter.limit)
-                .select('-__v')
-                .populate([
-                    {
-                        path: 'roomId',
-                        transform: function (value) {
-                            return {
-                                description: value.description,
-                                images: value.images,
-                            };
-                        },
-                    },
-                    {
-                        path: 'hotel',
-                        transform: function (value) {
-                            return {
-                                title: value.title,
-                                description: value.description,
-                                images: value.images,
-                            };
-                        },
-                    },
-                ]);
-        }
-
-        if (
-            !filter.userId &&
-            !filter.roomId &&
-            filter.dateStart &&
-            filter.dateEnd
-        ) {
-            reservation = await this.ReservationModel.find({
-                $or: [
-                    {
-                        dateStart: {$gte: filter.dateStart, $lte: filter.dateEnd},
-                    },
-                    {
-                        dateEnd: {$gte: filter.dateStart, $lte: filter.dateEnd},
-                    },
-                ],
-            })
-                .select('-__v')
-                .populate([
-                    {
-                        path: 'roomId',
-                        transform: function (value) {
-                            return {
-                                id: value._id,
-                            };
-                        },
-                    },
-                ]);
-        }
-        return reservation;
+                }
+            ]
+        })
     }
 }
