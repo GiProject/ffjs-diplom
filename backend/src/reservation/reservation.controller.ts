@@ -45,18 +45,13 @@ export class ReservationController {
         return await this.reservationService
             .getReservations({
                 roomId: params.roomId,
-            })
-            .then((res) =>
-                res.map((item) => {
-                    return [item.dateStart, item.dateEnd];
-                }),
-            );
+            });
     }
 
-    @Get('/reservations/:id')
-    async getReservationClient(@Param() params: { id: string }) {
+    @Get('/reservations/user/:user_id')
+    async getReservationClient(@Param() params: { user_id: string }) {
         return await this.reservationService.getReservations({
-            userId: params.id,
+            userId: params.user_id,
         });
     }
 

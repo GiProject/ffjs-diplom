@@ -23,7 +23,6 @@ export class AuthService {
     const isPasswordValidate = await bcrypt.compare(password, user.passwordHash);
 
     if (isPasswordValidate) {
-      console.log(user._id);
       return {
         id: user._id,
         email: user.email,

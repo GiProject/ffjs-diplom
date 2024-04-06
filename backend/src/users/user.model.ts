@@ -7,7 +7,7 @@ export type UserDocument = HydratedDocument<User>;
 @Schema()
 export class User {
 
-    _id: mongoose.Schema.Types.ObjectId;
+    _id: mongoose.Types.ObjectId;
     @Prop()
     email: string;
 
