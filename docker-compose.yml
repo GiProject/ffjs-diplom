@@ -7,33 +7,29 @@ networks:
 services:
   mongo:
     container_name: mongo
-    image: mongo:5.0.26
+    image: mongo:latest
     restart: always
     environment:
       MONGO_INITDB_DATABASE: booking
-    volumes:
-      - ./mongodb:/data/db
     ports:
       - 27017:27017
     networks:
       - app
 
   nestjs:
+    container_name: backend_nestjs
     build: ./backend
     ports:
       - 3002:3000
     restart: always
-    volumes:
-      - ./backend:/app
     depends_on:
       - mongo
     networks:
       - app
 
   react:
+    container_name: frontend_react
     build: ./frontend
-    volumes:
-      - ./frontend:/app
     ports:
       - 3003:3000
     networks:
