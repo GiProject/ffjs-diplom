@@ -11,6 +11,8 @@ services:
     restart: always
     environment:
       MONGO_INITDB_DATABASE: booking
+    volumes:
+      - ./mongodb:/data/db
     ports:
       - 27017:27017
     networks:
@@ -21,6 +23,8 @@ services:
     ports:
       - 3002:3000
     restart: always
+    volumes:
+      - ./backend:/app
     depends_on:
       - mongo
     networks:
