@@ -22,7 +22,7 @@ services:
     volumes:
       - ./frontend:/app
     ports:
-      - 3003:8080
+      - 3003:3000
     networks:
       - app
 
