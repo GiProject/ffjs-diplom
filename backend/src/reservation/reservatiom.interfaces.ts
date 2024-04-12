@@ -17,7 +17,7 @@ export interface ReservationDto {
 }
 
 export interface ReservationSearchOptions {
-    userId?: string;
+    userId?: ID;
     roomId?: string;
     dateStart?: Date;
     dateEnd?: Date;

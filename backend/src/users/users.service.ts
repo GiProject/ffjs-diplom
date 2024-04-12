@@ -1,6 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { User } from "./user.model";
-import { ID, IUser, IUserRegistration, IUserService, SearchUserParams, UserReturnInterface } from "./user.interfaces";
+import {
+  CreateUserDto,
+  ID,
+  IUser,
+  IUserService,
+  SearchUserParams,
+  UserReturnInterface
+} from "./user.interfaces";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Promise } from "mongoose";
 import * as bcrypt from "bcrypt";
@@ -12,7 +19,7 @@ export class UsersService implements IUserService {
   ) {
   }
 
-  public async create(data: IUserRegistration) {
+  public async create(data: CreateUserDto) {
     const { password } = data;
     const passwordHash = await bcrypt.hash(
       password,

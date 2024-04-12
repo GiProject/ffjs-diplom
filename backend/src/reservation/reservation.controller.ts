@@ -7,22 +7,25 @@ import {JwtAuthGuard} from "../guards/jwt-auth.guard";
 import {User} from "../decorations/user.decorator";
 import {UserEntity} from "../users/user.entity";
 import {ID} from "../hotel/hotel.interfaces";
+import {Roles} from "../guards/role.decorator";
+import {RoleGuard} from "../guards/role.guard";
 
 @Controller('api')
 @UseGuards(JwtAuthGuard)
 export class ReservationController {
     constructor(private readonly reservationService: ReservationService) {}
 
-    @Post('/hotels/:hotelId/rooms/:roomId/reservation')
+    @Post('client/reservations')
+    @Roles('client')
+    @UseGuards(RoleGuard)
     async add(
-        @Param() params: {hotelId: ID, roomId: ID},
         @User() user: UserEntity,
         @Body() body: any,
     ) {
         return await this.reservationService.addReservation({
             userId: user.id,
-            hotelId: params.hotelId,
-            roomId: params.roomId,
+            hotelId: body.hotelId,
+            roomId: body.roomId,
             dateStart: new Date(
                 formatInTimeZone(
                     new Date(body.dateStart),
@@ -48,14 +51,19 @@ export class ReservationController {
             });
     }
 
-    @Get('/reservations/user/:user_id')
-    async getReservationClient(@Param() params: { user_id: string }) {
+
+    @Get('manager/reservations/:userId')
+    @Roles('manager')
+    @UseGuards(RoleGuard)
+    async getReservationClient(@Param() params: { userId: ID }) {
         return await this.reservationService.getReservations({
-            userId: params.user_id,
+            userId: params.userId,
         });
     }
 
-    @Delete('/reservations/:id')
+    @Delete('client/reservations/:id')
+    @Roles('client', 'manager')
+    @UseGuards(RoleGuard)
     async removeReservation(@Param() params: { id: string }) {
         await this.reservationService.removeReservation(params.id);
     }

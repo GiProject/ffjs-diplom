@@ -43,13 +43,8 @@ export interface IUserService {
 
 export interface CreateUserDto {
   email: string;
-  name: string;
-  phone?: string;
-}
-
-export interface IUserRegistration {
-  email: string;
-  name: string;
-  phone: string;
   password: string;
+  name: string;
+  contactPhone: string;
+  role: string;
 }
