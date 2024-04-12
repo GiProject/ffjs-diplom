@@ -2,7 +2,7 @@
 2. Скопировать файл `.env-example` и переименовать в `.env`
 3. Заполнить значения в `.env`(пример данных ниже)
 4. Запустить сборку командой `docker-compose up -d`
-5. После успешной сборки запустить команду `docker exec backend_nestjs npm run init:users` чтобы создать пользователей admin и manager
+5. После успешной сборки запустить команду `docker exec backend_container_name npm run init:users` чтобы создать пользователей admin и manager
 
 Приложение будет доступно по адресу http://localhost:3003, api http://localhost:3002, база данные http://localhost:27017
 
