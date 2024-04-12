@@ -31,7 +31,7 @@ export const generalAPI: any = createApi({
     }),
     hotelAdd: builder.mutation({
       query: (formData: FormData) => ({
-        url: "/api/hotels",
+        url: "/api/admin/hotels",
         method: "POST",
         body: formData,
       }),
@@ -39,8 +39,8 @@ export const generalAPI: any = createApi({
     }),
     hotelUpdate: builder.mutation({
       query: ({ formData, id }: { formData: FormData; id: string }) => ({
-        url: `/api/hotels/${id}`,
-        method: "PATCH",
+        url: `/api/admin/hotels/${id}`,
+        method: "PUT",
         body: formData,
       }),
       invalidatesTags: ["Hotels"],
