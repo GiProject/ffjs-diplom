@@ -1,39 +1,46 @@
-import {Body, Controller, Delete, Get, Param, Post, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Query, UseGuards} from '@nestjs/common';
 import {formatInTimeZone} from 'date-fns-tz';
 
 import {ReservationService} from './reservation.service';
 import {ReservationDto, SearchReservationParams} from "./reservatiom.interfaces";
+import {JwtAuthGuard} from "../guards/jwt-auth.guard";
+import {User} from "../decorations/user.decorator";
+import {UserEntity} from "../users/user.entity";
+import {ID} from "../hotel/hotel.interfaces";
+import {Roles} from "../guards/role.decorator";
+import {RoleGuard} from "../guards/role.guard";
 
 @Controller('api')
+@UseGuards(JwtAuthGuard)
 export class ReservationController {
     constructor(private readonly reservationService: ReservationService) {}
 
-    @Post('client/reservations/')
-    async add(@Body() body: ReservationDto) {
-        const reservation = await this.reservationService.addReservation({
-            ...body,
+    @Post('client/reservations')
+    @Roles('client')
+    @UseGuards(RoleGuard)
+    async add(
+        @User() user: UserEntity,
+        @Body() body: any,
+    ) {
+        return await this.reservationService.addReservation({
+            userId: user.id,
+            hotelId: body.hotelId,
+            roomId: body.roomId,
             dateStart: new Date(
                 formatInTimeZone(
-                    body.dateStart,
+                    new Date(body.dateStart),
                     'Europe/Moscow',
                     'yyyy-MM-dd',
                 )
             ),
             dateEnd: new Date(
                 formatInTimeZone(
-                    body.dateEnd,
+                    new Date(body.dateEnd),
                     'Europe/Moscow',
                     'yyyy-MM-dd'
                 )
             ),
         });
-
-        return {
-            dateStart: reservation.dateStart,
-            dateEnd: reservation.dateEnd,
-            hotelRoom: reservation.roomId,
-            hotel: reservation.hotel,
-        };
     }
 
     @Get('reservations/hotel-room/:roomId')
@@ -41,22 +48,22 @@ export class ReservationController {
         return await this.reservationService
             .getReservations({
                 roomId: params.roomId,
-            })
-            .then((res) =>
-                res.map((item) => {
-                    return [item.dateStart, item.dateEnd];
-                }),
-            );
+            });
     }
 
-    @Get('/reservations/:id')
-    async getReservationClient(@Param() params: { id: string }) {
+
+    @Get('manager/reservations/:userId')
+    @Roles('manager')
+    @UseGuards(RoleGuard)
+    async getReservationClient(@Param() params: { userId: ID }) {
         return await this.reservationService.getReservations({
-            userId: params.id,
+            userId: params.userId,
         });
     }
 
-    @Delete('/reservations/:id')
+    @Delete('client/reservations/:id')
+    @Roles('client', 'manager')
+    @UseGuards(RoleGuard)
     async removeReservation(@Param() params: { id: string }) {
         await this.reservationService.removeReservation(params.id);
     }

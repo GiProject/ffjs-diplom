@@ -3,11 +3,11 @@ import {
   Controller, Delete,
   Get,
   HttpException, HttpStatus,
-  Param, Patch,
+  Param,
   Post,
   Put,
   Query,
-  UploadedFiles,
+  UploadedFiles, UseGuards,
   UseInterceptors
 } from "@nestjs/common";
 import { FilesInterceptor } from "@nestjs/platform-express";
@@ -18,6 +18,8 @@ import {
   ICreateHotelRoomDto,
   ID, SearchRoomsParams, UpdateHotelParams, UpdateHotelRoomParams,
 } from "../hotel/hotel.interfaces";
+import {Roles} from "../guards/role.decorator";
+import {RoleGuard} from "../guards/role.guard";
 
 @Controller("api")
 export class HotelRoomController {
@@ -27,7 +29,7 @@ export class HotelRoomController {
   ) {
   }
 
-  @Get("/hotels-rooms")
+  @Get("/common/hotel-rooms")
   async searchRooms(@Query() query: SearchRoomsParams) {
     return await this.hotelRoomService.search(query);
   }
@@ -64,7 +66,7 @@ export class HotelRoomController {
     };
   }
 
-  @Get('/hotels/rooms/:id')
+  @Get('/common/hotel-rooms/:id')
   async findOne(@Param() params: {
     id: ID
   }) {
@@ -77,7 +79,9 @@ export class HotelRoomController {
     });
   }
 
-  @Patch('/hotels/rooms/:id')
+  @Put('/hotels/rooms/:id')
+  @Roles('admin')
+  @UseGuards(RoleGuard)
   @UseInterceptors(FilesInterceptor('images', 6))
   async updateHotelRoom(
       @Param() params: {id: ID},
@@ -98,6 +102,8 @@ export class HotelRoomController {
 
 
   @Delete('/hotels/rooms/:id')
+  @Roles('admin')
+  @UseGuards(RoleGuard)
   async delete(@Param() params: {
     id: ID
   }) {
