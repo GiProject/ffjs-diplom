@@ -14,6 +14,8 @@ import {ReservationModule} from "./reservation/reservation.module";
 import {NestjsFormDataModule} from "nestjs-form-data";
 import {JwtModule} from "@nestjs/jwt";
 import {MulterModule} from "@nestjs/platform-express";
+import { CommandModule } from 'nestjs-command';
+import {UserCommand} from "./users/user.command";
 
 @Module({
     imports: [
@@ -29,7 +31,8 @@ import {MulterModule} from "@nestjs/platform-express";
         JwtModule.register({secret: 'secret'}),
         MulterModule.register({
             dest: './upload',
-        })
+        }),
+        CommandModule
     ],
     controllers: [
         AppController,
@@ -37,8 +40,8 @@ import {MulterModule} from "@nestjs/platform-express";
     ],
     providers: [
         AppService,
-        AuthService
-
+        AuthService,
+        UserCommand
     ],
     exports: [AuthService],
 })
