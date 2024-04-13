@@ -77,6 +77,13 @@ export const generalAPI: any = createApi({
         method: "GET",
       }),
     }),
+    roomDelete: builder.mutation({
+      query: (id) => ({
+        url: `/api/hotels/rooms/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Rooms"],
+    }),
 
     hotelAdd: builder.mutation({
       query: (formData: FormData) => ({
@@ -133,6 +140,7 @@ export const {
   useHotelAddMutation,
   useHotelAddRoomMutation,
   useHotelUpdateMutation,
+  useRoomDeleteMutation,
   useRoomUpdateMutation,
   useGetUsersQuery,
 } = generalAPI;

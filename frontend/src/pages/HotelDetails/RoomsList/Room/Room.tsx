@@ -2,11 +2,17 @@ import Body from "@/widgets/Body/Body";
 import Button from "@/shared/ui/Button/Button";
 import s from "./Room.module.scss";
 import { useAppSelector } from "@/shared/hooks/redux";
+import { useRoomDeleteMutation } from "@/shared/redux/api/generalAPI";
 interface RoomProps {
   roomDetails: any;
 }
 
 const Room: React.FC<RoomProps> = ({ roomDetails }) => {
+  const [deleteHotel, { status, data, error }] = useRoomDeleteMutation();
+
+  const handleDelete = () => {
+    deleteHotel(roomDetails._id);
+  };
   const { userInfo }: any = useAppSelector((state) => state.auth);
   return (
     <Body>
@@ -27,6 +33,9 @@ const Room: React.FC<RoomProps> = ({ roomDetails }) => {
             <div className={s.Button}>
               <Button href={`/rooms/${roomDetails._id}/edit`}>
                 Редактировать
+              </Button>
+              <Button style="danger" onClick={handleDelete}>
+                Удалить
               </Button>
             </div>
           )}
