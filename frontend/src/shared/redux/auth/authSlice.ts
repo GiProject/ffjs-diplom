@@ -29,14 +29,21 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.userInfo = null;
+      state.refreshToken = null;
       state.userToken = null;
       localStorage.removeItem("userToken");
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("userInfo");
     },
     setUser: (state, { payload }) => {
-      state.userInfo = payload;
-      localStorage.setItem("userInfo", JSON.stringify(payload));
+      const userModel = {
+        contactPhone: payload?.contactPhone,
+        email: payload?.email,
+        name: payload?.name,
+        role: payload?.role,
+      };
+      state.userInfo = userModel;
+      localStorage.setItem("userInfo", JSON.stringify(userModel));
     },
     setAccessToken: (state, { payload }) => {
       state.userToken = payload.access_token;
