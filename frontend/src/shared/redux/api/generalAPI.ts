@@ -5,7 +5,7 @@ import { baseQueryWithReauth } from "./baseQuery";
 export const generalAPI: any = createApi({
   reducerPath: "generalAPI",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Hotels"],
+  tagTypes: ["Hotels", "Rooms"],
   endpoints: (builder) => ({
     userSignIn: builder.mutation({
       query: ({ email, password }: { email: string; password: string }) => ({
@@ -46,6 +46,21 @@ export const generalAPI: any = createApi({
       }),
       providesTags: ["Hotels"],
     }),
+
+    hotelGetRooms: builder.query({
+      query: (id) => ({
+        url: `/api/common/hotel-rooms?hotel=${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Rooms"],
+    }),
+    hotelGetRoom: builder.query({
+      query: (id) => ({
+        url: `/api/common/hotel-rooms/${id}`,
+        method: "GET",
+      }),
+    }),
+
     hotelAdd: builder.mutation({
       query: (formData: FormData) => ({
         url: "/api/admin/hotels",
@@ -54,6 +69,13 @@ export const generalAPI: any = createApi({
       }),
       invalidatesTags: ["Hotels"],
     }),
+    hotelAddRoom: builder.mutation({
+      query: ({ formData, id }) => ({
+        url: `/api/hotels/${id}/rooms`,
+        method: "POST",
+        body: formData,
+      }),
+    }),
     hotelUpdate: builder.mutation({
       query: ({ formData, id }: { formData: FormData; id: string }) => ({
         url: `/api/admin/hotels/${id}`,
@@ -61,6 +83,14 @@ export const generalAPI: any = createApi({
         body: formData,
       }),
       invalidatesTags: ["Hotels"],
+    }),
+    roomUpdate: builder.mutation({
+      query: ({ formData, id }: { formData: FormData; id: string }) => ({
+        url: `/api/hotels/rooms/${id}`,
+        method: "PUT",
+        body: formData,
+      }),
+      invalidatesTags: ["Rooms"],
     }),
 
     getUsers: builder.query({
@@ -79,7 +109,11 @@ export const {
   useUserSignUpMutation,
   useHotelGetListQuery,
   useHotelGetItemQuery,
+  useHotelGetRoomQuery,
+  useHotelGetRoomsQuery,
   useHotelAddMutation,
+  useHotelAddRoomMutation,
   useHotelUpdateMutation,
+  useRoomUpdateMutation,
   useGetUsersQuery,
 } = generalAPI;

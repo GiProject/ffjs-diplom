@@ -1,26 +1,35 @@
 import Body from "@/widgets/Body/Body";
 import Button from "@/shared/ui/Button/Button";
 import s from "./Room.module.scss";
+import { useAppSelector } from "@/shared/hooks/redux";
 interface RoomProps {
   roomDetails: any;
 }
 
 const Room: React.FC<RoomProps> = ({ roomDetails }) => {
+  const { userInfo }: any = useAppSelector((state) => state.auth);
   return (
     <Body>
       <article className={s.Room}>
-        <div className={s.Image}></div>
+        <div className={s.Image}>
+          <img
+            src={`${process.env.BASE_URL}${roomDetails.images[0]}`}
+            alt={""}
+            width={240}
+            height={200}
+          />
+        </div>
         <div className={s.Info}>
-          <h4>Название номера</h4>
           <div className={s.Description}>
-            Описание номера описание номера опис ание номера описание номера
-            опис ание номера опис ание номера опис ание номера опис ание номера
-            опис ание номера описа ние номера опис ание номера описание номера
-            описание номера
+            {roomDetails?.description ?? "Описания нет"}
           </div>
-          <div className={s.Button}>
-            <Button>Редактировать</Button>
-          </div>
+          {userInfo?.role === "admin" && (
+            <div className={s.Button}>
+              <Button href={`/rooms/${roomDetails._id}/edit`}>
+                Редактировать
+              </Button>
+            </div>
+          )}
         </div>
       </article>
     </Body>

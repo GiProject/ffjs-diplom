@@ -18,6 +18,8 @@ import HotelAdd from "../pages/HotelAdd/HotelAdd";
 import Template from "../widgets/Template/Template";
 import ReduxProvider from "../shared/providers/ReduxProvider";
 import HotelUpdate from "@/pages/HotelUpdate/HotelUpdate";
+import RoomAdd from "@/pages/RoomAdd/RoomAdd";
+import RoomDetails from "@/pages/RoomUpdate/RoomUpdate";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route path="/hotels" element={<HotelsPage />} />
           <Route path="/hotels/:id" element={<HotelDetails />} />
           <Route path="/hotels/:id/update" element={<HotelUpdate />} />
+          <Route path="/hotels/:id/addRoom" element={<RoomAdd />} />
+          <Route path="/rooms/:id/edit" element={<RoomDetails />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/hotels/add" element={<HotelAdd />} />
         </Routes>
