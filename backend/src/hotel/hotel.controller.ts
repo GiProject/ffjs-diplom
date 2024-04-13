@@ -17,7 +17,6 @@ import {Roles} from "../guards/role.decorator";
 import {RoleGuard} from "../guards/role.guard";
 
 @Controller('api')
-@UseGuards(JwtAuthGuard)
 export class HotelController {
     constructor(private readonly hotelService: HotelService) {
     }
@@ -25,7 +24,7 @@ export class HotelController {
 
     @Post('/admin/hotels')
     @Roles('admin')
-    @UseGuards(RoleGuard)
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @UseInterceptors(FilesInterceptor('images', 6))
     async create(
         @UploadedFiles() images: Array<Express.Multer.File>,
@@ -55,7 +54,7 @@ export class HotelController {
 
     @Put('/admin/hotels/:id')
     @Roles('admin')
-    @UseGuards(RoleGuard)
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @UseInterceptors(FilesInterceptor('images', 6))
     async updateHotel(
         @Param() params: {id: ID},
@@ -77,7 +76,7 @@ export class HotelController {
 
     @Delete('/admin/hotels/:id')
     @Roles('admin')
-    @UseGuards(RoleGuard)
+    @UseGuards(JwtAuthGuard, RoleGuard)
     async delete(@Param() params: {
         id: ID
     }) {
