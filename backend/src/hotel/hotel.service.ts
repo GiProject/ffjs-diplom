@@ -11,12 +11,14 @@ import {
 } from "./hotel.interfaces";
 import {saveFile} from "../functions/save.file";
 import {Reservation, ReservationDocument} from "../reservation/reservation.model";
+import {HotelRoom, HotelRoomDocument} from "../hotelRoom/hotel.room.model";
 
 @Injectable()
 export class HotelService implements IHotelService {
     constructor(
         @InjectModel(Hotel.name) private HotelModel: Model<HotelDocument>,
         @InjectModel(Reservation.name) private ReservationModel: Model<ReservationDocument>,
+        @InjectModel(HotelRoom.name) private HotelRoomModel: Model<HotelRoomDocument>,
     ) {
     }
 
@@ -35,7 +37,7 @@ export class HotelService implements IHotelService {
             .select('-__v -createdAt -updatedAt');
     }
 
-    public async search(params: SearchHotelParams){
+    public async search(params: SearchHotelParams) {
 
         let query: SearchHotelQuery = {};
 
@@ -48,17 +50,22 @@ export class HotelService implements IHotelService {
             const reservations = await this.ReservationModel.find({
                 dateStart: {
                     $gte: params.dateStart,
-                    $lte: params.dateStart
+                    $lte: params.dateEnd
                 },
                 dateEnd: {
                     $lte: params.dateEnd,
                     $gte: params.dateStart
                 }
-            }).select('hotelId').exec()
-            let notHotelId = reservations.map(reservation => reservation.hotelId);
+            }).select('roomId').exec();
+
+            const notReservedRooms = await this.HotelRoomModel.find({
+                _id: {
+                    $nin: reservations.map(reservation => reservation.roomId)
+                }
+            }).select('hotel').exec()
 
             query._id = {
-                $nin: notHotelId
+                $in: notReservedRooms.map(room => room.hotel._id)
             }
         }
 
@@ -124,6 +131,6 @@ export class HotelService implements IHotelService {
     }
 
     public async delete(id: ID) {
-        return this.HotelModel.findOneAndDelete({ _id: id });
+        return this.HotelModel.findOneAndDelete({_id: id});
     }
 }
