@@ -45,8 +45,7 @@ export class HotelService implements IHotelService {
             query.title = {$regex: new RegExp(params.title, "i")};
         }
 
-
-        if (params.isFree) {
+        if (params.dateStart && params.dateEnd) {
             const reservations = await this.ReservationModel.find({
                 dateStart: {
                     $gte: params.dateStart,
