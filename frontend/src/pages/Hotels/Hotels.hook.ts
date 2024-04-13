@@ -5,11 +5,25 @@ import {
   useHotelGetRoomsQuery,
 } from "@/shared/redux/api/generalAPI";
 
-export function useGetHotels() {
-  const { data, isLoading } = useHotelGetListQuery();
+export function useGetHotels({
+  dateStart,
+  dateEnd,
+  title,
+}: {
+  dateStart?: string;
+  dateEnd?: string;
+  title?: string;
+}) {
+  const { data, isLoading, refetch } = useHotelGetListQuery({
+    dateStart,
+    dateEnd,
+    title,
+  });
+
   return {
     hotels: data?.data || [],
     count: data?.count || 0,
+    refetch,
     isLoading,
   };
 }

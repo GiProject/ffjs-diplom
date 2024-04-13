@@ -33,8 +33,18 @@ export const generalAPI: any = createApi({
     }),
 
     hotelGetList: builder.query({
-      query: () => ({
-        url: "/api/hotels",
+      query: ({
+        dateStart,
+        dateEnd,
+        title,
+      }: {
+        dateStart?: string;
+        dateEnd?: string;
+        title?: string;
+      }) => ({
+        url: `/api/hotels?dateStart=${dateStart ?? ""}&dateEnd=${
+          dateEnd ?? ""
+        }&title=${title ?? ""}`,
         method: "GET",
       }),
       providesTags: ["Hotels"],

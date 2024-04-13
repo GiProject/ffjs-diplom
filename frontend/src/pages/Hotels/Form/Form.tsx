@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 import moment from "moment";
@@ -15,6 +16,8 @@ import IconTitle from "@/shared/assets/form-icon-title.svg";
 interface FormHotelsProps {}
 
 const FormHotels: React.FC<FormHotelsProps> = () => {
+  let [searchParams, setSearchParams] = useSearchParams();
+
   const {
     register,
     handleSubmit,
@@ -32,8 +35,12 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
   });
 
   async function onSubmitForm(values: any) {
-    console.log(values);
-    // TODO: request data
+    let params = {
+      startDate: moment(values.startDate).format("YYYY-MM-DD"),
+      endDate: moment(values.endDate).format("YYYY-MM-DD"),
+      title: values.title,
+    };
+    setSearchParams(params);
   }
 
   return (
