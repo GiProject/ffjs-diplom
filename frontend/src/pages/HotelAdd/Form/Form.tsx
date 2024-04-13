@@ -71,7 +71,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
           options={{
             required: "Введите название отеля",
             onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-              e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
+              e.target.value = e.target.value.replace(/[!?,+=]*/g, "");
             },
             minLength: {
               value: 3,
@@ -94,7 +94,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
           options={{
             required: "Введите описание отеля",
             onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-              e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
+              e.target.value = e.target.value.replace(/[!?,+=]*/g, "");
             },
             minLength: {
               value: 3,

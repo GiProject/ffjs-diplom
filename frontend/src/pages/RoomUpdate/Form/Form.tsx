@@ -88,7 +88,7 @@ const Formrooms: React.FC<FormroomsProps> = ({ room }) => {
             options={{
               required: "Введите описание номера",
               onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-                e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
+                e.target.value = e.target.value.replace(/[!?,+=]*/g, "");
               },
               minLength: {
                 value: 3,

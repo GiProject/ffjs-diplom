@@ -33,7 +33,6 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
     control,
   } = useForm({
     defaultValues: {
-      title: "",
       description: "",
       images: [],
     },
@@ -66,29 +65,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
             required: "Добавьте изображение",
           }}
         />
-        <Input
-          label={"Название номера"}
-          icon={<IconTitle />}
-          errors={errors}
-          register={register}
-          watch={watch}
-          id="title"
-          type="text"
-          options={{
-            required: "Введите название номера",
-            onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-              e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
-            },
-            minLength: {
-              value: 3,
-              message: "Название номера: от 3 символов",
-            },
-            maxLength: {
-              value: 50,
-              message: "Название номера: до 50 символов",
-            },
-          }}
-        />
+
         <Input
           label={"Описание номера"}
           icon={<IconTitle />}
@@ -100,7 +77,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
           options={{
             required: "Введите описание номера",
             onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-              e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
+              e.target.value = e.target.value.replace(/[!?,+=]*/g, "");
             },
             minLength: {
               value: 3,
@@ -121,7 +98,6 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
       {(Object.entries(errors).length > 0 || error?.data?.message) && (
         <div className={s.Errors}>
           {errors?.images?.message && <span>{errors?.images?.message}</span>}
-          {errors?.title?.message && <span>{errors?.title?.message}</span>}
           {errors?.description?.message && (
             <span>{errors?.description?.message}</span>
           )}
