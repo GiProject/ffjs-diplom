@@ -6,6 +6,11 @@ import Button from "@/shared/ui/Button/Button";
 import Input from "@/shared/ui/Input/Input";
 import useSignIn from "./SignUp.hook";
 
+//Icons
+import IconEmail from "@/shared/assets/form-icon-email.svg";
+import IconPass from "@/shared/assets/form-icon-pass.svg";
+import IconTitle from "@/shared/assets/form-icon-title.svg";
+
 interface SignUpFormProps {}
 
 const SignUpForm: React.FC<SignUpFormProps> = () => {
@@ -37,7 +42,7 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
       <div className={s.Form}>
         <Input
           label={"Email"}
-          icon={<></>}
+          icon={<IconEmail />}
           errors={errors}
           register={register}
           watch={watch}
@@ -55,11 +60,11 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
             },
             minLength: {
               value: 5,
-              message: "Email: 5 min.",
+              message: "Email: от 5 символов",
             },
             maxLength: {
               value: 40,
-              message: "Email: 40 max",
+              message: "Email: до 40 символов",
             },
             pattern: {
               value: /^[а-яА-ЯA-Z0-9._%+-]+@[а-яА-ЯA-Z0-9.-]+\.[А-ЯA-Z]{2,}$/i,
@@ -68,8 +73,32 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
           }}
         />
         <Input
+          label={"Пароль"}
+          icon={<IconPass />}
+          errors={errors}
+          register={register}
+          watch={watch}
+          id="password"
+          type="password"
+          defaultValue={""}
+          options={{
+            required: "Введите пароль",
+            onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
+              e.target.value = e.target.value.replace(/[а-яА-Я\s]*/g, "");
+            },
+            minLength: {
+              value: 5,
+              message: "Пароль — от 5 символов",
+            },
+            maxLength: {
+              value: 30,
+              message: "Пароль — до 30 символов",
+            },
+          }}
+        />
+        <Input
           label={"Имя"}
-          icon={<></>}
+          icon={<IconTitle />}
           errors={errors}
           register={register}
           watch={watch}
@@ -104,7 +133,7 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
         />
         <Input
           label={"Телефон"}
-          icon={<></>}
+          icon={<IconTitle />}
           errors={errors}
           register={register}
           watch={watch}
@@ -129,30 +158,6 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
           }}
         />
 
-        <Input
-          label={"Пароль"}
-          icon={<></>}
-          errors={errors}
-          register={register}
-          watch={watch}
-          id="password"
-          type="password"
-          defaultValue={""}
-          options={{
-            required: "Введите пароль",
-            onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-              e.target.value = e.target.value.replace(/[а-яА-Я\s]*/g, "");
-            },
-            minLength: {
-              value: 5,
-              message: "Pass: 5 min.",
-            },
-            maxLength: {
-              value: 30,
-              message: "Pass: 5 max",
-            },
-          }}
-        />
         <Button type="submit" isLoading={isLoading} isSuccess={isSuccess}>
           Войти
         </Button>
