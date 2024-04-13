@@ -10,6 +10,7 @@ import "@fontsource/roboto/700.css";
 
 //Pages
 import HotelsPage from "../pages/Hotels/Hotels";
+import HotelsSearch from "../pages/HotelsSearch/Hotels";
 import UsersPage from "../pages/Users/Users";
 import HotelDetails from "../pages/HotelDetails/HotelDetails";
 import HotelAdd from "../pages/HotelAdd/HotelAdd";
@@ -27,6 +28,7 @@ function App() {
       <Template>
         <Routes>
           <Route path="/" element={<HotelsPage />} />
+          <Route path="/search" element={<HotelsSearch />} />
           <Route path="/hotels" element={<HotelsPage />} />
           <Route path="/hotels/:id" element={<HotelDetails />} />
           <Route path="/hotels/:id/update" element={<HotelUpdate />} />
