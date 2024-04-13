@@ -8,6 +8,14 @@ export interface SearchHotelParams {
     limit: number;
     offset: number;
     title: string;
+    isFree?: boolean;
+    dateStart: Date;
+    dateEnd: Date;
+}
+
+export interface SearchHotelQuery {
+    title?: object;
+    _id?: object
 }
 
 export interface UpdateHotelParams {

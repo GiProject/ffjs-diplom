@@ -1,21 +1,22 @@
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {Model, Promise} from "mongoose";
+import {Model} from "mongoose";
 import {Hotel, HotelDocument} from './hotel.model';
 import {
     FileInterface,
-    HotelReturnInterface,
     ID,
     IHotelService,
-    SearchHotelParams,
-    UpdateHotelParams, UpdateHotelRoomParams
+    SearchHotelParams, SearchHotelQuery,
+    UpdateHotelRoomParams
 } from "./hotel.interfaces";
 import {saveFile} from "../functions/save.file";
+import {Reservation, ReservationDocument} from "../reservation/reservation.model";
 
 @Injectable()
 export class HotelService implements IHotelService {
     constructor(
         @InjectModel(Hotel.name) private HotelModel: Model<HotelDocument>,
+        @InjectModel(Reservation.name) private ReservationModel: Model<ReservationDocument>,
     ) {
     }
 
@@ -36,9 +37,30 @@ export class HotelService implements IHotelService {
 
     public async search(params: SearchHotelParams){
 
-        const query = {
-            title: {$regex: new RegExp(params.title, "i")},
-        };
+        let query: SearchHotelQuery = {};
+
+        if (params.title) {
+            query.title = {$regex: new RegExp(params.title, "i")};
+        }
+
+
+        if (params.isFree) {
+            const reservations = await this.ReservationModel.find({
+                dateStart: {
+                    $gte: params.dateStart,
+                    $lte: params.dateStart
+                },
+                dateEnd: {
+                    $lte: params.dateEnd,
+                    $gte: params.dateStart
+                }
+            }).select('hotelId').exec()
+            let notHotelId = reservations.map(reservation => reservation.hotelId);
+
+            query._id = {
+                $nin: notHotelId
+            }
+        }
 
         const count = await this.HotelModel.find(query).countDocuments().exec();
         const hotels = await this.HotelModel.find(query)
