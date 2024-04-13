@@ -2,6 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 
+//Icons
+import IconEmail from "@/shared/assets/form-icon-email.svg";
+import IconPass from "@/shared/assets/form-icon-pass.svg";
+
 import Button from "@/shared/ui/Button/Button";
 import Input from "@/shared/ui/Input/Input";
 import useSignIn from "./SignIn.hook";
@@ -36,7 +40,7 @@ const SignInForm: React.FC<SignInFormProps> = () => {
       <div className={s.Form}>
         <Input
           label={"Email"}
-          icon={<></>}
+          icon={<IconEmail />}
           errors={errors}
           register={register}
           watch={watch}
@@ -69,7 +73,7 @@ const SignInForm: React.FC<SignInFormProps> = () => {
 
         <Input
           label={"Пароль"}
-          icon={<></>}
+          icon={<IconPass />}
           errors={errors}
           register={register}
           watch={watch}

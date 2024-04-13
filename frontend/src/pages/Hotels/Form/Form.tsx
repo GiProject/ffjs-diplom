@@ -1,4 +1,5 @@
 import React from "react";
+
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 import moment from "moment";
@@ -7,6 +8,9 @@ import Button from "@/shared/ui/Button/Button";
 import Body from "@/widgets/Body/Body";
 import Input from "@/shared/ui/Input/Input";
 import InputDate from "@/shared/ui/Input/InputDate";
+
+import IconCalendar from "@/shared/assets/form-icon-calendar.svg";
+import IconTitle from "@/shared/assets/form-icon-title.svg";
 
 interface FormHotelsProps {}
 
@@ -38,7 +42,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
         <div className={s.Form}>
           <Input
             label={"Название отеля"}
-            icon={<></>}
+            icon={<IconTitle />}
             errors={errors}
             register={register}
             watch={watch}
@@ -46,7 +50,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
             type="text"
             defaultValue={""}
             options={{
-              required: "Введите название отеля",
+              required: false,
               onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
                 e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
               },
@@ -63,7 +67,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
           <div className={s.Columns}>
             <InputDate
               name="startDate"
-              icon={<></>}
+              icon={<IconCalendar />}
               control={control}
               errors={errors}
               label={"Начало"}
@@ -77,7 +81,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
             />
             <InputDate
               name="finishDate"
-              icon={<></>}
+              icon={<IconCalendar />}
               control={control}
               errors={errors}
               label={"Конец"}

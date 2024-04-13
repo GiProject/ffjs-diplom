@@ -7,8 +7,8 @@ interface UploadProps {
   control: any;
   options: any;
   defaultValue?: string[];
-  deletedFiles: number[];
-  setDeletedFiles: any;
+  deletedFiles?: number[];
+  setDeletedFiles?: any;
 }
 
 const Upload: React.FC<UploadProps> = ({
@@ -55,7 +55,9 @@ const Upload: React.FC<UploadProps> = ({
       ...defaultFiles.slice(0, index),
       ...defaultFiles.slice(index + 1, defaultFiles.length),
     ]);
-    setDeletedFiles([...deletedFiles, index]);
+    setDeletedFiles &&
+      deletedFiles &&
+      setDeletedFiles([...deletedFiles, index]);
   };
 
   useEffect(() => {

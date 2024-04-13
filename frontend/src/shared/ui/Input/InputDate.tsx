@@ -1,5 +1,5 @@
 "use client";
-import { forwardRef, useRef, useState } from "react";
+import { forwardRef } from "react";
 import s from "./Input.module.scss";
 import "react-datetime/css/react-datetime.css";
 import Datetime from "react-datetime";
@@ -82,7 +82,7 @@ const InputDate: React.FC<InputDateProps> = ({
           onClick={onClick}
           onChange={onChange} //
           type="text"
-          placeholder="DD/MM/YYYY HH:MM"
+          placeholder="ДД/ММ/ГГГГ"
           className={s.input}
           disabled={disabled}
         />
@@ -109,6 +109,7 @@ const InputDate: React.FC<InputDateProps> = ({
           initialValue={defaultValue ? moment(defaultValue) : ""}
           strictParsing={true}
           closeOnSelect={true}
+          timeFormat={false}
           isValidDate={checkDate}
           utc={utc}
         />
