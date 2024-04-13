@@ -56,6 +56,13 @@ export const generalAPI: any = createApi({
       }),
       providesTags: ["Hotels"],
     }),
+    hotelDelete: builder.mutation({
+      query: (id) => ({
+        url: `/api/admin/hotels/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Hotels"],
+    }),
 
     hotelGetRooms: builder.query({
       query: (id) => ({
@@ -119,6 +126,7 @@ export const {
   useUserSignUpMutation,
   useHotelGetListQuery,
   useHotelGetItemQuery,
+  useHotelDeleteMutation,
   useHotelGetRoomQuery,
   useHotelGetRoomsQuery,
   useHotelAddMutation,
