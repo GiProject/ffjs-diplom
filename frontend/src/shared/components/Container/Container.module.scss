@@ -1,0 +1,9 @@
+.Container {
+  width: var(--container);
+  max-width: 90%;
+  margin: 0 auto;
+  height: inherit;
+  min-height: inherit;
+  position: relative;
+  z-index: 2;
+}

@@ -1,4 +1,4 @@
-import { useAppDispatch } from "@/shared/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/redux";
 import { logout } from "@/shared/redux/auth/authSlice";
 import Button from "@/shared/ui/Button/Button";
 import ModalWindow from "@/widgets/ModalWindow/ModalWindow";
@@ -10,6 +10,7 @@ interface UserWindowProps {
 
 const UserWindow: React.FC<UserWindowProps> = ({ open, setOpen }) => {
   const dispatch = useAppDispatch();
+  const { userInfo }: any = useAppSelector((state) => state.auth);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -23,11 +24,33 @@ const UserWindow: React.FC<UserWindowProps> = ({ open, setOpen }) => {
       }}
     >
       <header>
-        <h6>Войти</h6>
+        <h6>Мой профиль</h6>
       </header>
       <section>
-        <Button onClick={handleLogout}>Выйти из аккаунта</Button>
+        <ul>
+          {userInfo?.email && (
+            <li>
+              Почта: <span>{userInfo.email}</span>
+            </li>
+          )}
+          {userInfo?.name && (
+            <li>
+              Имя: <span>{userInfo.name}</span>
+            </li>
+          )}
+          {userInfo?.contactPhone && (
+            <li>
+              Телефон: <span>{userInfo.contactPhone}</span>
+            </li>
+          )}
+          {userInfo?.role && (
+            <li>
+              Роль: <span>{userInfo.role}</span>
+            </li>
+          )}
+        </ul>
       </section>
+      <Button onClick={handleLogout}>Выйти из аккаунта</Button>
     </ModalWindow>
   );
 };

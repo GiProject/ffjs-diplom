@@ -3,6 +3,7 @@
 .Template {
   display: grid;
   grid-gap: var(--gap);
+  margin-top: calc(var(--headerHeight) + var(--gap) + 10px);
   .Content {
     display: grid;
     grid-gap: var(--gap);

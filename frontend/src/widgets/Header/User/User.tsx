@@ -19,6 +19,7 @@ const User: React.FC<UserProps> = ({}) => {
       setOpen(true);
     } else {
       dispatch(setLoginOpen(true));
+      console.log("no token");
     }
   };
 
