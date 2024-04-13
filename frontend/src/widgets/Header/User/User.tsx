@@ -9,7 +9,7 @@ interface UserProps {}
 
 const User: React.FC<UserProps> = ({}) => {
   const dispatch = useAppDispatch();
-  const { userToken }: any = useAppSelector((state) => state.auth);
+  const { userToken, userInfo }: any = useAppSelector((state) => state.auth);
 
   //User Window
   const [open, setOpen] = useState(false);
@@ -19,7 +19,6 @@ const User: React.FC<UserProps> = ({}) => {
       setOpen(true);
     } else {
       dispatch(setLoginOpen(true));
-      console.log("no token");
     }
   };
 
@@ -27,7 +26,8 @@ const User: React.FC<UserProps> = ({}) => {
     return (
       <>
         <article className={s.User} onClick={handleClick}>
-          Авторизован <div className={s.Avatar}></div>
+          {userInfo?.name ? userInfo.name : userInfo?.email}{" "}
+          <div className={s.Avatar}></div>
         </article>
         <UserWindow open={open} setOpen={setOpen} />
       </>

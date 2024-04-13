@@ -46,10 +46,14 @@ const authSlice = createSlice({
       localStorage.setItem("userInfo", JSON.stringify(userModel));
     },
     setAccessToken: (state, { payload }) => {
-      state.userToken = payload.access_token;
-      state.refreshToken = payload.refreshToken;
-      localStorage.setItem("userToken", payload.access_token);
-      localStorage.setItem("refreshToken", payload.refreshToken);
+      if (payload.access_token) {
+        state.userToken = payload.access_token;
+        localStorage.setItem("userToken", payload.access_token);
+      }
+      if (payload.refreshToken) {
+        state.refreshToken = payload.refreshToken;
+        localStorage.setItem("refreshToken", payload.refreshToken);
+      }
     },
   },
 });

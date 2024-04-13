@@ -4,7 +4,7 @@ import User from "./User/User";
 import { Link } from "react-router-dom";
 import Container from "@/shared/components/Container/Container";
 import SignInWindow from "@/features/SignIn/SignInWindow/SignInWindow";
-import SignUpWindow from "@/features/SignUp/SignInWindow/SignUpWindow";
+import SignUpWindow from "@/features/SignUp/SignUpWindow/SignUpWindow";
 
 interface HeaderProps {}
 

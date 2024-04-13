@@ -9,7 +9,7 @@ import useSignIn from "./SignUp.hook";
 interface SignUpFormProps {}
 
 const SignUpForm: React.FC<SignUpFormProps> = () => {
-  const { loginUser, isLoading, isError, isSuccess, error } = useSignIn();
+  const { registerUser, isLoading, isError, isSuccess, error } = useSignIn();
 
   const {
     register,
@@ -23,12 +23,13 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
     defaultValues: {
       email: "",
       password: "",
+      name: "",
+      contactPhone: "",
     },
   });
 
   async function onSubmitForm(values: any) {
-    await loginUser(values);
-    // TODO: request data
+    await registerUser(values);
   }
 
   return (
@@ -66,6 +67,67 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
             },
           }}
         />
+        <Input
+          label={"Имя"}
+          icon={<></>}
+          errors={errors}
+          register={register}
+          watch={watch}
+          id="name"
+          type="text"
+          defaultValue={""}
+          options={{
+            required: "Введите имя",
+            onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
+              e.target.value = e.target.value
+                .replace(/[^a-zA-Zа-яА-Я-\s]*/g, "")
+                .replace(/^\s/g, "")
+                .replace(/^-/g, "")
+                .replace(/\s{2,}/g, " ")
+                .replace(/-{2,}/g, "-")
+                .replace(/-\s/g, "-")
+                .replace(/\s-/g, "-");
+            },
+            minLength: {
+              value: 2,
+              message: "Имя — от 2 символов",
+            },
+            maxLength: {
+              value: 30,
+              message: "Имя — до 30 символов",
+            },
+            pattern: {
+              value: /^[a-zA-Zа-яА-Я\s-]*$/,
+              message: "Имя — ошибка формата",
+            },
+          }}
+        />
+        <Input
+          label={"Телефон"}
+          icon={<></>}
+          errors={errors}
+          register={register}
+          watch={watch}
+          id="contactPhone"
+          minLength={10}
+          maxLength={10}
+          type="text"
+          defaultValue={""}
+          options={{
+            required: "Введите имя",
+            onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
+              e.target.value = e.target.value.replace(/[^0-9.]/g, "");
+            },
+            minLength: {
+              value: 10,
+              message: "Телефон — 10 символов",
+            },
+            pattern: {
+              value: /^[0-9]*$/,
+              message: "Телефон — ошибка формата",
+            },
+          }}
+        />
 
         <Input
           label={"Пароль"}
@@ -98,6 +160,10 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
       {(Object.entries(errors).length > 0 || isError) && (
         <div className={s.Errors}>
           {errors?.email?.message && <span>{errors?.email?.message}</span>}
+          {errors?.name?.message && <span>{errors?.name?.message}</span>}
+          {errors?.contactPhone?.message && (
+            <span>{errors?.contactPhone?.message}</span>
+          )}
           {errors?.password?.message && (
             <span>{errors?.password?.message}</span>
           )}

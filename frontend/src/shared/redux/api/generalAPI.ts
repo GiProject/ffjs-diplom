@@ -14,6 +14,23 @@ export const generalAPI: any = createApi({
         body: { email, password },
       }),
     }),
+    userSignUp: builder.mutation({
+      query: ({
+        email,
+        password,
+        name,
+        contactPhone,
+      }: {
+        email: string;
+        password: string;
+        name: string;
+        contactPhone: string;
+      }) => ({
+        url: "/api/client/register",
+        method: "POST",
+        body: { email, password, name, contactPhone },
+      }),
+    }),
 
     hotelGetList: builder.query({
       query: () => ({
@@ -59,6 +76,7 @@ export const generalAPI: any = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useUserSignInMutation,
+  useUserSignUpMutation,
   useHotelGetListQuery,
   useHotelGetItemQuery,
   useHotelAddMutation,
