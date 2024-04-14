@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 
@@ -69,7 +69,9 @@ const BookForm: React.FC<BookFormProps> = ({ roomId }) => {
           minDate={getValues("dateStart") ? getValues("dateStart") : undefined}
           disabled={getValues("dateStart") ? false : true}
         />
-        <Button type="submit">Забронировать</Button>
+        <Button type="submit" isSuccess={isSuccess}>
+          Забронировать
+        </Button>
         {Object.entries(errors).length > 0 ||
           (isError && (
             <div className={s.Errors}>

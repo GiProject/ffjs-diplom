@@ -1,5 +1,5 @@
 import { useAppDispatch } from "@/shared/hooks/redux";
-import { setLoginOpen } from "@/shared/redux/GlobalSlice";
+import { setBookingOpen } from "@/shared/redux/GlobalSlice";
 import { useBookRoomMutation } from "@/shared/redux/api/generalAPI";
 import { useEffect, useState } from "react";
 
@@ -13,7 +13,7 @@ export default function useBook() {
     if (data && !isError) {
       setIsSuccess(true);
       setTimeout(() => {
-        dispatch(setLoginOpen(false));
+        dispatch(setBookingOpen(false));
         setIsSuccess(false);
       }, 1000);
     }

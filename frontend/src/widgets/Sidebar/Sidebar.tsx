@@ -15,17 +15,17 @@ const nav_items = [
   {
     name: "Мои бронирования",
     link: "/bookings",
-    only: "client",
+    only: ["client"],
   },
   {
     name: "Добавить гостиницу",
     link: "/hotels/add",
-    only: "admin",
+    only: ["admin"],
   },
   {
     name: "Пользователи",
     link: "/users",
-    only: "admin",
+    only: ["admin", "manager"],
   },
 ];
 
@@ -36,7 +36,7 @@ export default function Sidebar() {
       <div className={s.Sidebar}>
         <nav>
           {nav_items.map((item) => {
-            if (item.only && userInfo?.role !== item.only) return null;
+            if (item.only && !item.only.includes(userInfo?.role)) return null;
             return (
               <NavLink
                 key={item.link + item.name}

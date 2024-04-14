@@ -1,14 +1,13 @@
 import Body from "@/widgets/Body/Body";
 import BookingsList from "./BookingsList/BookingsList";
-import { useBookingsListManagerQuery } from "@/shared/redux/api/generalAPI";
-import { useParams } from "react-router";
+import { useBookingsListQuery } from "@/shared/redux/api/generalAPI";
 
 interface BookingsProps {}
 
 const Bookings: React.FC<BookingsProps> = () => {
-  const params = useParams();
-  const userId = params.id;
-  const { data, isFetching } = useBookingsListManagerQuery(userId);
+  const { data, isFetching } = useBookingsListQuery("", {
+    pollingInterval: 900000,
+  });
 
   return (
     <Body>

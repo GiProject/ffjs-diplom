@@ -17,6 +17,7 @@ const BookingsList: React.FC<BookingsListProps> = ({ bookings }) => {
       ) : (
         <>
           <p>Нет забронированных номеров</p>
+          <Link to={"/search"}>Перейти к поиску</Link>
         </>
       )}
     </div>
