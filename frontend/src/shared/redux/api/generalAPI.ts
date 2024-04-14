@@ -5,7 +5,7 @@ import { baseQueryWithReauth } from "./baseQuery";
 export const generalAPI: any = createApi({
   reducerPath: "generalAPI",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Hotel", "Hotels", "Rooms"],
+  tagTypes: ["Hotel", "Hotels", "Rooms", "Bookings"],
   endpoints: (builder) => ({
     userSignIn: builder.mutation({
       query: ({ email, password }: { email: string; password: string }) => ({
@@ -137,6 +137,20 @@ export const generalAPI: any = createApi({
         },
       }),
     }),
+    bookingsList: builder.query({
+      query: () => ({
+        url: `/api/client/reservations/`,
+        method: "GET",
+      }),
+      providesTags: ["Bookings"],
+    }),
+    bookingDeleteClient: builder.mutation({
+      query: (bookingId) => ({
+        url: `/api/client/reservations/${bookingId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Bookings"],
+    }),
   }),
 });
 
@@ -157,4 +171,6 @@ export const {
   useRoomUpdateMutation,
   useGetUsersQuery,
   useBookRoomMutation,
+  useBookingsListQuery,
+  useBookingDeleteClientMutation,
 } = generalAPI;

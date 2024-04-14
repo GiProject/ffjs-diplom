@@ -36,15 +36,17 @@ const Room: React.FC<RoomProps> = ({ roomDetails }) => {
           <div className={s.Description}>
             {roomDetails?.description ?? "Описания нет"}
           </div>
-          <div className={s.ButtonGroup}>
-            <Button
-              onClick={() => {
-                handleBook(roomDetails._id);
-              }}
-            >
-              Забронировать
-            </Button>
-          </div>
+          {userInfo?.role === "client" && (
+            <div className={s.ButtonGroup}>
+              <Button
+                onClick={() => {
+                  handleBook(roomDetails._id);
+                }}
+              >
+                Забронировать
+              </Button>
+            </div>
+          )}
           {userInfo?.role === "admin" && (
             <div className={s.ButtonGroup}>
               <Button href={`/rooms/${roomDetails._id}/edit`}>

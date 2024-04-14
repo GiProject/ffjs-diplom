@@ -13,6 +13,11 @@ const nav_items = [
     link: "/search",
   },
   {
+    name: "Мои бронирования",
+    link: "/bookings",
+    only: "client",
+  },
+  {
     name: "Добавить гостиницу",
     link: "/hotels/add",
     only: "admin",

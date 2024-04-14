@@ -79,7 +79,7 @@ const BookForm: React.FC<BookFormProps> = ({ roomId }) => {
               {errors?.dateEnd?.message && (
                 <span>{errors?.dateEnd?.message}</span>
               )}
-              {isError && <span>{error.message}</span>}
+              {error?.error && <span>{error.error}</span>}
             </div>
           ))}
       </div>

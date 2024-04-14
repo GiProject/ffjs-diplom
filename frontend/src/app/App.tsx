@@ -21,6 +21,7 @@ import ReduxProvider from "../shared/providers/ReduxProvider";
 import HotelUpdate from "@/pages/HotelUpdate/HotelUpdate";
 import RoomAdd from "@/pages/RoomAdd/RoomAdd";
 import RoomDetails from "@/pages/RoomUpdate/RoomUpdate";
+import Bookings from "@/pages/Users/Bookings/Bookings";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
           <Route path="/rooms/:id/edit" element={<RoomDetails />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/hotels/add" element={<HotelAdd />} />
+
+          <Route path="/bookings" element={<Bookings />} />
         </Routes>
       </Template>
     </ReduxProvider>

@@ -1,0 +1,22 @@
+@use "./src/shared/styles/mixins" as *;
+
+.Item {
+  width: 100%;
+  display: flex;
+  background-color: #f3f2f2;
+  padding: 10px var(--padding);
+  border-radius: var(--radius);
+  div {
+    margin-right: 10px;
+    a {
+      font-weight: 500;
+      color: var(--accent);
+    }
+  }
+  .Delete {
+    font-weight: 500;
+    color: var(--error);
+    cursor: pointer;
+    @include HoverText;
+  }
+}

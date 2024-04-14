@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/redux";
-import ModalWindow from "../../../widgets/ModalWindow/ModalWindow";
+import ModalWindow from "@/widgets/ModalWindow/ModalWindow";
 import { setBookingOpen } from "@/shared/redux/GlobalSlice";
 import BookForm from "../BookForm/BookForm";
 
