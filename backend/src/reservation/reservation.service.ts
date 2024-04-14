@@ -48,11 +48,16 @@ export class ReservationService implements IReservation {
     public async getReservations(
         filter: ReservationSearchOptions,
     ): Promise<ReservationDocument[]> {
+
         const { userId } = filter;
         const parseFilter: any = {};
         userId && (parseFilter.userId = userId);
         filter.dateStart && (parseFilter.dateStart = { $gte: filter.dateStart, $lte: filter.dateStart});
         filter.dateEnd && (parseFilter.dateEnd = { $lte: filter.dateEnd, $gte: filter.dateStart});
+        if (userId) {
+            parseFilter.userId = userId.toString();
+        }
+
         return await this.ReservationModel
             .find(parseFilter)
             .select('-__v')
