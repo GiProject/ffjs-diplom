@@ -10,7 +10,7 @@ const nav_items = [
   },
   {
     name: "Поиск номера",
-    link: "/hotels",
+    link: "/search",
   },
   {
     name: "Добавить гостиницу",

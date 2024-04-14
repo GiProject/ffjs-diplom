@@ -7,6 +7,7 @@ import RoomsList from "./RoomsList/RoomsList";
 import ScrollToTop from "@/shared/utils/scrollToTop";
 import { useGetHotel } from "../Hotels/Hotels.hook";
 import { useAppSelector } from "@/shared/hooks/redux";
+import BookWindow from "@/features/Book/BookWindow/BookWindow";
 
 export default function HotelDetail() {
   const params = useParams();
@@ -51,6 +52,7 @@ export default function HotelDetail() {
       )}
 
       <RoomsList rooms={rooms} />
+      <BookWindow />
       <ScrollToTop />
     </div>
   );

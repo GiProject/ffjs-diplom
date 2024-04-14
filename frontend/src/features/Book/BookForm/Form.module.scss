@@ -1,0 +1,24 @@
+@use "./src/shared/styles/mixins" as *;
+
+.Form {
+  display: grid;
+  grid-gap: var(--gap);
+  padding-bottom: 150px;
+  .Columns {
+    display: grid;
+    grid-gap: var(--gap);
+    grid-template-columns: repeat(2, minmax(0%, 50%));
+    @include MQ(M) {
+      grid-template-columns: repeat(1, minmax(0%, 100%));
+    }
+  }
+}
+
+.Errors {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--gap);
+  & > * {
+    color: var(--error);
+  }
+}

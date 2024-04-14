@@ -10,6 +10,7 @@ import Body from "@/widgets/Body/Body";
 import Input from "@/shared/ui/Input/Input";
 import InputDate from "@/shared/ui/Input/InputDate";
 
+//Icons
 import IconCalendar from "@/shared/assets/form-icon-calendar.svg";
 import IconTitle from "@/shared/assets/form-icon-title.svg";
 
@@ -29,11 +30,15 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
   } = useForm({
     defaultValues: {
       title: "",
+      startDate: "",
+      finishDate: "",
     },
   });
 
   async function onSubmitForm(values: any) {
     let params = {
+      startDate: moment(values.startDate).format("YYYY-MM-DD"),
+      endDate: moment(values.endDate).format("YYYY-MM-DD"),
       title: values.title,
     };
     setSearchParams(params);
@@ -68,12 +73,46 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
             }}
           />
           <div className={s.Columns}>
+            <InputDate
+              name="startDate"
+              icon={<IconCalendar />}
+              control={control}
+              errors={errors}
+              label={"Заезд"}
+              options={{
+                required: "Введите дату начала",
+              }}
+              minDate={moment().subtract(1, "day")}
+              maxDate={
+                getValues("finishDate") ? getValues("finishDate") : undefined
+              }
+            />
+            <InputDate
+              name="finishDate"
+              icon={<IconCalendar />}
+              control={control}
+              errors={errors}
+              label={"Выезд"}
+              options={{
+                required: "Введите дату конца",
+              }}
+              minDate={
+                getValues("startDate") ? getValues("startDate") : undefined
+              }
+              disabled={getValues("startDate") ? false : true}
+            />
             <Button type="submit">Найти</Button>
           </div>
         </div>
         {Object.entries(errors).length > 0 && (
           <div className={s.Errors}>
             {errors?.title?.message && <span>{errors?.title?.message}</span>}
+            {errors?.startDate?.message && (
+              <span>{errors?.startDate?.message}</span>
+            )}
+            {errors?.finishDate?.message && (
+              <span>{errors?.finishDate?.message}</span>
+            )}
           </div>
         )}
       </form>

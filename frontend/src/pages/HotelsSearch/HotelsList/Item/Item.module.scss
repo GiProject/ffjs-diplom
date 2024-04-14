@@ -1,6 +1,6 @@
 @use "./src/shared/styles/mixins" as *;
 
-.Room {
+.Item {
   display: flex;
   @include MQ(M) {
     flex-direction: column;
@@ -8,7 +8,7 @@
   .Image {
     width: 30%;
     min-width: 200px;
-    height: 150px;
+    height: 200px;
     margin-right: var(--gap);
     background-color: #efefef;
     border-radius: var(--radius);
@@ -35,7 +35,7 @@
       margin: 0 0 var(--gap) 0;
       color: var(--gray);
     }
-    .ButtonGroup {
+    .Button {
       max-width: 300px;
       display: flex;
       flex-direction: column;
