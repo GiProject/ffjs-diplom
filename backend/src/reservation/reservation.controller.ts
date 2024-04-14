@@ -2,18 +2,23 @@ import {Body, Controller, Delete, Get, Param, Post, Query, UseGuards} from '@nes
 import {formatInTimeZone} from 'date-fns-tz';
 
 import {ReservationService} from './reservation.service';
-import {ReservationDto, SearchReservationParams} from "./reservatiom.interfaces";
 import {JwtAuthGuard} from "../guards/jwt-auth.guard";
 import {User} from "../decorations/user.decorator";
 import {UserEntity} from "../users/user.entity";
 import {ID} from "../hotel/hotel.interfaces";
 import {Roles} from "../guards/role.decorator";
 import {RoleGuard} from "../guards/role.guard";
+import {HotelRoom, HotelRoomDocument} from "../hotelRoom/hotel.room.model";
+import {InjectModel} from "@nestjs/mongoose";
+import {Model} from "mongoose";
 
 @Controller('api')
 @UseGuards(JwtAuthGuard)
 export class ReservationController {
-    constructor(private readonly reservationService: ReservationService) {}
+    constructor(
+        private readonly reservationService: ReservationService,
+        @InjectModel(HotelRoom.name) private HotelRoomModel: Model<HotelRoomDocument>,
+    ) {}
 
     @Post('client/reservations')
     @Roles('client')
@@ -22,9 +27,11 @@ export class ReservationController {
         @User() user: UserEntity,
         @Body() body: any,
     ) {
+        const hotelRoom = await this.HotelRoomModel.findOne({_id: body.roomId}).exec();
+
         return await this.reservationService.addReservation({
             userId: user.id,
-            hotelId: body.hotelId,
+            hotelId: hotelRoom.hotel._id,
             roomId: body.roomId,
             dateStart: new Date(
                 formatInTimeZone(
