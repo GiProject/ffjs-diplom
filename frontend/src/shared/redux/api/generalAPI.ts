@@ -124,6 +124,19 @@ export const generalAPI: any = createApi({
         method: "GET",
       }),
     }),
+
+    //Reservations
+    bookRoom: builder.mutation({
+      query: ({ dateStart, dateEnd, roomId }) => ({
+        url: `/api/client/reservations`,
+        method: "POST",
+        body: {
+          dateStart,
+          dateEnd,
+          roomId,
+        },
+      }),
+    }),
   }),
 });
 
@@ -143,4 +156,5 @@ export const {
   useRoomDeleteMutation,
   useRoomUpdateMutation,
   useGetUsersQuery,
+  useBookRoomMutation,
 } = generalAPI;

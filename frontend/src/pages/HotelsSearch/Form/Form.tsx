@@ -10,6 +10,7 @@ import Body from "@/widgets/Body/Body";
 import Input from "@/shared/ui/Input/Input";
 import InputDate from "@/shared/ui/Input/InputDate";
 
+//Icons
 import IconCalendar from "@/shared/assets/form-icon-calendar.svg";
 import IconTitle from "@/shared/assets/form-icon-title.svg";
 

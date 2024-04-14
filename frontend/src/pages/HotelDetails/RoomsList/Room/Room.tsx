@@ -1,18 +1,25 @@
+import s from "./Room.module.scss";
 import Body from "@/widgets/Body/Body";
 import Button from "@/shared/ui/Button/Button";
-import s from "./Room.module.scss";
-import { useAppSelector } from "@/shared/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/redux";
 import { useRoomDeleteMutation } from "@/shared/redux/api/generalAPI";
+import { setBookingOpen } from "@/shared/redux/GlobalSlice";
 interface RoomProps {
   roomDetails: any;
 }
 
 const Room: React.FC<RoomProps> = ({ roomDetails }) => {
+  const dispatch = useAppDispatch();
   const [deleteHotel, { status, data, error }] = useRoomDeleteMutation();
 
   const handleDelete = () => {
     deleteHotel(roomDetails._id);
   };
+
+  const handleBook = (id: string) => {
+    dispatch(setBookingOpen(id));
+  };
+
   const { userInfo }: any = useAppSelector((state) => state.auth);
   return (
     <Body>
@@ -29,8 +36,17 @@ const Room: React.FC<RoomProps> = ({ roomDetails }) => {
           <div className={s.Description}>
             {roomDetails?.description ?? "Описания нет"}
           </div>
+          <div className={s.ButtonGroup}>
+            <Button
+              onClick={() => {
+                handleBook(roomDetails._id);
+              }}
+            >
+              Забронировать
+            </Button>
+          </div>
           {userInfo?.role === "admin" && (
-            <div className={s.Button}>
+            <div className={s.ButtonGroup}>
               <Button href={`/rooms/${roomDetails._id}/edit`}>
                 Редактировать
               </Button>
