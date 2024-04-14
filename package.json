@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "react-portal": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/react-portal": "^4.0.7"
+  }
+}

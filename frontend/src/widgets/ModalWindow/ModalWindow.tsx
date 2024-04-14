@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import s from "./ModalWindow.module.scss";
 import { CSSTransition } from "react-transition-group";
-import Portal from "./Portal";
+import { Portal } from "react-portal";
 
 // TODO: types
 interface ModalWindowProps {
