@@ -10,7 +10,7 @@ import {Roles} from "../guards/role.decorator";
 import {RoleGuard} from "../guards/role.guard";
 import {HotelRoom, HotelRoomDocument} from "../hotelRoom/hotel.room.model";
 import {InjectModel} from "@nestjs/mongoose";
-import {Model} from "mongoose";
+import mongoose, {Model} from "mongoose";
 
 @Controller('api')
 @UseGuards(JwtAuthGuard)
@@ -62,9 +62,18 @@ export class ReservationController {
     @Get('manager/reservations/:userId')
     @Roles('manager')
     @UseGuards(RoleGuard)
-    async getReservationClient(@Param() params: { userId: ID }) {
+    async getManagerClientReservation(@Param() params: { userId: ID }) {
         return await this.reservationService.getReservations({
             userId: params.userId,
+        });
+    }
+
+    @Get('client/reservations')
+    @Roles('client')
+    @UseGuards(RoleGuard)
+    async getReservationClient(@User() user: UserEntity,) {
+        return await this.reservationService.getReservations({
+            userId: new mongoose.Types.ObjectId(user.id),
         });
     }
 
