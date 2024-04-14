@@ -39,17 +39,13 @@ export default function () {
                     </td>
                   </tr>
                 );
-              }
-              if (userInfo?.role === "admin") {
+              } else {
                 return (
                   <tr key={user._id}>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.contactPhone}</td>
                     <td>{user.role}</td>
-                    <td>
-                      <Link to={`/users/${user._id}`}>Бронирования</Link>
-                    </td>
                   </tr>
                 );
               }
