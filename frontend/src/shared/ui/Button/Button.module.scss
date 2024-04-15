@@ -34,6 +34,10 @@
     background-color: #262937;
     color: #fff;
   }
+  &[data-style="danger"] {
+    background-color: var(--error);
+    color: #fff;
+  }
   &.Disabled {
     opacity: 0.4;
     transition: 0.5s ease-in-out all;

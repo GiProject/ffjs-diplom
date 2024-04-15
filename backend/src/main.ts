@@ -24,6 +24,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:3000',
       'http://localhost:3002',
+      'http://localhost:3003',
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,

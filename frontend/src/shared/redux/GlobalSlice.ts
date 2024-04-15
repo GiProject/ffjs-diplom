@@ -4,11 +4,13 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface GlobalSlice {
   loginOpen: boolean;
   signupOpen: boolean;
+  bookingOpen: boolean | string;
 }
 
 const initialState: GlobalSlice = {
   loginOpen: false,
   signupOpen: false,
+  bookingOpen: false,
 };
 
 export const GlobalSlice = createSlice({
@@ -21,10 +23,14 @@ export const GlobalSlice = createSlice({
     setSignupOpen: (state, action: PayloadAction<boolean>) => {
       state.signupOpen = action.payload;
     },
+    setBookingOpen: (state, action: PayloadAction<boolean | string>) => {
+      state.bookingOpen = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setLoginOpen, setSignupOpen } = GlobalSlice.actions;
+export const { setLoginOpen, setSignupOpen, setBookingOpen } =
+  GlobalSlice.actions;
 
 export default GlobalSlice.reducer;

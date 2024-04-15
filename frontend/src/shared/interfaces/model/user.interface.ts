@@ -1,9 +1,9 @@
-import {string} from "yup";
+import { string } from "yup";
 
-export default interface User
-{
-    _id: string,
-    name: string,
-    email: string,
-    contactPhone: string,
+export default interface User {
+  _id: string;
+  name: string;
+  email: string;
+  contactPhone: string;
+  role: string;
 }

@@ -4,7 +4,7 @@ export type HotelDocument = Hotel & Document;
 
 @Schema()
 export class Hotel {
-    _id: mongoose.Schema.Types.ObjectId;
+    _id: mongoose.Types.ObjectId;
 
     @Prop({ required: true })
     public title: string;

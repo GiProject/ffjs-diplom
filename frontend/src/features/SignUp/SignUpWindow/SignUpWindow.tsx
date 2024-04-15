@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/redux";
 import ModalWindow from "../../../widgets/ModalWindow/ModalWindow";
 import { setSignupOpen } from "@/shared/redux/GlobalSlice";
-import SignUpForm from "../SignInForm/SignUpForm";
+import SignUpForm from "../SignUpForm/SignUpForm";
 
 interface SignUpWindowProps {}
 

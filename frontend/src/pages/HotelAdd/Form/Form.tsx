@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 
+//Icons
+import IconTitle from "@/shared/assets/form-icon-title.svg";
+
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
 import Upload from "@/shared/ui/UploadImage/Upload";
@@ -39,7 +42,6 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
       formData.append("images", imageFile);
     });
     await hotelAdd(formData);
-    // TODO: request data
   }
 
   useEffect(() => {
@@ -60,7 +62,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
         />
         <Input
           label={"Название отеля"}
-          icon={<></>}
+          icon={<IconTitle />}
           errors={errors}
           register={register}
           watch={watch}
@@ -69,7 +71,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
           options={{
             required: "Введите название отеля",
             onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-              e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
+              e.target.value = e.target.value.replace(/[!?,+=]*/g, "");
             },
             minLength: {
               value: 3,
@@ -83,7 +85,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
         />
         <Input
           label={"Описание отеля"}
-          icon={<></>}
+          icon={<IconTitle />}
           errors={errors}
           register={register}
           watch={watch}
@@ -92,7 +94,7 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
           options={{
             required: "Введите описание отеля",
             onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-              e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
+              e.target.value = e.target.value.replace(/[!?,+=]*/g, "");
             },
             minLength: {
               value: 3,
@@ -110,13 +112,14 @@ const FormHotels: React.FC<FormHotelsProps> = () => {
           </Button>
         </div>
       </div>
-      {Object.entries(errors).length > 0 && (
+      {(Object.entries(errors).length > 0 || error?.data?.message) && (
         <div className={s.Errors}>
           {errors?.images?.message && <span>{errors?.images?.message}</span>}
           {errors?.title?.message && <span>{errors?.title?.message}</span>}
           {errors?.description?.message && (
             <span>{errors?.description?.message}</span>
           )}
+          {error?.data?.message && <span>{error.data.message}</span>}
         </div>
       )}
     </form>

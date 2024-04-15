@@ -3,15 +3,17 @@
 .Template {
   display: grid;
   grid-gap: var(--gap);
+  margin-top: calc(var(--headerHeight) + var(--gap) + 10px);
+  grid-template-columns: minmax(0%, 100%);
   .Content {
     display: grid;
     grid-gap: var(--gap);
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: minmax(0%, 20%) minmax(0%, 80%);
     @include MQ(M) {
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: minmax(0%, 30%) minmax(0%, 70%);
     }
     @include MQ(S) {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0%, 100%);
     }
   }
 }

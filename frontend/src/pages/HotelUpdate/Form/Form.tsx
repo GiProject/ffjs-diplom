@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import s from "./Form.module.scss";
 
+//Icons
+import IconTitle from "@/shared/assets/form-icon-title.svg";
+
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
 import Upload from "@/shared/ui/UploadImage/Upload";
@@ -81,7 +84,7 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
           />
           <Input
             label={"Название отеля"}
-            icon={<></>}
+            icon={<IconTitle />}
             errors={errors}
             register={register}
             watch={watch}
@@ -90,7 +93,7 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
             options={{
               required: "Введите название отеля",
               onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-                e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
+                e.target.value = e.target.value.replace(/[!?,+=]*/g, "");
               },
               minLength: {
                 value: 3,
@@ -104,7 +107,7 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
           />
           <Input
             label={"Описание отеля"}
-            icon={<></>}
+            icon={<IconTitle />}
             errors={errors}
             register={register}
             watch={watch}
@@ -113,7 +116,7 @@ const FormHotels: React.FC<FormHotelsProps> = ({ hotel }) => {
             options={{
               required: "Введите описание отеля",
               onChange: (e: React.ChangeEvent<HTMLInputElement>): void => {
-                e.target.value = e.target.value.replace(/[а-яА-Я!?,+=]*/g, "");
+                e.target.value = e.target.value.replace(/[!?,+=]*/g, "");
               },
               minLength: {
                 value: 3,

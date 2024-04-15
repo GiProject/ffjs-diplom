@@ -1,21 +1,24 @@
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {Model, Promise} from "mongoose";
+import {Model} from "mongoose";
 import {Hotel, HotelDocument} from './hotel.model';
 import {
     FileInterface,
-    HotelReturnInterface,
     ID,
     IHotelService,
-    SearchHotelParams,
-    UpdateHotelParams, UpdateHotelRoomParams
+    SearchHotelParams, SearchHotelQuery,
+    UpdateHotelRoomParams
 } from "./hotel.interfaces";
 import {saveFile} from "../functions/save.file";
+import {Reservation, ReservationDocument} from "../reservation/reservation.model";
+import {HotelRoom, HotelRoomDocument} from "../hotelRoom/hotel.room.model";
 
 @Injectable()
 export class HotelService implements IHotelService {
     constructor(
         @InjectModel(Hotel.name) private HotelModel: Model<HotelDocument>,
+        @InjectModel(Reservation.name) private ReservationModel: Model<ReservationDocument>,
+        @InjectModel(HotelRoom.name) private HotelRoomModel: Model<HotelRoomDocument>,
     ) {
     }
 
@@ -34,11 +37,36 @@ export class HotelService implements IHotelService {
             .select('-__v -createdAt -updatedAt');
     }
 
-    public async search(params: SearchHotelParams){
+    public async search(params: SearchHotelParams) {
 
-        const query = {
-            title: {$regex: new RegExp(params.title, "i")},
-        };
+        let query: SearchHotelQuery = {};
+
+        if (params.title) {
+            query.title = {$regex: new RegExp(params.title, "i")};
+        }
+
+        if (params.dateStart && params.dateEnd) {
+            const reservations = await this.ReservationModel.find({
+                dateStart: {
+                    $gte: params.dateStart,
+                    $lte: params.dateEnd
+                },
+                dateEnd: {
+                    $lte: params.dateEnd,
+                    $gte: params.dateStart
+                }
+            }).select('roomId').exec();
+
+            const notReservedRooms = await this.HotelRoomModel.find({
+                _id: {
+                    $nin: reservations.map(reservation => reservation.roomId)
+                }
+            }).select('hotel').exec()
+
+            query._id = {
+                $in: notReservedRooms.map(room => room.hotel._id)
+            }
+        }
 
         const count = await this.HotelModel.find(query).countDocuments().exec();
         const hotels = await this.HotelModel.find(query)
@@ -102,6 +130,6 @@ export class HotelService implements IHotelService {
     }
 
     public async delete(id: ID) {
-        return this.HotelModel.findOneAndDelete({ _id: id });
+        return this.HotelModel.findOneAndDelete({_id: id});
     }
 }

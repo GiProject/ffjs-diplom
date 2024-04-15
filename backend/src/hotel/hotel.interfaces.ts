@@ -7,7 +7,14 @@ export interface ID extends Types.ObjectId {}
 export interface SearchHotelParams {
     limit: number;
     offset: number;
-    title: string;
+    title?: string;
+    dateStart?: Date;
+    dateEnd?: Date;
+}
+
+export interface SearchHotelQuery {
+    title?: object;
+    _id?: object
 }
 
 export interface UpdateHotelParams {

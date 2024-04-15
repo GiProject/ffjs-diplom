@@ -1,0 +1,19 @@
+.Table {
+  width: 100%;
+  overflow-x: auto;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--accent);
+    td,
+    th {
+      border: 1px solid var(--accent);
+      padding: 4px 6px;
+    }
+    tr {
+      td {
+        padding: 4px 6px;
+      }
+    }
+  }
+}

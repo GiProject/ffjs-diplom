@@ -1,0 +1,9 @@
+.BookingsList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  & > * {
+    margin-bottom: var(--gap);
+  }
+}
