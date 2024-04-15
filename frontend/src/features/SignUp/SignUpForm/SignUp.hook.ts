@@ -1,5 +1,5 @@
 import { useAppDispatch } from "@/shared/hooks/redux";
-import { setLoginOpen } from "@/shared/redux/GlobalSlice";
+import { setSignupOpen } from "@/shared/redux/GlobalSlice";
 import { useUserSignUpMutation } from "@/shared/redux/api/generalAPI";
 import { logout, setAccessToken, setUser } from "@/shared/redux/auth/authSlice";
 import { useEffect, useState } from "react";
@@ -13,13 +13,11 @@ export default function useSignIn() {
 
   useEffect(() => {
     if (data && !isError) {
-      if (data.access_token) {
-        dispatch(setAccessToken(data.access_token));
-      }
+      dispatch(setAccessToken(data));
       dispatch(setUser(data));
       setIsSuccess(true);
       setTimeout(() => {
-        dispatch(setLoginOpen(false));
+        dispatch(setSignupOpen(false));
         setIsSuccess(false);
       }, 1000);
     }
