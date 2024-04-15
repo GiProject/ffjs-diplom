@@ -1,8 +1,7 @@
-import { Promise, Types } from "mongoose";
-import { User } from "./user.model";
+import { Promise, Types } from 'mongoose';
+import { User } from './user.model';
 
-export interface ID extends Types.ObjectId {
-}
+export interface ID extends Types.ObjectId {}
 
 export interface IUser {
   email: string;
@@ -27,8 +26,8 @@ export interface SearchUserInputParams {
 }
 
 export interface UserReturnInterface {
-  count: number,
-  users: User[]
+  count: number;
+  users: User[];
 }
 
 export interface IUserService {

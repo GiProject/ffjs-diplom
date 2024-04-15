@@ -6,14 +6,14 @@ import { HotelRoomController } from './hotelRoom.controller';
 import { HotelRoomService } from './hotel.room.service';
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([
-            { name: HotelRoom.name, schema: HotelRoomSchema },
-        ]),
-        HotelModule,
-    ],
-    controllers: [HotelRoomController],
-    providers: [HotelRoomService],
-    exports: [HotelRoomService],
+  imports: [
+    MongooseModule.forFeature([
+      { name: HotelRoom.name, schema: HotelRoomSchema },
+    ]),
+    HotelModule,
+  ],
+  controllers: [HotelRoomController],
+  providers: [HotelRoomService],
+  exports: [HotelRoomService],
 })
 export class HotelRoomModule {}

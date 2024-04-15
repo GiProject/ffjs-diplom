@@ -1,14 +1,17 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from "@nestjs/common";
-import { UsersService } from "./users.service";
-import { CreateUserDto, SearchUserInputParams, SearchUserParams } from "./user.interfaces";
-import { Roles } from "../guards/role.decorator";
-import { RoleGuard } from "../guards/role.guard";
-import {JwtAuthGuard} from "../guards/jwt-auth.guard";
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { UsersService } from './users.service';
+import {
+  CreateUserDto,
+  SearchUserInputParams,
+  SearchUserParams,
+} from './user.interfaces';
+import { Roles } from '../guards/role.decorator';
+import { RoleGuard } from '../guards/role.guard';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
-@Controller("api/users")
+@Controller('api/users')
 export class UsersController {
-  constructor(private userService: UsersService) {
-  }
+  constructor(private userService: UsersService) {}
 
   @Get()
   @Roles('manager', 'admin')
@@ -18,7 +21,7 @@ export class UsersController {
       ...query,
       email: query.query,
       name: query.query,
-      contactPhone: query.query
+      contactPhone: query.query,
     };
 
     return await this.userService.findAll(params);
@@ -30,5 +33,4 @@ export class UsersController {
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
   }
-
 }

@@ -1,49 +1,41 @@
-import {Module} from '@nestjs/common';
-import {AppController} from './app.controller';
-import {AppService} from './app.service';
-import {ConfigModule} from '@nestjs/config';
-import {MongooseModule} from '@nestjs/mongoose';
-import {UsersModule} from './users/users.module';
-import {AuthModule} from "./auth/auth.module";
-import {AuthController} from "./auth/auth.controller";
-import {AuthService} from "./auth/auth.service";
-import {PassportModule} from "@nestjs/passport";
-import {HotelModule} from "./hotel/hotel.module";
-import {HotelRoomModule} from "./hotelRoom/hotel.room.module";
-import {ReservationModule} from "./reservation/reservation.module";
-import {NestjsFormDataModule} from "nestjs-form-data";
-import {JwtModule} from "@nestjs/jwt";
-import {MulterModule} from "@nestjs/platform-express";
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthController } from './auth/auth.controller';
+import { AuthService } from './auth/auth.service';
+import { PassportModule } from '@nestjs/passport';
+import { HotelModule } from './hotel/hotel.module';
+import { HotelRoomModule } from './hotelRoom/hotel.room.module';
+import { ReservationModule } from './reservation/reservation.module';
+import { NestjsFormDataModule } from 'nestjs-form-data';
+import { JwtModule } from '@nestjs/jwt';
+import { MulterModule } from '@nestjs/platform-express';
 import { CommandModule } from 'nestjs-command';
-import {UserCommand} from "./users/user.command";
+import { UserCommand } from './users/user.command';
 
 @Module({
-    imports: [
-        ConfigModule.forRoot(),
-        MongooseModule.forRoot(process.env.MONGO_URL),
-        UsersModule,
-        AuthModule,
-        PassportModule,
-        HotelModule,
-        HotelRoomModule,
-        ReservationModule,
-        NestjsFormDataModule,
-        JwtModule.register({secret: 'secret'}),
-        MulterModule.register({
-            dest: './upload',
-        }),
-        CommandModule
-    ],
-    controllers: [
-        AppController,
-        AuthController,
-    ],
-    providers: [
-        AppService,
-        AuthService,
-        UserCommand
-    ],
-    exports: [AuthService],
+  imports: [
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGO_URL),
+    UsersModule,
+    AuthModule,
+    PassportModule,
+    HotelModule,
+    HotelRoomModule,
+    ReservationModule,
+    NestjsFormDataModule,
+    JwtModule.register({ secret: 'secret' }),
+    MulterModule.register({
+      dest: './upload',
+    }),
+    CommandModule,
+  ],
+  controllers: [AppController, AuthController],
+  providers: [AppService, AuthService, UserCommand],
+  exports: [AuthService],
 })
-export class AppModule {
-}
+export class AppModule {}

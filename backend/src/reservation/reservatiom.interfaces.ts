@@ -1,43 +1,42 @@
-import {Reservation} from "./reservation.model";
-import {ObjectId, Types} from "mongoose";
+import { Reservation } from './reservation.model';
+import { Types } from 'mongoose';
 
 export interface ID extends Types.ObjectId {}
 export interface SearchReservationParams {
-    limit: number;
-    offset: number;
-    userId: string;
+  limit: number;
+  offset: number;
+  userId: string;
 }
 
 export interface ReservationDto {
-    userId: string;
-    hotelId: ID;
-    roomId: ID;
-    dateStart: Date;
-    dateEnd: Date;
+  userId: string;
+  hotelId: ID;
+  roomId: ID;
+  dateStart: Date;
+  dateEnd: Date;
 }
 
 export interface ReservationSearchOptions {
-    userId?: ID;
-    roomId?: string;
-    dateStart?: Date;
-    dateEnd?: Date;
-    limit?: number;
-    offset?: number;
+  userId?: ID;
+  roomId?: string;
+  dateStart?: Date;
+  dateEnd?: Date;
+  limit?: number;
+  offset?: number;
 }
 
 export interface IReservation {
-    addReservation(data: ReservationDto): Promise<Reservation>;
-    removeReservation(id: string): Promise<void>;
-    getReservations(
-        filter: ReservationSearchOptions,
-    ): Promise<Array<Reservation>>;
+  addReservation(data: ReservationDto): Promise<Reservation>;
+  removeReservation(id: string): Promise<void>;
+  getReservations(
+    filter: ReservationSearchOptions,
+  ): Promise<Array<Reservation>>;
 }
 
 export interface IReservationModelInterface {
-    userId: ID;
-    hotelId: ID;
-    roomId: ID;
-    dateStart: Date;
-    dateEnd: Date;
+  userId: ID;
+  hotelId: ID;
+  roomId: ID;
+  dateStart: Date;
+  dateEnd: Date;
 }
-

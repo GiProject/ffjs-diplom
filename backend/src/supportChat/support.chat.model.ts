@@ -6,22 +6,23 @@ export type SupportRequestDocument = SupportRequest & Document;
 
 @Schema()
 export class SupportRequest {
-    _id: mongoose.Types.ObjectId;
+  _id: mongoose.Types.ObjectId;
 
-    @Prop({ required: true, ref: 'User' })
-    public userId: mongoose.Types.ObjectId;
+  @Prop({ required: true, ref: 'User' })
+  public userId: mongoose.Types.ObjectId;
 
-    @Prop({ required: true })
-    public createdAt: Date;
+  @Prop({ required: true })
+  public createdAt: Date;
 
-    @Prop({ required: true })
-    public theme: string;
+  @Prop({ required: true })
+  public theme: string;
 
-    @Prop()
-    public messages: Message[];
+  @Prop()
+  public messages: Message[];
 
-    @Prop()
-    public isActive: boolean;
+  @Prop()
+  public isActive: boolean;
 }
 
-export const SupportRequestSchema = SchemaFactory.createForClass(SupportRequest);
+export const SupportRequestSchema =
+  SchemaFactory.createForClass(SupportRequest);
