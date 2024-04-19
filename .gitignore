@@ -1,4 +1,5 @@
 .idea
+.env
 mongodb
 /**/node_modules
 /frontend/dist

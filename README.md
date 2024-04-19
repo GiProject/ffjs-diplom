@@ -9,6 +9,7 @@
 Пример данных для .env
 ```
 MONGO_URL=mongodb://mongo:27017/booking
+BASE_URL=http://localhost:3002
 APP_SALT=10
 
 MANAGER_EMAIL=manager@test.ru
